@@ -8,6 +8,8 @@ svn을 원격저장소로하고 로컬에는 git을 핸들링하기 위한 프�
 ### git 로컬리포지토리 만들기
 로컬에 리포지토리를 만든다
 `git svn clone -s http://svn.server/path/project`
+만약 svn 저장소가 기본 layout(i.e, trunk, branches, tags directory)로 구성이 되어 있지 않다면 `-s`를 빼고 명령을 호출한다.
+`git svn clone http://svn.server/path/project`
 ### svn update 명령어
 `git svn rebase`
 ### 원격 저장소 정보 불러오기
@@ -36,3 +38,4 @@ git svn dcommit
 ## 참고
 - [git-svn의 구석구석](https://baepower.wordpress.com/2012/05/31/git-svn%EC%9D%98-%EA%B5%AC%EC%84%9D%EA%B5%AC%EC%84%9D/)
 - [GIT와 SVN 연동하기 GIT-SVN](http://blog.cjred.net/177/)
+- [svn 대비 git의 차별점](http://seungzzang.blogspot.kr/2013/04/git-svn-svn-git.html)
