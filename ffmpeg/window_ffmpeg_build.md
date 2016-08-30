@@ -48,3 +48,5 @@ ffmpeg configure 시, 발생하는 에러
 - [ffmpeg 컴파일하기](http://egloos.zum.com/sallykim/v/2399353)
   - 설치하면서 발생하는 버그 등 첨부되어 있음
 - [Windows 기반의 FFmpeg 다운로드 및 간단한 동영상 변환](http://logg.tistory.com/64)
+- [Zeranoe FFmpeg 다운로드](https://ffmpeg.zeranoe.com/builds/)
+  - 빌드 된 FFmpeg 다운로드
