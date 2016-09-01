@@ -35,6 +35,11 @@ git commit -m "merge from brown"
 git svn dcommit
 ```
 
+### pull, fetch의 차이점
+Fetch : 원격 저장소의 소스를 로컬 저장소로 가져옴, merge를 하지 않음
+pull : 원격 저장소의 소를 로컬 저장소로 가져와 merge 작업까지 통합하여 수행
+
+
 ## 참고
 - [git-svn의 구석구석](https://baepower.wordpress.com/2012/05/31/git-svn%EC%9D%98-%EA%B5%AC%EC%84%9D%EA%B5%AC%EC%84%9D/)
 - [GIT와 SVN 연동하기 GIT-SVN](http://blog.cjred.net/177/)

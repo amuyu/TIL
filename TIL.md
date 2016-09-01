@@ -228,7 +228,10 @@ public class MainPresenterImpl implements MainPresenter {
 ```
 
 ### Test
-MVP에서 테스트는 Model Layer, View Layer, Presenter Layer 3개의 레이어를 따로 테스트한다. Model은 전통적인 JUnit, Presenter는 구글에서 제공하는 Android Test Support Library(ATSL)을 사용한다.. View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
+MVP에서 테스트는 Model Layer, View Layer, Presenter Layer 3개의 레이어를 따로 테스트한다. 
+Model은 전통적인 JUnit, 
+Presenter는 구글에서 제공하는 Android Test Support Library(ATSL)을 사용한다.. 
+View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
 종합예시는 아래 참고에 **GDG-ATSL-ON-MVP**를 참고한다.
 
 
@@ -237,8 +240,14 @@ MVP에서 테스트는 Model Layer, View Layer, Presenter Layer 3개의 레이�
 - [Android와 개발 패턴](http://tosslab.github.io/android/2015/03/01/01.Android-mvc-mvvm-mvp.html)
 - [Android Testing Support Library](https://google.github.io/android-testing-support-library/)
 - [GDG-ATSL-ON-MVP](https://github.com/ZeroBrain/GDG-ATSL-ON-MVP)
+- [Android Testing Codelab](https://codelabs.developers.google.com/codelabs/android-testing/#1)
+
 
 ---
+## Android와 Annotation
+안드로이드에서는 기본적으로 Java 1.6에서 사용되는 Annotation을 지원한다. 대표적으로 @Override가 있다.
+
+
 ## Dipendency Injection
 요즘 안드로이드 개발에서 Dependency Injection 방법을 이용한 개발 방법이 이슈이다.
 ### 안드로이드에서 @Inject와 @Test 사용의 좋은 점

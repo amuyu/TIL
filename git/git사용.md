@@ -102,15 +102,79 @@ git reset --hard origin/master
 - 이력(log)에서 확정본 1개를 딱 한 줄로만 표시하기 : git config format.pretty oneline
 - 파일을 추가할 때 대화식으로 추가하기
 
-### merge와 rebase 차이
+### merge와 rebase
+merge와 rebase는 Git에서 한 브랜치에서 다른 브랜치로 합치기 위해 사용한다
+#### merge와 rebase 차이
 Git 매뉴얼 정의 내용은 다음과 같다
 - git-merge : join two or more development histories together.
 - git-rebase : Forward-port local commits to the updated upstream head
 
-무엇을 쓰는게 좋은가? 히스토리 관리를 별로 신경쓰지 않고 혼자서만 커밋하거나 아니면
-믿을 수 있는 소수만 커밋하지 않는다면 merge 대신 rebase를 사용하는 것이 좋다.
+무엇을 쓰는게 좋은가? 
+Merget를 사용할 때,
+히스토리 관리를 별로 신경쓰지 않고 혼자(소수)서만 커밋할 때, ?? 확인이 필요함
+
+rebase의 Log는 히스토리가 선형적으로 쌓인다. 모든 작업이 차례대로 수행된 것처럼 깔끔하게 보인다.
+rebase는 자신의 커밋 히스토리를 이쁘게 만들기 위해 쓰는게 좋다.
+
+### Merge 예
+실제 개발과정에서 겪을 만한 예제를 하나 살펴보자. 브랜치와 Merge는 보통 이런 식으로 진행한다
+1. 작업 중인 웹사이트가 있다.
+2. 새로운 이슈를 처리할 새 Branch를 하나 생성.
+3. 새로 만든 Branch에서 작업 중.  
+
+이때 중요한 문제가 생겨서 그것을 해결하는 Hotfix를 먼저 만들어야 한다. 그러면 다음과 같이 할 수 있다:
+1. 새로운 이슈를 처리하기 이전의 운영(Production) 브랜치로 이동.
+2. Hotfix 브랜치를 새로 하나 생성.
+3. 수정한 Hotfix 테스트를 마치고 운영 브랜치로 Merge.
+4. 다시 작업하던 브랜치로 옮겨가서 하던 일 진행.  
+
+```bash
+# issue 작업
+git checkout -b iss53
+git commit #issue 53
+
+# hotfix 작업
+git checkout master
+git checkout -b hotfix
+git commit #hotfix
+
+# hotfix merge
+git checkout master
+git merge hotfix # Fast-forword merge
+
+# 필요없는 branch 삭제
+git brach -d hotfix
+
+# 하던 issue 계속 작업
+git checkout iss53
+
+# 53번 merge
+git checkout master
+git merge iss53 # Git 은 각 브랜치가 가리키는 커밋 두 개와 공통 조상 하나를 사용하여 3-way Merge를 한다.
+
+# 충돌이 발생했을 때
+git status # 충돌한 파일 확인해서 파일을 직접 수정한다
+git add # 다시 Git에 저장
+git status # 충돌이 해결됐는지 확인
+
+# 충돌 취소하기
+git merge --abort # 충돌하기 전으로 돌아감
+Merge를 처음부터 다시 하고 싶다면
+git reset --hard HEAD
+
+# 공백 무시하기
+git merge -Xignore-space-change whitespace
+
+# 필요없는 branch 삭제
+git branch -d iss53
+
+
+```
+
+
 
 ## 참고
 - [git간편안내서](https://rogerdudler.github.io/git-guide/index.ko.html)
 - [git merge와 rebase 비교하기](https://blog.outsider.ne.kr/666)
 - [svn 대비 git의 차별점](http://seungzzang.blogspot.kr/2013/04/git-svn-svn-git.html)
+- [Git브랜치-Rebase하기](https://git-scm.com/book/ko/v1/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase%ED%95%98%EA%B8%B0)
