@@ -102,6 +102,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 #### 백그라운드 푸쉬
 백그라운드에 있을 때는 그냥 알림이 뜨게 되며, 알림을 누르면 앱의 시작 지점 Activity로 Intent를 호출한다.
+##### FCM 백그라운드 push 처리 하는 방법
+FCM 메시지는 두가지 타입이 있음.
+- display-messages: These messages only work when your app is in foreground
+- data-messages: These messages work even if your app is in background
+
+`data-messages` 형태로 보내기 위해서는 message body에 `notification`값을 포함하지 않고 `data`를 포함해서 전송하면 data-messages 로 전송할 수 있다. 
+- 참고
+ - [How to handle notification when app in background in firebase](http://stackoverflow.com/questions/37711082/how-to-handle-notification-when-app-in-background-in-firebase)
 
 #### 토큰 가져오기
 토큰을 가져오는 함수 호출
