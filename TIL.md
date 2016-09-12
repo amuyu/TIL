@@ -1,5 +1,13 @@
 # TIL
 # 안드로이드
+## GSON jsonArray 처리
+```java
+Type listType = new TypeToken<ArrayList<YourClass>>(){}.getType();
+List<YourClass> yourClassList = new Gson().fromJson(jsonArray, listType);
+```
+### 참고
+[gson list type](http://stackoverflow.com/a/5554296/6759520)
+
 ## Okhttp의 Request body 로그남기기
 requestbody는 utf8 형태로 저장하기 때문에 utt8로 인코딩된 데이터를 읽는 로직이 필요하다.
 ```java
