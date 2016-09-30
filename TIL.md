@@ -1,5 +1,32 @@
 # TIL
 # 안드로이드
+## IntentService
+간단하고 편리하게 Service의 특성을 사용할 수 있다.
+클라이언트에서 서비스를 실행하면 Intent를 받아서 Intent Queue 에 순서대로 넣고 IntentService는 Queue에 존재하는 intent를 하나씩 실행하게 된다.
+Queue가 모두 비워지면 서비스는 종료한다.
+### onHandleIntent
+IntentService를 실행하면 IntentService는 onHandleIntent 함수를 호출한다.
+### 주의할 점
+Queue가 모두 비워지면 IntentService
+
+## onNewintent
+Activity 가 foreground 상태에서 Intent에 Extra값을 추가하고
+StartActivity를 호출하면 onCreate() 대신에 onNewIntent가 호출되고
+그 다음에 noResume()가 호출됨
+[onNewIntent알아보기](http://diyall.tistory.com/786)
+
+## dynamic String 적용 - String.xml
+string.xml 에 변수 적용하기 
+[dynamic String using String.xml?](http://stackoverflow.com/questions/3656371/dynamic-string-using-string-xml)
+
+## 커스텀 font 적용
+xmlns:app="http://schemas.android.com/apk/res-auto"
+
+[커스텀 폰트 쉽게 적용하는 방법](http://gun0912.tistory.com/10)
+
+## dp px 변환 계산
+[안드로이드 DP 계산기](http://lime.so/6)
+
 ## GSON jsonArray 처리
 ```java
 Type listType = new TypeToken<ArrayList<YourClass>>(){}.getType();
