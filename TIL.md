@@ -1,4 +1,14 @@
 # TIL
+# 코딩
+## Builder Pattern
+객체 생성 시, Builder 패턴을 사용하면 파라미터가 많을 경우 제공 상태를 일관성 있게 하고, object를 생성시킬 때, step-by-step으로 만들 수 있도록 할 수 있다.
+### 작업순서
+1) class 안에 중첩 static class를 생성시키고, 바깥쪽 class의 argument들을 안쪽 static class(builder class)로 옮긴다. 바깥쪽 class의 생성자는 private로 선언해서 직접적인 생성을 막는다.
+2) builder class의 생성자를 public static으로 선언하고 필요한 파라메터들을 요청한다.
+3) builder class에는 선택적 파라메터에 대한 setter method가 있어야한다. 그리고 선택적 인자를 설정한 후에도 같은 builder object를 리턴해야한다.
+4) 마지막으로로 클라이언트 프로그램이 요청하는 object를 받을 수 있도록 build method를 만드는데, build method에서는 바깥쪽 class의 생성자가 builder 클래스의 인자를 받을 수 있도록 제공한다.
+
+
 # 안드로이드
 ## IntentService
 간단하고 편리하게 Service의 특성을 사용할 수 있다.
@@ -127,155 +137,5 @@ Nullness annotations는 2개의 Annotatinos가 있습니다.
 적용해두면 추후 개발에 문제가 줄어들 수 있다.
 
 
-## Dipendency Injection
-요즘 안드로이드 개발에서 Dependency Injection 방법을 이용한 개발 방법이 이슈이다.
-### 안드로이드에서 @Inject와 @Test 사용의 좋은 점
-#### DI의 이점
-DI의 이점은 크게 세 가지를 들 수 있다.
-- 객체의 생성 주기를 제어한다.
-  DI 스타일이 유행하기 전까지는 한 번 생성해서 계속 재활용할 객체의 sigleton 패턴을 직접 구현했다.
-  객체 생성 지점을 통제하기 위해서, getInstance() 메서드를 추가하는 등 각 클래스마다 코드를 추가해야 했다.
-- 객체에 부가 기능을 추가한다.
-  AOP(Aspect Oriented Programming)을 이용하면, 의존하는 객체에 같은 규약을 유지한 채로 로깅, 보안, 트랜잭션 처리, Exception 처리 등의 부가 기능을 추가할 수 있어 반복되는 코드를 줄이고 유연하게 각종 운영 정책을 변경할 수 있다.
-- 실행 환경에 따라 구현 객체를 바꿔치기한다.  
-
-
-#### Andorid에서도 @Inject가 의미 있을까
-- 용량에 부담이 된다.
-  모바일 기기의 한정된 자원 때문
-- 성능에 부담이 된다.
-  프레임워크를 사용하면 실행 시에 콜스택이 늘어날 수 있다. 의존 관계를 해석하기 위해 앱 초기 로딩에 더 많은 일을 해야 할 가능성도 크다.
-- Dalvik에서는 cglib과 같은 런타임 바이트 코드 생성 라이브러리를 사용할 수 없다.
-- 앱 규모가 작아서 DI의 유연성으로 얻는 이득이 크지 않다.
-- 안드로이드 기본 프레임워크와 DI 프레임워크의 조화를 고려해야 한다.
-
-
-
-### Dagger2
-Square에서 만든 Dagger를 Google이 Fork하여 개선한 DI(Dependency injection) 프레임워크
-의존성에 따른 객체생성을 추상화하여 보일러플레이트 코드를 줄이고, 변화에 유연하게 만든다.
-Dagger2를 이용해 여러 클래스에 의존하는 MVP 모델의 Presenter와 Model객체를 깔끔하게 구현할 수 있다.
-#### 중요 Annotation
-- @Module : Module로 구성되고, 내부에서 주입할 객체들을 provide해주는 것
-- @Provides : 객체 주입에 필요한 내용을 리턴해주는 것
-- @Component : Module과 Inject간의 Bridge 같은 역할
-- @Inject : 객체의 주입.
-
-#### 사용 방법 정리
-##### gradle 설정 추가
-```gradle
-compile 'com.google.dagger:dagger:2.0'
-```
-##### 모델 정의
-Motor.java
-```java
-public class Motor { 
-    private int speed;
- 
-    public Motor() {
-        this.speed = 0;
-    }
- 
-    public int getSpeed() {
-        return speed;
-    }
- 
-    public void accelerate(int value) {
-        speed = speed + value;
-    }
- 
-    public void setSpeed(int value) {
-        speed = value;
-    }
- 
-    public void brake() {
-        speed = 0;
-    }
-}
-
-```
-Bike.java
-```java
-public class Bike {
- 
-    private Motor motor;
- 
-    public Bike(@NonNull Motor motor) {
-        this.motor = motor;
-    }
- 
-    public void increaseSpped() {
-        this.motor.setSpeed(this.motor.getSpeed() + 1);
-    }
- 
-    public void decreaseSpeed() {
-        if (this.motor.getSpeed() > 0) {
-            this.motor.setSpeed(this.motor.getSpeed() - 1);
-        }
-    }
- 
-    public int getSpeed() {
-        return this.motor.getSpeed();
-    }
-}
-```
-##### Module 정의
-MotorModule.java
-```java
-@Module
-public class MotorModule {
- 
-    @Provides
-    Motor provideMotor() {
-        return new Motor();
-    }
-}
-```
-BikeModule.java
-```java
-@Module(
-        includes = MotorModule.class
-)
-public class BikeModule {
- 
-    @Provides
-    Bike provideBike(Motor motor) {
-        return new Bike(motor);
-    }
-}
-```
-#### Component 정의
-MainActivityComponent.java
-```java
-@Component(
-        ...
-        modules = {
-                ...
-                BikeModule.class
-        }
-)
-public interface MainActivityComponent extends ActivityComponent {
-    void inject(@NonNull MainActivity mainActivity);
-}
-```
-이렇게 Component를 정의하고 컴파일 하면 "DaggerMainActivityComponent"가 만들어 진다. 이걸 가지고 실질적으로 객체 주입을 진행할 수 있다.
-```java
-aggerMainActivityComponent.builder()
-        ...
-        .bikeModule(new BikeModule())
-        .build();
-```
-### Inject 정의
-```java
-@Inject
-Bike bike;
-```
-
-#### 참고
-- [Android깨알팁4-Dagger2](https://medium.com/@jsuch2362/android-%EA%B9%A8%EC%95%8C%ED%8C%81-4-dagger2-7f38cd9cb11b#.owet5o6uu)
-- [Android 개발에서 Dagger2 이용해보기](http://drcarter.tistory.com/169)
-
-### 참고
-- [Android에서 @Inject, @Test](http://d2.naver.com/helloworld/342818)
 
 ---
