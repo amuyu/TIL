@@ -65,6 +65,8 @@ git pull	// fetch + merge
 다른 가지의 내용을 현재 가지에 병합하려면 아래 명령을 실행한다.
 ```bash
 git merge <가지 이름>
+git merge -Xtheris <가지 이름>
+git merge -Xours <가지 이름>
 ```
 충돌이 발생하면 git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 해야 한다. 충돌을 해결했다면 git에게 수정한 파일을 병합하라고 알려준다.
 ```bash
@@ -184,6 +186,11 @@ git branch -d iss53
 
 ```
 
+### 로컬 저장소를 원격 저장소에 추가 하기
+```bash
+git remote add origin <저장소>
+git push origin master
+```
 
 
 ## 참고
