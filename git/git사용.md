@@ -59,7 +59,7 @@ git push origin <가지 이름>
 ### 갱신과 병합
 로컬 저장소를 원격 저장소에 맞춰 갱신하려면 아래 명령을 실행한다.
 ```bash
-git pull
+git pull	// fetch + merge
 ```
 원격 저장소의 변경 내용이 로컬 작업 디렉토리에 받아지고(fetch), 병합(merge) 된다.
 다른 가지의 내용을 현재 가지에 병합하려면 아래 명령을 실행한다.
@@ -73,6 +73,19 @@ git add <파일 이름>
 변경 내용을 병합하기 전에, 어떻게 바뀌었는지 비교할 수 있다.
 ```bash
 git diff <원래 가지> <비교 대상 가지>
+```
+### 원격 저장소 가져오기 정리 Fetch
+git pull 보다 git fetch를 사용하면 직접 병합 작업을 할 수 있다.
+```bash
+git fetch					// 최신 커밋 이력 가져오기
+git status					// 상태 확인
+git branch -a 				// branch  확인
+git merge origin/master		// 병합
+git diff					// 차이점 확인
+// 수정
+git add <파일이름>
+git commit <파일이름>
+git push origin master
 ```
 
 ### 꼬리표 달기
