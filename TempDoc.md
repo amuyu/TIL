@@ -12,6 +12,8 @@
 뭐지?
 
 # 안드로이드
+## Layout
+tools:showIn
 ## Guava
 Guava는 구글이 작성한 자바 오픈소스 라이브러리
 ### Guava를 사용하면 좋은 5가지 이유
