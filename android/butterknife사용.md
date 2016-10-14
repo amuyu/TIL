@@ -28,7 +28,18 @@ dependencies {
 }
 ```
 
-## asa
+## Acitivity, Fragment, RecyclerView Bind
+화면 별 Bind 방법
+```java
+// Activity
+ButterKnife.bind(this);
+
+// Fragment
+ButterKnife.bind(this,rootView);
+
+// RecyclerView.holder
+ButterKnife.bind(viewholder, rootView);
+```
 
 
 ## 참고
