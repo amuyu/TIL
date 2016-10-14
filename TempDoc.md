@@ -1,4 +1,58 @@
 # TIL
+# 업무
+## 개발 프로세스
+[토스랩, 이렇게 일하고 있습니다.](http://tosslab.github.io/process/2016/02/25/how-to-work-in-tosslab.html)
+
+## 코드리뷰
+### 요청 방법
+- Title
+  - Featur/Bug-fix 건
+  - 어떤 목적
+- 어떤 이슈와 연결됐는지
+- Description
+  - 어떤 로직을 추가/수정했는지
+  - 어떻게 추가 수정했는지
+
+
+### 코드리뷰는 언제?
+코드리뷰가 요청이 오면 업무의 최우선순위로 조정되어 즉시 응답하도록 하는 것이 원칙이다.
+(지금 당장 하든지 아니면 언제부터 할 것인지를 피드백을 반드시 준다.)
+이를 바탕으로 현실적으로 수정
+1. 월~수 : feature/bug-fix 개발이 업무의 최우선 순위
+2. 목,금 : 코드리뷰가 업무의 최우선 순위이며 코드리뷰 대상은 목요일 출근 전까지 리뷰 요청한 건
+
+### 무엇을 리뷰하나요?
+- 성능 개선 개발 : 시간복잡도
+- 신규 feature 개발 : 잠재적인 오류 검출
+- 리팩토링 : 테스트코드나 구조에 대한 물음
+- 신규 기술 도입 : 해당 기술의 로직과 그에 대한 물음
+- 기타 : 변수명과 같은 코드 컨벤션, 실제 빌드 해서 동작
+
+### 코드리뷰 코멘트는 어떻게
+- oo보다는 xx가 더 나은 것 같아요
+- xx는 oo부분을 참고해서 이용하면 되요
+- oo는 xx에 의해서 문제되지 않을까요?
+- xx를 하려다가 oo로 했는데 어떻게 생각하세요?
+
+### 코드리뷰가 끝나면 어떻게
+리뷰가 완료되면 개발용 브랜치에 통합한다. 최소 1명의 피드백도 진행되지 않은 코드는 통합하지 않는다.
+
+### 긴급히 코드리뷰해야 하는 건은 어떻게 하나요?
+즉시 진행한다.
+
+### 코드 리뷰 시스템
+"p4 mail"이나 gerrit 같은 코드 리뷰 시스템을 사용하는 것도 좋은 듯..
+온라인 상에서의 코드 리뷰
+
+### 코드 리뷰에 대한 인식, 태도, 문화?
+코드 리뷰를 통해서 많이 배운다. 나보다 더 나은 엔지니어로부터 조언을 받을 수 있으니까
+-> 실력이 좋은 사람으로부터 배워야 한다!!!
+
+### 참고
+[코드리뷰, 이렇게 하고 있습니다.](http://tosslab.github.io/codereview/2015/12/18/%EC%BD%94%EB%93%9C%EB%A6%AC%EB%B7%B0-%EC%9D%B4%EB%A0%87%EA%B2%8C-%ED%95%98%EA%B3%A0-%EC%9E%88%EB%8B%A4.html)
+[코드 리뷰 어떻게 하나요?](http://sv-story.blogspot.kr/2013/04/blog-post_28.html)
+
+
 # 코딩
 ## Builder Pattern
 객체 생성 시, Builder 패턴을 사용하면 파라미터가 많을 경우 제공 상태를 일관성 있게 하고, object를 생성시킬 때, step-by-step으로 만들 수 있도록 할 수 있다.
@@ -12,6 +66,32 @@
 뭐지?
 
 # 안드로이드
+## Gradle Dependency 분리하기
+라이브러리의 이름과 버전을 분리 별도로 분리하여 관리한다.
+### 참고
+[Gradle Dependency 분리하기](http://tosslab.github.io/android/2016/10/10/dependencies-of-gradle.html)
+
+
+## key-value xml
+```xml
+<string-array name="my_array">
+    <item>key1|value1</item>
+    <item>key2|value2</item>
+</string-array>
+```
+```java
+Map<String, String> getKeyValueFromStringArray(Context ctx) {
+int id = context.getResources().getIdentifier(resourcename, "array", context.getPackageName());
+    String[] array = ctx.getResources().getStringArray(id);
+    Map<String, String> result = new HashMap<>();
+    for (String str : array) {
+        String[] splittedItem = str.split("\\|");
+        result.put(splittedItem[0], splittedItem[1])
+    }
+    return result
+}
+```
+
 ## Layout
 tools:showIn
 ## Guava
