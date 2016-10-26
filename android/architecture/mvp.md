@@ -230,6 +230,25 @@ View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
 - [androidTest-JUnit4, Espresso를 이용한 테스트 코드 작성](http://thdev.tech/androiddev/2016/05/04/Android-Test-Example.html)
 
 ## MVP 좀더 자세히
+### 구조
+![MVP구조](https://codelabs.developers.google.com/codelabs/android-testing/img/f910e640272817e9.png)
+#### Model
+The model provides and stores the internal data.
+ex) in notes app, the notes are represented in the model
+#### View
+The view handles the display of data.
+ex) in notes app,
+- A view that provides an interface for displaying a list of notes (NotesContract.View) that is implemented in its own fragment (NotesFragment).
+- A view that displays details of a single note (NoteDetailContract.View) and corresponding fragment (NoteDetailFragment).
+- A view where the user enters data for a new note (user action) (AddNoteContract.View) and corresponding fragment (AddNoteFragment).  
+
+#### Presenter
+The presenter sits between the model and view.
+ex) in notes app,
+- NotesPresenter that loads a list of notes from the API.
+- NoteDetailPresenter that loads a single note.
+- AddNotePresenter that saves a new note.
+
 ### MVP를 적용하는 이유?
 - TDD(Test-driven development)의 가능성
 - View와 Model 간의 구분이 가능
@@ -238,6 +257,39 @@ View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
 ### 구글 예제 (TODO-MVP)
 TODO-MVP는 다음과 같은 구조를 가지고 있다.
 ![이미지](https://raw.githubusercontent.com/wiki/googlesamples/android-architecture/images/mvp.png)
+
+### Android Testing Codelab 예제
+#### Notes app structure: Feature separation by packages
+Instead of using a package by layer approach, We have structured the application by package per feature. This greatly improves readability and modularizes the app in a way that parts of it can be changed independently from each other. Let's take a quick look  
+
+Package: com.example.android.testing.notes  
+
+|pacakge|feature|
+|---|---|
+|.addnote|Adding a new note|
+|.data|Storage of notes|
+|.notedetail|Showing details for a single note|
+|.statistics|The statistics screen|
+|.util|Utility classes used in various parts of the app|
+
+#### Explore the "Notes" Features
+##### Showing a list of notes
+We'll be looking at these classes:  
+
+|class|description|
+|---|---|
+|NotesActivity|The entry point into our app. Hosts the NotesFragment|
+|NotesContract.View|Defines the View layer for this feature|
+|NotesContract.UserActionsListener|Defines the interaction between the View and Presenter layers|
+|NotesFragment|Concrete implementation of the View layer|
+|NotePresenter|The Presenter layer, implements the NotesContract.UserActionsListener to listen for user actions. It has a reference to the View to update it when the model changes|
+ 
+###### View layer
+###### Presenter layer
+
+
+
+
 
 ### 참고
 - [simple-mvp](https://github.com/tinmegali/simple-mvp)
