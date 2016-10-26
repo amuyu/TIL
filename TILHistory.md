@@ -1,3 +1,9 @@
+## 2016년 10월 26일
+### Jsoup 사용
+
+## 2016년 10월 25일
+### SwipeRefreshLayout
+
 ## 2016년 10월 13일
 ### Gradle dependencies 분리해서 관리하기
 ### 코드리뷰와 개발 프로세스

@@ -65,7 +65,40 @@
 ## 리액티브 프로그래밍
 뭐지?
 
+## Jsoup
+Html 파서 라이브러리
+### 참고
+- [jsoup download](https://jsoup.org/download)
+- [jsoup - 자바를 위한 BeautifulSoup (HTML parser)](http://edoli.tistory.com/95)
+
 # 안드로이드
+## SwipeRefreshLayout
+The SwipeRefreshLayout should be used whenever the user can refresh the contents of a view via a vertical swipe gesture.
+```java
+mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    @Override
+    public void onRefresh() {
+        // 이 부분에 리플래시 시키고 싶으신 것을 넣어 주시면 됩니다.
+    }
+});
+
+// 리플래쉬 ui 종료
+mSwipeRefresh.setRefreshing(false);
+```
+
+## Activity launchmode singleTask 사용
+Activity:launchmode 중 sigleTask 와 singleInstance는 한 개의 instance 만을 가질 수 있다. 
+그래서 항상 stack의 root를 차지한다. 
+### SingleTask 사용 예
+Activity Stack이 다음의 순서로 쌓인 상황에서 `A->B->C->D` 특정 이벤트가 발생했을 때, A로 가려고 하는 경우 사용
+A Activity에 sigleTask option 을 추가하고, 이벤트가 발생했을 때, startActivity를 호출한다.
+### singleTask와 sigleInstace 차이
+sigleTask는 다른 activity 들이 자신의 instance 위에 쌓이는 것을 허락해준다.
+singleInstance는 다른 activity를 자신의 task 안에 포함시키 않는다.
+### 참고
+[Android moving back to first activity on button click](http://stackoverflow.com/a/2776875/6811452)
+[간단하게 Activity stack 처리하는 방법](http://mokiprogramming.blogspot.kr/2014/01/activity-stack.html)
+
 ## Gradle Dependency 분리하기
 라이브러리의 이름과 버전을 분리 별도로 분리하여 관리한다.
 ### 참고
