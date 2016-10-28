@@ -71,7 +71,64 @@ Html 파서 라이브러리
 - [jsoup download](https://jsoup.org/download)
 - [jsoup - 자바를 위한 BeautifulSoup (HTML parser)](http://edoli.tistory.com/95)
 
+## 
+
 # 안드로이드
+## parcelable 인터페이스
+커스텀 클래스나 오브젝트를 다른 컴포넌트에 전달하는 경우 사용
+### parcelable 사용 예
+parcelable을 사용하면 좀 더 쉽게 전달할 수 있다.
+사용하지 않을 때,
+```java
+// 보내는 쪽
+Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+intent.putExtra(MovieDetailActivity.CARD_PROFILE, card.getProfileImage());
+intent.putExtra(MovieDetailActivity.CARD_NAME, card.getName());
+intent.putExtra(MovieDetailActivity.CARD_TIME, card.getUpdatedTime());
+intent.putExtra(MovieDetailActivity.CARD_PICTURE, card.getPicture());
+intent.putExtra(MovieDetailActivity.CARD_DESCRIPTION, card.getDescription());
+intent.putExtra(MovieDetailActivity.CARD_SOURCE, card.getSource());
+intent.putExtra(MovieDetailActivity.CARD_ID, card.getId());
+startActivity(intent);
+// 받는 쪽
+String cardName = intent.getStringExtra(MovieDetailActivity.CARD_NAME);
+String cardTime = intent.getStringExtra(MovieDetailActivity.CARD_TIME);
+String cardProfile = intent.getStringExtra(MovieDetailActivity.CARD_PROFILE);
+String cardPicture = intent.getStringExtra(MovieDetailActivity.CARD_PICTURE);
+String cardDescription = intent.getStringExtra(MovieDetailActivity.CARD_DESCRIPTION);
+String cardSource = intent.getStringExtra(MovieDetailActivity.CARD_SOURCE);
+String cardId = intent.getStringExtra(MovieDetailActivity.CARD_ID);
+
+return new Card.Builder()
+        .id(cardId)
+        .name(cardName)
+        .createdTime(cardTime)
+        .profileImage(cardProfile)
+        .picture(cardPicture)
+        .description(cardDescription)
+        .source(cardSource)
+        .createCard();
+```
+사용할 때,
+```java
+// 보내는 쪽
+Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+intent.putExtra(MovieDetailActivity.CARD_INFO, card);
+startActivity(intent);
+// 받는 쪽
+card = getIntent().getParcelableExtra(CARD_INFO);
+```
+## 라이브러리 
+parcelable을 쉽게 해주는 parceler 라이브러리가 있음
+### 참고
+- [안드로이드에서 parcelable이 뭔지 자세히 설명해주세요](http://hashcode.co.kr/questions/882/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C-parcelable%EC%9D%B4-%EB%AD%94%EC%A7%80-%EC%9E%90%EC%84%B8%ED%9E%88-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
+- [Using Parceler](https://guides.codepath.com/android/Using-Parceler)
+- [Android Parcelable 인터페이스 구현](http://thdev.net/364)
+
+
+## Flavor
+설정한 Flavor 파일들 중에 원본의 src와 res에 들어있는 중복되는 파일들 교체 빌드 해주는 것
+
 ## SwipeRefreshLayout
 The SwipeRefreshLayout should be used whenever the user can refresh the contents of a view via a vertical swipe gesture.
 ```java
@@ -113,7 +170,7 @@ singleInstance는 다른 activity를 자신의 task 안에 포함시키 않는�
 </string-array>
 ```
 ```java
-Map<String, String> getKeyValueFromStringArray(Context ctx) {
+Map<스트링, String> getKeyValueFromStringArray(Context ctx) {
 int id = context.getResources().getIdentifier(resourcename, "array", context.getPackageName());
     String[] array = ctx.getResources().getStringArray(id);
     Map<String, String> result = new HashMap<>();
@@ -135,10 +192,10 @@ Guava는 구글이 작성한 자바 오픈소스 라이브러리
 
   ```java
     // java
-    final Map<String, Map<String, Integer>> lookup = new HashMap<String, Map<String, Integer>>();
+    final Map<스트링, 맵<스트링, 인티저>> lookup = new HashMap<스트링, 맵<스트링, 인티저>>();
 
     // guava
-    final Map<String, Map<String, Integer>> lookup = Maps.newHashMap();
+    final Map<스트링, Map<스트링, Integer>> lookup = Maps.newHashMap();
   ```  
 
 2. 제한된 함수형 스타일의 프로그래밍

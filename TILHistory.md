@@ -1,5 +1,15 @@
+## 2016년 10월 27일
+### key Hashcode
+
+## 2016년 10월 27일
+### realm
+
 ## 2016년 10월 26일
 ### Jsoup 사용
+### mock injection class for test?
+### Flavor
+### ImmutableList // Guava
+### parcelable
 
 ## 2016년 10월 25일
 ### SwipeRefreshLayout
