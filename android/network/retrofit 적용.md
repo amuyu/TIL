@@ -30,6 +30,19 @@ compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0' // rxjava와 연동
 
 ```
 
+## Proguard
+```gradle
+# Platform calls Class.forName on types which do not exist on Android to determine platform.
+-dontnote retrofit2.Platform
+# Platform used when running on RoboVM on iOS. Will not be used at runtime.
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+# Platform used when running on Java 8 VMs. Will not be used at runtime.
+-dontwarn retrofit2.Platform$Java8
+# Retain generic type information for use by reflection by converters and adapters.
+-keepattributes Signature
+# Retain declared checked exceptions for use by a Proxy instance.
+-keepattributes Exceptions
+```
 
 
 ## Retrofit 사용 방법(예제)
@@ -453,6 +466,26 @@ For complex query parameter combinations a Map can be used.
 Call<List<User>> groupList(@Path("id") int groupId, @QueryMap Map<String, String> options);
 ```
 
+### Post전송
+```java
+ @POST(ApiManager.SUB_URL+"/svc/auth")
+    Observable<UserIAuthData> requestUserAuth(@Body RequestBody body);
+```
+```java
+RequestBody formBody = new OkHttpFormBuilder()
+                .add("cpn", data.getCpn())
+                .add("name", data.getName())
+                .add("birthday", data.getBirthday())
+                .add("gender", data.getGender())
+                .add("nation", data.getNation())
+                .add("tel_com_cd", data.getTel_com_cd())
+                .build();
+
+        return retrofit.create(UserAuthApiService.class).requestUserAuth(formBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+```
+
 ## 참고
 
 [Retrofit 공식 사이트](http://square.github.io/retrofit/)
@@ -465,3 +498,4 @@ Call<List<User>> groupList(@Path("id") int groupId, @QueryMap Map<String, String
 
 [Retrofit2 + okhttp3 + Rxandroid 사용법](http://tiii.tistory.com/11)
 [Get raw HTTP response with Retrofit](http://stackoverflow.com/questions/33282889/get-raw-http-response-with-retrofit)
+[Logging In Retrofit2](https://futurestud.io/tutorials/retrofit-2-log-requests-and-responses)
