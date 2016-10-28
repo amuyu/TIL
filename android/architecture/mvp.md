@@ -250,9 +250,10 @@ ex) in notes app,
 - AddNotePresenter that saves a new note.
 
 ### MVP를 적용하는 이유?
-- TDD(Test-driven development)의 가능성
+- TDD(Test-driven development)의 가능성 (테스트)
 - View와 Model 간의 구분이 가능
 - View와 Model의 사용법이 분리되면서 Clean code가 가능하다
+- 비즈니스 로직 분리를 강제하는 아키텍처
 
 ### 구글 예제 (TODO-MVP)
 TODO-MVP는 다음과 같은 구조를 가지고 있다.
@@ -288,6 +289,40 @@ We'll be looking at these classes:
 ###### Presenter layer
 
 
+## 추가 Architecture
+### domain
+애플리케이션의 핵심이 되는 부분. 모델이나 비즈니스 로직을 정리하여 작성한다.  
+![Domain layer](http://fernandocejas.com/wp-content/uploads/2014/09/clean_architecture_android.png)
+### data
+domain 패키지에 정의한 Interface 구현. API 요청, DB 접근
+### exception
+비즈니스 로직에서의 예외를 핸들링하기 위한 추상 클래스
+### repository
+model을 얻어 갱신하는 Interface  
+![Repository Interface](http://fernandocejas.com/wp-content/uploads/2014/09/clean_architecture_data.png)
+###  usecase
+Repository와 Executor를 사용해 Model를 얻어 반환하도록 한다. Android에서는 UI 스레드와 같은 곳에서 처리하면 안 되므로 아래의 UseCase Interface를 상속해서 별도 스레드에서 처리하도록 한다.
+```java
+public interface GetHomeTweetListUseCase extends UseCase {
+  void execute(Long lastTweetId);
+
+  public class OnLoadedEvent {
+    public final Collection<TweetModel> tweetModels;
+
+    public OnLoadedEvent(Collection<TweetModel> tweetModels) {
+      this.tweetModels = tweetModels;
+    }
+  }
+
+  public class OnErrorEvent {
+    public final ErrorBundle errorBundle;
+
+    public OnErrorEvent(ErrorBundle errorBundle) {
+      this.errorBundle = errorBundle;
+    }
+  }
+}
+```
 
 
 
@@ -296,3 +331,6 @@ We'll be looking at these classes:
 - [adapter 너는 누구냐?](https://medium.com/@jsuch2362/adapter-%EB%88%84%EA%B5%AC%EB%83%90-%EB%84%8C-data-view-2db7eff11c20#.xe3ygwcr4)
 - [Android TODO MVP 어떻게 적용할까?](http://thdev.tech/androiddev/2016/06/14/Android-TODO-MVP-Example.html)
 - [Google Sample Basic MVP](https://github.com/googlesamples/android-architecture/tree/todo-mvp/)
+- [Android에서는 MVC보다 MVP 쪽이 좋을지도 몰라](http://pluu.github.io/blog/android/2016/04/06/android-mvc-mvp/)
+- [Architecting Android](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
+- [archi](https://github.com/ivacf/archi) - mvp, mvvm, mvc 세가지 패턴 비교가 쉬움
