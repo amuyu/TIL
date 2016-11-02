@@ -1,4 +1,4 @@
-## Android와 개발 패턴
+## Android 개발 패턴 발전 History
 많은 개발자들이 안드로이드에서는 MVC 자체의 모습보다는 MVVM이나 MVP가 가장 적합하다는 말을 많이 하고 있다. Activity가 View를 포함한 클래스이기 때문에 나타나는 현상이라고 볼 수 있다.
 
 ### 일반 코드
@@ -125,11 +125,6 @@ public class MainViewModel {
 }
 ```
 ### MVP 모델
-- View는 실제 View에 대한 직접적인 접근을 담당한다.
-- view에서 발생하는 이벤트는 직접 핸들링하나 Presenter에 위임하도록 한다.
-- Presenter는 실질적인 기능을 제어하는 곳으로써 ViewController로써 이해하면 쉽다.
-- Model은 비즈니스 로직을 실질적으로 수행한다.
-
 Presenter : View 는 1:1로 매칭하며 View Presenter가 주요 기능을 관장하되 실제 view에서 발생하는 이벤트는 Presenter (이벤트:View -> Presenter)로 전달하여 처리하도록 하고 다시 처리된 결과는 Presenter가 View에 전달하도록 하여 처리한다.
 
 View에 대한 직접적인 접근은 Activity가 하도록 하고 이에 대한 제어는 Presenter가 하도록 하고 있다.
@@ -230,6 +225,12 @@ View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
 - [androidTest-JUnit4, Espresso를 이용한 테스트 코드 작성](http://thdev.tech/androiddev/2016/05/04/Android-Test-Example.html)
 
 ## MVP 좀더 자세히
+Model, View, Preseneter에 대해서 간략하게 설명하면 다음과 같ㅇ다.
+- View는 실제 View에 대한 직접적인 접근을 담당한다.
+- view에서 발생하는 이벤트는 직접 핸들링하나 Presenter에 위임하도록 한다.
+- Presenter는 실질적인 기능을 제어하는 곳으로써 ViewController로써 이해하면 쉽다.
+- Model은 비즈니스 로직을 실질적으로 수행한다.
+
 ### 구조
 ![MVP구조](https://codelabs.developers.google.com/codelabs/android-testing/img/f910e640272817e9.png)
 #### Model
