@@ -422,32 +422,6 @@ DummyCollaborator는 자신의 작업을 수행하기 위해 새로운 스레드
 |isDisplayed|화면에 노출상태 가져오는 메소드|  
 
 
-## Espresso basics
-You can still safely operate on views by implementing your own `ViewAction`s and `ViewAssertion`s.
-
-Here's an overview of the main components of Espresso
-- Espresso - Entry point to interactions with views(via onView and onData)
-- ViewMatchers - onView
-- ViewActions - ViewInteraction.perform()
-- ViewAssertions - ViewInteraction.check()
-
-Example:
-```java
-onView(withId(R.id.my_view))      // withId(R.id.my_view) is a ViewMatcher
-  .perform(click())               // click() is a ViewAction
-  .check(matches(isDisplayed())); // matches(isDisplayed()) is a ViewAssertion
-```  
-
-## Finding a view with onView
-## Performing an action on a view
-## Checking if a view fulfills an assertion
-## Fragment Test
-```java
-//fevi-regacy 
-MainActivity activity = activityTestRule.getActivity();
-        FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        movieListFragment = (MovieListFragment) fragmentManager.findFragmentById(R.id.content_frame);
-```
 
 # WebView TestCode 작성하기
 
@@ -459,9 +433,45 @@ Model 은 JUnit, Presenter는 ATSL, View는 ATSL에 더하여 Espresso 사용
 ## TossLab
 - [Test적용현황](http://image.slidesharecdn.com/mvp-atsl-livecoding-160331015440/95/mvp-atsl-live-coding-53-638.jpg?cb=1459389370)
 
+# proguard 설정
+```gradle
+# Proguard rules that are applied to your test apk/code.
+-ignorewarnings
+
+-keepattributes *Annotation*
+
+-dontnote junit.framework.**
+-dontnote junit.runner.**
+
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+-dontwarn org.junit.**
+-dontwarn org.hamcrest.**
+-dontwarn com.squareup.javawriter.JavaWriter
+# Uncomment this if you use Mockito
+-dontwarn org.mockito.**
+```
+
+# 일단 한 번 해보자
+## gradle 설정
+해봤는데 실패
+```gradle
+// app/build.gradle
+// default COnfig
+testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+// dependency
+androidTestCompile 'com.android.support:support-annotations:' + rootProject.ext.supportLibVersion;
+androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+androidTestCompile 'com.android.support.test:runner:0.5'
+androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:1.4"
+androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:1.4"
+```
+
 ## 참고
 - [안드로이드 스튜디오에서 단위 테스트 작성 및 실행하기](http://androidhuman.com/536)
+  - Android Junit 테스트 설명, gradle 테스트 실행 명령
 - [Android Studio Tips: Unit Testing 적용하기 (Part 1)](https://www.davidlab.net/ko/tech/android-studio-tips-applying-unit-testing-part1/)
+  - Junit 테스트 설명, mock object 사용
 - [Android App과 TDD 밑에 자료 보고난 후 공유](http://blog.benelog.net/3017442)
 - [Android App과 TDD-kakao임유진](https://docs.google.com/file/d/0B-SpjDXB7EMTMjFsM0k2YTFDbWM/edit)
 - [Android에 테스트 도입하기](http://blog.dramancompany.com/2016/08/%ec%95%88%eb%93%9c%eb%a1%9c%ec%9d%b4%eb%93%9c%ec%97%90-%ed%85%8c%ec%8a%a4%ed%8a%b8-%eb%8f%84%ec%9e%85%ed%95%98%ea%b8%b0/)
@@ -478,3 +488,4 @@ Model 은 JUnit, Presenter는 ATSL, View는 ATSL에 더하여 Espresso 사용
 - [mockito site](http://site.mockito.org/)
 - [mockito 사용법](http://jdm.kr/blog/222)
 - [Android Testing Codelab](https://codelabs.developers.google.com/codelabs/android-testing/#5)
+- [Android-testing-templates](https://github.com/googlesamples/android-testing-templates/blob/master/AndroidTestingBlueprint/app/proguard-test-rules.pro)
