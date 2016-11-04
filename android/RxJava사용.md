@@ -3,8 +3,8 @@
 비동기처리와 이벤트 기반의 프로그램 개발을 위해 유용한 기능을 제공
 ReactiveX는 Observer패턴과 Iterator패턴, 그리고 함수형 프로그래밍의 아이디어를 조합한 형태
 ### Observer 패턴
-Obsever pattern은 객체의 상태 변화를 관찰하는 옵저버들의 목록을 객체에 등록하여 상태 변화가 있을 때마다 메서드 등을 통해 
-객체가 직접 목록의 각 옵저버에게 통지하도록 하는 디자인 패턴. 주로 분산 이벤트 핸들링 시스템 구현에 사용된다. 
+Obsever pattern은 객체의 상태 변화를 관찰하는 옵저버들의 목록을 객체에 등록하여 상태 변화가 있을 때마다 메서드 등을 통해
+객체가 직접 목록의 각 옵저버에게 통지하도록 하는 디자인 패턴. 주로 분산 이벤트 핸들링 시스템 구현에 사용된다.
 발행/구독 모델로 알려져 있기도 하다.
 - Subject(Observable) : 이벤트를 발생시킨다.
 - Observer(Subscriber) : 발생된 이벤트를 받아 처리한다.  
@@ -15,15 +15,59 @@ RxJava의 Observable는 누군가 구독(subscribe)하고 있지 않는다고 �
 - subscribe : subscriber가 이벤트를 전달받기 위해 하는 행위, 이벤트를 받은 후 처리하는 내용을 정의함
 - observe : 구독보다는 좀 더 넓은 범위의 행위
   예 : Observable 컴포넌트들을 서로 연결하는 과정에서 Observable은 다른 Observable을 관찰한다.
-  
+
+### 기본 Observable 구조
+observe와 subscribe 기본 구조를 살펴보자
+```java
+// observe
+Observable<String> simpleObservable =
+    Observable.create(new Observable.OnSubscribe<String>() {
+        @Override
+        public void call(Subscriber<? super String> subscriber) {
+            subscriber.onNext("Hello RxAndroid !!");
+            subscriber.onCompleted();
+        }
+    });
+// subscribe
+simpleObservable
+    .subscribe(new Subscriber<String>() {
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "complete!");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG, "error: " + e.getMessage());
+        }
+
+        @Override
+        public void onNext(String text) {
+            ((TextView) findViewById(R.id.textView)).setText(text);
+        }
+    });
+```
+subscribe 는 편의를 위해 간단한 인터페이스를 제공한다
+다음은 onNext만 다루고 있다
+```java
+simpleObservable
+    .subscribe(new Action1<String>() {
+        @Override
+        public void call(String text) {
+            ((TextView) findViewById(R.id.textView)).setText(text);
+        }
+    });
+```
+onNext, onError를 다루는 구성도 있다
+RestAPI 호출을 RxAndroid와 사용하는 경우에는 onNext와 onError 구성을 많이 사용한다.
 
 ### Observable과 Subscriber 사용해보기
-Observable은 이벤트를 발생시키는 주체로 하나 혹은 여러개의 이벤트를 발생시키고 
+Observable은 이벤트를 발생시키는 주체로 하나 혹은 여러개의 이벤트를 발생시키고
 최종적으로 이벤트의 종료를 알리거나 에러 발생을 알린다.
 
 RxJava에서 이벤트의 발생, 종료, 에러는 아래와 같이 표현된다
 - onNext : 이벤트의 발생
-- onCOmpleted : 이벤트 종료
+- onCompleted : 이벤트 종료
 - onError : 에러 발생
 
 #### Obeservable 이벤트 발생
@@ -242,7 +286,7 @@ public class UserListFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mSubscription = mClient.users()
-            .observeOn(AndroidSchedulers.mainThread()) 
+            .observeOn(AndroidSchedulers.mainThread())
             // 결과의 통지는 UI Thread에서 실행됩니다.
             .subscribe(                                
             // subscribe의 타이밍에 처리가 시작되어 Callback에 결과가 보내집니다.
@@ -316,6 +360,60 @@ compile 'io.reactivex:rxandroid:1.2.1'
 -dontwarn rx.**
 ```
 
+# RxBinding
+안드로이드에서 필수적인 obserable은 RxBinding에 구현되어 있다
+## build.gradle
+```gradle
+compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+```
+## RxView
+가장 유용한 도구는 RxView.clicks이다 RxView.clicks는 view 타입을 인자로 받는 정적 메서드로 setOnClickListener를 통해 OnClickListener에 전달될 이벤트를 옵저버블 형태로 래핑한다
+```Java
+RxView
+    .clicks(findViewById(R.id.button))
+    .map(event -> new Random().nextInt())
+    .subscribe(value -> {
+        TextView textView = (TextView) findViewB yId(R.id.textView);
+        textView.setText("number: " + value.toString());
+    }, throwable -> {
+        Log.e(TAG, "Error: " + throwable.getMessage());
+        throwable.printStackTrace();
+    });
+```
+### merge
+여러 경로로 온 이벤트를 동시에 처리해야 하는 경우, 개별 이벤트를 옵저버블로 받은 후 병합을 시도할 수 있다 다음은 두 개의 버튼에서 이벤트를 병합하여 처리하는 예이다
+```Java
+Observable<String> lefts = RxView.clicks(findViewById(R.id.leftButton))
+        .map(event -> "left");
+
+Observable<String> rights = RxView.clicks(findViewById(R.id.rightButton))
+        .map(event -> "right");
+
+Observable<String> together = Observable.merge(lefts, rights);
+
+together.subscribe(text -> ((TextView) findViewById(R.id.textView)).setText(text));
+
+together.map(text -> text.toUpperCase())
+        .subscribe(text -> Toast.makeText(this, text, Toast.LENGTH_SHORT).show());
+```
+### scan
+병합된 데이터를 누적으로 처리할 수 있다
+다음은 두 가지 scan을 예로 들었는데, 첫번째 scan은 together 옵저버블을 통해 전달되는 값을 number로 받지만 전혀 사용하고 있지 않고 1씩 증가한다
+두번째 sacn은 number로 값을 받는 것은 동일하지만 플러스 버튼을 누르면 1이 더해지고 마이너스 버튼을 누르면 -1이 감소한다 두 가지 scan 모두 값을 누적해서 처리한다   
+```Java
+Observable<Integer> minuses = RxView.clicks(findViewById(R.id.minusButton))
+    .map(event -> -1);
+Observable<Integer> pluses = RxView.clicks(findViewById(R.id.plusButton))
+    .map(event -> 1);
+Observable<Integer> together = Observable.merge(minuses, pluses);
+together.scan(0, (sum, number) -> sum + 1)
+    .subscribe(count ->
+        ((TextView) findViewById(R.id.count)).setText(count.toString()));
+together.scan(0, (sum, number) -> sum + number)
+    .subscribe(number ->
+        ((TextView) findViewById(R.id.number)).setText(number.toString()));
+```
+### 스케줄러
 
 ## 참고
 [RxJava의 PublishSubject 알아보기](https://realm.io/kr/news/rxjava-publish-subject/)
@@ -326,3 +424,4 @@ compile 'io.reactivex:rxandroid:1.2.1'
 [리액티브 프로그래밍 도입기:사운드 클라우드 아키텍처](https://realm.io/kr/news/gotocph-mattias-kappler-reactive-architecture-android/)
 [Retrofit2.0과 RxJava(Observable)사용](http://blog.naver.com/PostView.nhn?blogId=artisan_ryu&logNo=220629095154)
 [안드로이드 동시성 프로그래밍](http://www.slideshare.net/deview/1b4-39616041)
+[RxAndroid로 리액티브 앱 만들기](https://realm.io/kr/news/rxandroid/)
