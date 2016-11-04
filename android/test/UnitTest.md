@@ -53,7 +53,7 @@ Gradle 명령을 실행
 ```bash
 gradlew connectedAndroidTest
 ```
-Local Unit Testing 할 때, 
+Local Unit Testing 할 때,
 ```bash
 gradlew test
 ```
@@ -63,7 +63,7 @@ gradlew test
 ### Adder
 ```java
 package com.androidhuman.example.studiotesting;
- 
+
 /**
  * Created by kunny on 4/8/14.
  */
@@ -75,16 +75,16 @@ public class Adder {
 ```
 ### Test코드
 @Before는 Test 시작 전에 수행할 것
-@After는 Test 후에 수행해야 할 것 
+@After는 Test 후에 수행해야 할 것
 @Test는 실제 Test를 구현한 Test Method 사용
 ```java
 import junit.framework.TestCase;
- 
+
 /**
  * Created by kunny on 4/7/14.
  */
 public class BasicTest extends TestCase{
- 
+
     public void testSimple(){
         Adder adder = new Adder();
         assertEquals(5, adder.add(2, 3));
@@ -118,17 +118,17 @@ Activity의 TextView 문장 표시 테스트
 ### Test코드
 ```java
 public class MainActivityTest extends ActivityInstrumentationTestCase2<메인> {
- 
+
     public MainActivityTest(){
         super(MainActivity.class);
     }
- 
+
     public void testHelloString(){
         Activity activity = getActivity();
         TextView tvHello = (TextView)activity.findViewById(android.R.id.text1);
         assertEquals(activity.getText(R.string.hello_world), tvHello.getText().toString());
     }
- 
+
 }
 
 // JUnit4 + espresso
@@ -163,7 +163,7 @@ Mock Object를 생성하여 Abstract/Interface를 테스트 할 수 있다.
 when, threnReturn을 통해 실제 가상의 함수를 생성하고, 이를 테스트할 수 있다.
 Android System에 간단한 의존성을 가지는 경우 (예:Context 사용) 사용하기에 적합하다
 ## 이해
-### 왜 Mockito가 좋은가? 
+### 왜 Mockito가 좋은가?
 #### Stub-run-assert
 아래와 같은 코드를 테스트 한다고 하자
 ```java
@@ -268,7 +268,7 @@ when(mockIns.getList(anyString(), anyInt()))
             { this.add("JDM"); this.add("BLOG"); }
         }
     );
-    
+
 // 매개 변수에 특정 값을 넣어야 한다면 eq()를 사용
 when(mockIns.getList(eq("JDM"), anyInt()))
 ```
@@ -389,7 +389,7 @@ dependencies {
 # Espresso
 ## Setup
 ### Download Espresso
-Open your app's `build.gradle` file. 
+Open your app''s `build.gradle` file.
 Add the following lines inside dependencies
 ```gradle
 androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
@@ -400,7 +400,12 @@ Add to the same build.gradle file the following line in `android.defaultConfig`
 ```gradle
 testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 ```
-
+## 명령어 구조
+```java
+onView(Matcher)
+    .perform(ViewAction)
+    .check(ViewAssertion)
+```
 
 
 # 비동기 테스트
@@ -451,10 +456,105 @@ Model 은 JUnit, Presenter는 ATSL, View는 ATSL에 더하여 Espresso 사용
 # Uncomment this if you use Mockito
 -dontwarn org.mockito.**
 ```
+# 권한 확인 테스트
+테스트 하기 전에 권한 허용이 되어 있는지 확인한다
+## gradle
+필요한 gradle 설정
+```gradle
+androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+```
+###  minsdkversion 충돌
+sdk versino이 18보다 작은 경우 충돌이 발생한다 flavor를 추가해서 테스트할 때, version을 올려서 테스트하자
+```gradle
+productFlavors {
+    product{
+        minSdkVersion 15
+    }
+    uiautoTest {
+        minSdkVersion 18
+    }
+}
+```
+http://stackoverflow.com/questions/30585289/set-different-minsdkversion-for-testandroid-than-for-main-app
+## 확인
+```java
+@Before
+public void grantPhonePermission() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        getInstrumentation().getUiAutomation().executeShellCommand(
+                "pm grant " + getTargetContext().getPackageName()
+                        + " android.permission.CALL_PHONE");
+    }
+}
+```
+## 권한 팝업 확인
+UiDevice와 UiObject를 사용하기 위해서는 위 gradle 설정을 추가해야 한다.
+```java
+private static void allowPermissionsIfNeeded() {
+    if (Build.VERSION.SDK_INT >= 23) {
+        UiDevice device = UiDevice.getInstance(getInstrumentation());
+        UiObject allowPermissions = device.findObject(new UiSelector().text("Allow"));
+        if (allowPermissions.exists()) {
+            try {
+                allowPermissions.click();
+            } catch (UiObjectNotFoundException e) {
+                Timber.e(e, "There is no permissions dialog to interact with ");
+            }
+        }
+    }
+}
+```
+
+
+
+# espresso intent 테스트
+## intent 전송 예
+A Act ->B Act 이동할 때, 보내는 intent 를 확인하는 법. intent 내용은 Intent.ACTION_CALL로 전화번호를 전송함
+```java
+onView(withId(R.id.edit_text_caller_number))
+                .perform(typeText(VALID_PHONE_NUMBER), closeSoftKeyboard());
+        onView(withId(R.id.button_call_number)).perform(click());
+
+// Verify that an intent to the dialer was sent with the correct action, phone
+// number and package. Think of Intents intended API as the equivalent to Mockito's verify.
+intended(allOf(
+        hasAction(Intent.ACTION_CALL),
+        hasData(INTENT_DATA_PHONE_NUMBER),
+        toPackage(PACKAGE_ANDROID_DIALER)));
+```
+## intent 수신 예
+B Act -> A Act로 돌아올 때(ActivityResult), intent를 임의로 받기
+```
+// Stub all Intents to ContactsActivity to return VALID_PHONE_NUMBER. Note that the Activity
+// is never launched and result is stubbed.
+intending(hasComponent(hasShortClassName(".ContactsActivity")))
+        .respondWith(new ActivityResult(Activity.RESULT_OK,
+                ContactsActivity.createResultData(VALID_PHONE_NUMBER)));
+
+// Click the pick contact button.
+onView(withId(R.id.button_pick_contact)).perform(click());
+
+// Check that the number is displayed in the UI.
+onView(withId(R.id.edit_text_caller_number))
+        .check(matches(withText(VALID_PHONE_NUMBER)));
+```
+## intent incoming
+A Act 실행 시, intent를 받아서 처리할 때, 임의로 intent 주기
+```java
+@Rule
+    public ActivityTestRule<PermissionActivity> activityTestRule =
+            new ActivityTestRule<PermissionActivity>(PermissionActivity.class, true, false);
+
+@Test            
+Intent intent = new Intent();
+intent.setAction(Intent.ACTION_SEND);
+intent.setType("text/plain");
+intent.putExtra(Intent.EXTRA_TEXT, "this is my auth token");
+activityRule.launchActivity(intent);  
+```
 
 # 일단 한 번 해보자
 ## gradle 설정
-해봤는데 실패
 ```gradle
 // app/build.gradle
 // default COnfig
@@ -466,6 +566,7 @@ androidTestCompile 'com.android.support.test:runner:0.5'
 androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:1.4"
 androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:1.4"
 ```
+
 
 ## 참고
 - [안드로이드 스튜디오에서 단위 테스트 작성 및 실행하기](http://androidhuman.com/536)
@@ -489,3 +590,6 @@ androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:1.4"
 - [mockito 사용법](http://jdm.kr/blog/222)
 - [Android Testing Codelab](https://codelabs.developers.google.com/codelabs/android-testing/#5)
 - [Android-testing-templates](https://github.com/googlesamples/android-testing-templates/blob/master/AndroidTestingBlueprint/app/proguard-test-rules.pro)
+- [To test incoming intent](http://stackoverflow.com/a/34625825/6811452)
+- [android-test-demo](https://github.com/chiuki/android-test-demo) - di 사용한 테스트 샘플 코드
+- [android-testing-runtime-permissions](https://github.com/Egorand/android-testing-runtime-permissions)
