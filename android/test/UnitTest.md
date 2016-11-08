@@ -357,6 +357,26 @@ or
 
 # Hamcrest
 assert()와 같은 matcher를 확장한 라이브러리
+## assertThat
+Hamcrest has the target to make tests as readable as possible.
+For example, the is method is a thin wrapper for equalTo(value).
+```java
+// all statements test the same
+assertThat(a, equalTo(b));
+assertThat(a, is(equalTo(b)));
+assertThat(a, is(b));
+
+// JUnit 4 for equals check
+assertEquals(expected, actual);
+// Hamcrest for equals check
+assertThat(actual, is(equalTo(expected)));
+
+// JUnit 4 for not equals check
+assertFalse(expected.equals(actual));
+// Hamcrest for not equals check
+assertThat(actual, is(not(equalTo(expected))));
+```
+
 
 # Robolectric
 JVM 환경에서 안드로이드 앱 테스트 할 수 있는 프레임웍
@@ -405,6 +425,23 @@ testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 onView(Matcher)
     .perform(ViewAction)
     .check(ViewAssertion)
+```
+## Matcher for ImageView
+[Espresso Matcher for ImageView](https://medium.com/@dbottillo/android-ui-test-espresso-matcher-for-imageview-1a28c832626f#.v4hff6wik)
+ImageView 의 drawable를  matcher 할 수 있는 클래스 생성 - withDrawable
+
+## ViewPage Test
+[EspressoExamples](https://github.com/vgrec/EspressoExamples/blob/master/app/src/androidTest/java/com/vgrec/espressoexamples/ViewPagerTest.java)
+viewpager 관련 액션과 확인하는 부분 참고
+### swipeLeft
+viewpager의 swipeLeft 액션 실행
+```java
+onView(withId(R.id.pager)).perform(swipeLeft());
+```
+### check
+ViewPager의 diaplay 된 child view 중에서 text를 갖고 있는 지  확인
+```java
+ onView(allOf(withId(R.id.header_text), isDisplayed())).check(matches(withText("ALL BOOKS")));
 ```
 
 
@@ -465,6 +502,7 @@ androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 ```
 ###  minsdkversion 충돌
 sdk versino이 18보다 작은 경우 충돌이 발생한다 flavor를 추가해서 테스트할 때, version을 올려서 테스트하자
+uiautomator 때문에 발생하는 문제인듯
 ```gradle
 productFlavors {
     product{
@@ -566,6 +604,18 @@ androidTestCompile 'com.android.support.test:runner:0.5'
 androidTestCompile "com.crittercism.dexmaker:dexmaker-mockito:1.4"
 androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:1.4"
 ```
+
+## InstrumentationRegistry
+Android Test중 Context 가 필요할 때, InstrumentationRegistry.getContext() 로 호출 할 수 있다.
+InstrumentationRegistry 에는 다음의 메소드가 있다.
+```java
+getArguments
+getContext
+getInstrumentation
+getTargetContext
+registerInstance
+```
+
 
 
 ## 참고
