@@ -71,7 +71,13 @@ Html 파서 라이브러리
 - [jsoup download](https://jsoup.org/download)
 - [jsoup - 자바를 위한 BeautifulSoup (HTML parser)](http://edoli.tistory.com/95)
 
-## 
+## 안드로이드와 테스트 왜 필요한가?
+앱이 기능이 점점 추가되고 복잡해져 가면서 코드가 점점 누더기가 되어갔다. 수정에 대한 부작용을 파악하기 어려워졌고,
+테스트의 필요성을 느꼈다.
+[Android App과 TDD-임유진](http://egloos.zum.com/benelog/v/3017442)
+## TDD 왜 쓰나? 어떻게 쓰나?
+Service와 Persistence 계층
+## GUI 프로그래밍의 TDD??
 
 # 안드로이드
 ## parcelable 인터페이스
@@ -118,7 +124,7 @@ startActivity(intent);
 // 받는 쪽
 card = getIntent().getParcelableExtra(CARD_INFO);
 ```
-## 라이브러리 
+## 라이브러리
 parcelable을 쉽게 해주는 parceler 라이브러리가 있음
 ### 참고
 - [안드로이드에서 parcelable이 뭔지 자세히 설명해주세요](http://hashcode.co.kr/questions/882/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C%EC%97%90%EC%84%9C-parcelable%EC%9D%B4-%EB%AD%94%EC%A7%80-%EC%9E%90%EC%84%B8%ED%9E%88-%EC%84%A4%EB%AA%85%ED%95%B4%EC%A3%BC%EC%84%B8%EC%9A%94)
@@ -144,8 +150,8 @@ mSwipeRefresh.setRefreshing(false);
 ```
 
 ## Activity launchmode singleTask 사용
-Activity:launchmode 중 sigleTask 와 singleInstance는 한 개의 instance 만을 가질 수 있다. 
-그래서 항상 stack의 root를 차지한다. 
+Activity:launchmode 중 sigleTask 와 singleInstance는 한 개의 instance 만을 가질 수 있다.
+그래서 항상 stack의 root를 차지한다.
 ### SingleTask 사용 예
 Activity Stack이 다음의 순서로 쌓인 상황에서 `A->B->C->D` 특정 이벤트가 발생했을 때, A로 가려고 하는 경우 사용
 A Activity에 sigleTask option 을 추가하고, 이벤트가 발생했을 때, startActivity를 호출한다.
@@ -204,7 +210,7 @@ Guava는 함수형 스타일로 메서드를 전달하기 위한 일반적인 �
   ```java
 	Collection<?> noNullsCollection = filter(someCollection, notNull());
   ```  
-  
+
 3. 멀티맵(Multimaps과 바이맵(Bimaps)
 단일키에 여러 값을 저장하는 것 등은 Map의 정말 일반적인 사용입니다. 일반적으로 표준 자바 컬렉션의 사용은 값타입처럼 또 다른 컬렉션을 사용함으로써 이루어진다. 이것은 컬렉션 초기화같은 반복되는 많은 형식을 포함하게 되는데 멀티맵은 이것을 아주 깔끔하게 만들어준다.
   ```java
@@ -214,7 +220,7 @@ Guava는 함수형 스타일로 메서드를 전달하기 위한 일반적인 �
     scores.put("Bob", 15);
     System.out.println(Collections.max(scores.get("Bob"))); // prints 20
   ```
-  
+
 4. 쉬운 해쉬코드와 비교자
 자바에서 필드들의 해쉬코드로 클래스의 해쉬코드를 생성하는 것은 아주 일반적이다. Guava는 이것을 위해서 Object 클래스에 유틸리티 메서드를 제공한다.
   ```java
@@ -267,7 +273,7 @@ android {
 retrolambda {
     javaVersion JavaVersion.VERSION_1_7
 }
-  
+
 
 ```
 
@@ -287,7 +293,7 @@ StartActivity를 호출하면 onCreate() 대신에 onNewIntent가 호출되고
 [onNewIntent알아보기](http://diyall.tistory.com/786)
 
 ## dynamic String 적용 - String.xml
-string.xml 에 변수 적용하기 
+string.xml 에 변수 적용하기
 [dynamic String using String.xml?](http://stackoverflow.com/questions/3656371/dynamic-string-using-string-xml)
 
 ## 커스텀 font 적용
@@ -315,7 +321,7 @@ private static String bodyToString(final RequestBody request){
             final Buffer buffer = new Buffer();
             copy.writeTo(buffer);
             return buffer.readUtf8();
-        } 
+        }
         catch (final IOException e) {
             return "did not work";
         }
