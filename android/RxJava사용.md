@@ -86,6 +86,18 @@ observable에 subscribe 이루어지는 thread
 Subscriber(observer)에서 이벤트를 처리할 때 사용되는 thread
 Observable이 이벤트를 전파할 때, 사용되는 thread
 
+### 스케줄러
+스케줄러는 observable, subscribe, operator 를 어떤 스레드에서 수행할지 결정하는 것 subscribeOn과 observeOn으로 지정
+#### 스케줄러 목록
+- Schedulers.computation : 간단한 연산이나 콜백 처리를 위해 사용 I/O 처리를 여기에서 해서는 안됨
+- Schedulers.from(executor) : 특정 executor를 스케줄러로 사용
+- Schedulers.immediate : 현재 스레드에서 즉시 수행
+- Schedulers.io : 동기 I/O를 별도로 처리시켜 비동기 효율을 얻기 위한 스케줄러, 자체 스레드 풀에 의존함
+- Schedulers.newThread : 항상 새로운 스레드를 만드는 스케줄러
+- Schedulers.trampoline : 큐에 있는 일이 끝나면 이어서 현재 스레드에서 수행하는 스케줄러
+- AndroidSchedulers.mainThread : 안드로이드의 UI 스레드에서 동작
+- HandlerScheduler.from : 특정 핸들러 thread 에 의졶나여 동작
+안드로이드에서는 AndroidSchedulers.mainThread 와 RxJava가 제공하는 Schedulers.io 를 조합해서 많이 사용한다
 
 ### Observable 만들기
 #### create
@@ -413,7 +425,7 @@ together.scan(0, (sum, number) -> sum + number)
     .subscribe(number ->
         ((TextView) findViewById(R.id.number)).setText(number.toString()));
 ```
-### 스케줄러
+
 
 ## 참고
 [RxJava의 PublishSubject 알아보기](https://realm.io/kr/news/rxjava-publish-subject/)
