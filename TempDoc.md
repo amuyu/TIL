@@ -80,6 +80,104 @@ Service와 Persistence 계층
 ## GUI 프로그래밍의 TDD??
 
 # 안드로이드
+## UncaughtExceptionHandler 비정상 종료 처리 + GA 전달
+UncaughtExceptionHandler 를 이용해서 비정상 종료를 catch 할 수 있다.
+Trhead는 발생하는 예외를 uncaughtTread를 호출하게 되어 있다 그래서 Thread의 UncaughExceptionHandler 인스터스를 Thread에 등록해서
+예외 발생을 catch 할 수 있다.
+ExceptionReporter는 UncaughtExceptionHandler 인터페이스를 사용하는 애로 uncaught exceptions를 GoogleAnalytics에 보고할 때, 사용한다. 
+```java
+// Application 클래스
+@Override
+    public void onCreate() {
+        super.onCreate();
+
+        uncaughtExceptionHandler = new MyUncaughtExceptionHandler();
+        Thread.UncaughtExceptionHandler handler = new ExceptionReporter(
+                new GoogleAnalyticsUtil(this).getV3EasyTracker(),
+                GAServiceManager.getInstance(),
+                uncaughtExceptionHandler,
+                this);
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+    }
+
+public class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
+
+        @Override
+        public void uncaughtException(Thread thread, Throwable ex) {
+            Logger.d(TAG, "uncaughtException" + getStackTrace(ex));
+            System.exit(2);
+            uncaughtExceptionHandler.uncaughtException(thread, ex);
+        }
+    }
+```
+[UncaughtExceptionHandler를 이용한 앱 비정상 종료시 Log전송 및 재실행 하기](http://www.kmshack.kr/2013/03/uncaughtexceptionhandler%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%95%B1-%EB%B9%84%EC%A0%95%EC%83%81-%EC%A2%85%EB%A3%8C%EC%8B%9C-log%EC%A0%84%EC%86%A1-%EB%B0%8F-%EC%9E%AC%EC%8B%A4%ED%96%89-%ED%95%98/)
+[ExceptionReporter](https://developers.google.com/android/reference/com/google/android/gms/analytics/ExceptionReporter)
+
+## ListView Row height  
+row layout 에서 height 을 셋팅했는데 앱 실행 후, 확인해보면 반영이 안됨
+문제가 발생하게 된 코드,,
+```java
+ convertView = mInflater.inflate(R.layout.item_setting_menu, null);
+```
+두 번째 인자에 null 이 들어가는데 이와 관련한 내용을 찾아보면 다음과 같은 말이 있다.
+LayoutInflater will automatically attempt to attach the inflated view to the supplied root.
+the framework has a check in place that if you pass null for the root it bypasses this attempt to avoid an application crash.
+음.. 뭔 말인지.. layoutInflater 는 rootView에  inflated view를 붙이려고 시도하는데
+rootView가 null 이면 충돌을 피하기 위해 이런 시도를 bypass 한다? 어쨌든 rootView에 null 이 들어가서
+row layout 의 root element 에 고정한 height 이 childView의 속성으로 변경이 된 듯하다..
+이것을 다음과 같이 수정한다
+수정한 코드
+```java
+convertView = mInflater.inflate(R.layout.item_setting_menu, parent, false);
+```
+원했던 결과를 얻을 수 있다.
+attachToRoot 파라미턴에 대한 설명
+Whether the inflated hierarchy should be attached to the root parameter? If false, root is only used to create the correct subclass of LayoutParams for the root view in the XML
+### 참고
+[Layout Inflation as Intended](https://possiblemobile.com/2013/05/layout-inflation-as-intended/)
+
+## [개발에 유용한 도구들](http://www.slideshare.net/kingori/ss-68326596)
+### Stetho
+페이스북이 만든 킹왕짱 종합 선물세트? 크롬 브라우저의 inspect UI를 이용해 각종 정보를 조회한다
+(네트워크, Sqlite DB, SharedPreference, UI)
+(http://facebook.github.io/stetho/)
+#### 주요 기능
+- 네트워크 로깅
+- 앱 내부 sqlite DB SQL 실행
+- SharedPreference 조회/수정
+- 커스텀 동작 수행할 수 있는 dump plugin
+- javascript console
+#### 기본 설정
+```gradle
+debugCompile 'com.facebook.stetho:stetho:1.4.1'
+```
+```java
+Stetho.initializeWithDefaults(this)
+```
+adb 연결 후 크롬 브라우저에서 chrome://inspect 로 이동
+#### 네트워크 로깅
+```gradle
+compile 'com.facebook.stetho:stetho-okhttp3:1.4.1'
+```
+```java
+OkHttpClient.addNetworkInterceptro(new StethoInterceptor());
+```
+### LeakCanary
+Square에서 만든 액티비티 메모리 릭 탐지 도구
+(https://github.com/square/leakcanary)
+### HierarchyViewer
+SDK가 제공하는 뷰 성능 / 속성 조회 도구
+(https://developer.android.com/studio/profile/optimize-ui.html#HierarchyViewer)
+#### LayoutInspector
+안드로이드 스튜디오 2.2 에 추가된, Hierarchy Viewer의 계승자
+
+##[오픈소스 라이브러리 사용 가이드](http://www.slideshare.net/jyte/ss-68249803)
+
+### LeakCanary
+### HierarchyViewer,
+### Debugger
+
+
 ## parcelable 인터페이스
 커스텀 클래스나 오브젝트를 다른 컴포넌트에 전달하는 경우 사용
 ### parcelable 사용 예

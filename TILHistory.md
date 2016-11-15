@@ -1,4 +1,19 @@
-## 2016년 11월 7일
+
+## 2016년 11월 15일
+# UncughtExceptionHandler 비정상 종료 처리
+
+## 2016년 11월 14일
+camel in action
+apache camel
+
+
+## 2016년 11월 9일
+## [개발에 유용한 도구들](http://www.slideshare.net/kingori/ss-68326596)
+##[오픈소스 라이브러리 사용 가이드](http://www.slideshare.net/jyte/ss-68249803)
+## RestClientAPI 에
+RxBinding - TextView.onTExtChanged 를 적용해보자
+
+## 2016년 11월 8일
 ### Hamcrest (android/test/UnitTest)
 AssertThat
 ### Android Test (android/test/UnitTest)
