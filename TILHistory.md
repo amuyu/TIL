@@ -1,4 +1,8 @@
 
+## 2016년 11월 16일
+# Android Test
+InstrumentationRegistry.getTargetContext()
+
 ## 2016년 11월 15일
 # UncughtExceptionHandler 비정상 종료 처리
 

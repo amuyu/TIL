@@ -79,12 +79,20 @@ Html 파서 라이브러리
 Service와 Persistence 계층
 ## GUI 프로그래밍의 TDD??
 
+
+
+
 # 안드로이드
+## OpenCV-android-sdk
+### OpenCVLibrary 빌드 중 발생 에러
+프로젝트명이 "OpenCV Library 2.3.13.1" 로 빌드가 안되서 발생한 에러
+프로젝트명을 "OpenCVLibrary"로 변경함
+
 ## UncaughtExceptionHandler 비정상 종료 처리 + GA 전달
 UncaughtExceptionHandler 를 이용해서 비정상 종료를 catch 할 수 있다.
 Trhead는 발생하는 예외를 uncaughtTread를 호출하게 되어 있다 그래서 Thread의 UncaughExceptionHandler 인스터스를 Thread에 등록해서
 예외 발생을 catch 할 수 있다.
-ExceptionReporter는 UncaughtExceptionHandler 인터페이스를 사용하는 애로 uncaught exceptions를 GoogleAnalytics에 보고할 때, 사용한다. 
+ExceptionReporter는 UncaughtExceptionHandler 인터페이스를 사용하는 애로 uncaught exceptions를 GoogleAnalytics에 보고할 때, 사용한다.
 ```java
 // Application 클래스
 @Override
