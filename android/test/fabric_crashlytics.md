@@ -1,5 +1,6 @@
 # Crashlytics 적용
 모든 크래시에 대해 리포팅해주는 서비스
+GA와 비교했을 때, Crash 보고가 더 빨리 올라가고 누락이 적다 
 ## 가입
 [Crashlytics](https://try.crashlytics.com) 사이트에 가입한다.
 ## 빌드 설정
