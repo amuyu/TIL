@@ -51,11 +51,15 @@ Gradle 명령을 실행
 실행 후, 결과는 build/reports/{테스트패키지}/connected 폴더에 저장된다.
 폴더 안의 index.html 파일을 열면 테스트 보고서를 확인할 수 있다.
 ```bash
-gradlew connectedAndroidTest
+gradlew connectedAndroidTestㄴ
 ```
 Local Unit Testing 할 때,
 ```bash
 gradlew test
+```
+특정 클래스 test 할 때, .. 안됨
+```
+gradle -DconnectedInstrumentTest.single=UnitTestName connectedInstrumentTest
 ```
 
 ## Junit Test case
@@ -376,7 +380,9 @@ assertFalse(expected.equals(actual));
 // Hamcrest for not equals check
 assertThat(actual, is(not(equalTo(expected))));
 ```
-
+# mockito Tips
+final inerface는 stub 할 수 없다.
+[answer](http://stackoverflow.com/a/18942522/6811452)
 
 # Robolectric
 JVM 환경에서 안드로이드 앱 테스트 할 수 있는 프레임웍
@@ -610,17 +616,41 @@ Android Test중 Context 가 필요할 때, InstrumentationRegistry.getContext() 
 InstrumentationRegistry 에는 다음의 메소드가 있다.
 ```java
 getArguments
-getContext
+getContext - get test apk context
 getInstrumentation
-getTargetContext
+getTargetContext - get app apk context
 registerInstance
 ```
+
+## 사용 Tips
+### Context 사용 에러
+InstrumentationRegistry.getContext() 를 mock 개체에 파라미터로 전달 후, 테스트할 때 에러 발생
+```java
+when(dataManagerImpl.getLabeIndex(context, any(Integer.class))).thenReturn(1);
+```
+다음과 같이 에러 발생함
+```log
+This exception may occur if matchers are combined with raw values:
+//incorrect:
+someMethod(anyObject(), "raw String");
+When using matchers, all arguments have to be provided by matchers.
+For example:
+//correct:
+someMethod(anyObject(), eq("String by matcher"));
+```
+context 객체를 any 로 변경했더니 에러가 사라짐
+```java
+when(dataManagerImpl.getLabeIndex(any(Context.class), any(Integer.class))).thenReturn(1);
+```
+### presenter Test AndroidJUnit4 에서 해야 하나?
+ android 객체를 사용하려면 androidTest 를 하는게 낫다(Log나 intent rkxdmsrj)
+ android 객체를 사용하지 않으면 그냥 test를 해도 된다.
 
 
 
 ## 참고
 - [안드로이드 스튜디오에서 단위 테스트 작성 및 실행하기](http://androidhuman.com/536)
-  - Android Junit 테스트 설명, gradle 테스트 실행 명령
+  - 폴더 생성 부터~ Android Junit 테스트 설명, gradle 테스트 실행 명령
 - [Android Studio Tips: Unit Testing 적용하기 (Part 1)](https://www.davidlab.net/ko/tech/android-studio-tips-applying-unit-testing-part1/)
   - Junit 테스트 설명, mock object 사용
 - [Android App과 TDD 밑에 자료 보고난 후 공유](http://blog.benelog.net/3017442)
