@@ -83,6 +83,9 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## Palette, Swatch 활용 이미지 테마 적용
+[Palette,Swatch를 활용해서 이미지의 테마색 가져오기](http://gun0912.tistory.com/67)
+
 ## OpenCV-android-sdk
 ### OpenCVLibrary 빌드 중 발생 에러
 프로젝트명이 "OpenCV Library 2.3.13.1" 로 빌드가 안되서 발생한 에러
