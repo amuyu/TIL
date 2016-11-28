@@ -1,6 +1,12 @@
 ## Getting Started with the NDK
-### 
-
+### MacOS에서 NDK 설치
+1. https://developer.android.com/ndk/downloads/index.html 로 이동해 NDK를 다운로드한다.
+2. NDK 디렉토리를 환경 변수로 선언한다.
+```
+export ANDROID_SDK=/Users/amuyu/Library/Android/sdk
+export ANDROID_NDK=/Users/amuyu/Library/Android/sdk/ndk-bundle
+export PATH=$PATH:$ANDROID_NDK:$ANDROID_SDK/tools:$ANDROID_SDK/platform-tools
+```
 
 ### Android Studio 사용
 Android Studio 1.3 RC3 이상 Gradle 2.5 버전 이상에서 Android NDK를 지원
@@ -50,16 +56,16 @@ def getNdkBuildPath() {
 
 android {
   sourceSets.main {
-    // Compile된 Native Library가 위치하는 경로를 설정합니다. 
+    // Compile된 Native Library가 위치하는 경로를 설정합니다.
     jniLibs.srcDir 'src/main/libs'
-    
+
     // 여기에 JNI Source 경로를 설정하면 Android Studio에서 기본적으로 지원하는 Native
     // Library Build가 이루어집니다. 이 경우에 Android.mk와 Application.mk를
     // 자동으로 생성하기 때문에 편리하지만, 세부 설정이 어렵기 때문에 JNI Source의
     // 경로를 지정하지 않습니다.
     jni.srcDirs = []
   }
-  
+
   ext {
     // 아직은 Task 내에서 Build Type을 구분할 방법이 없기 때문에 이 Property를
     // 이용해 Native Library를 Debugging 가능하도록 Build할 지 결정합니다.
@@ -75,7 +81,7 @@ android {
       commandLine getNdkBuildPath(), '-C', file('src/main').absolutePath
     }
   }
-  
+
   // App의 Java Code를 Compile할 때 buildNative Task를 실행하여 Native Library도 같이
   // Build되도록 설정합니다.
   tasks.withType(JavaCompile) {
@@ -90,7 +96,7 @@ android {
 
   // Gradle의 clean Task를 실행할 떄, cleanNative Task를 실행하도록 설정합니다.
   clean.dependsOn 'cleanNative'
-  
+
   buildTypes {
     debug {
       // Debug Build시에 Native Library Debugging이 가능한 APK를 생성하도록 설정합니다.
