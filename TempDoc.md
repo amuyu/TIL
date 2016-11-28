@@ -59,6 +59,20 @@ Apple에서 제공하지 않는 유용한 패키지 관리자 설치
 
 
 # 코딩
+## Gvim
+### CommandT 플러그인
+[Vim에서 파일브라우징을 위한 플러그인](https://blog.outsider.ne.kr/608)
+[Getting Command-T Working on Windows](http://chrislaco.com/blog/gettimg-command-t-working-on-windows/)
+### UTF-8 한글
+```
+set tabstop=4
+set encoding=cp949
+set fileencodings=utf-8,cp949
+set langmenu=cp949
+set guifont=Gulimche:h12:cHANGEUL
+set lines=60 columns=120
+```
+
 ## Builder Pattern
 객체 생성 시, Builder 패턴을 사용하면 파라미터가 많을 경우 제공 상태를 일관성 있게 하고, object를 생성시킬 때, step-by-step으로 만들 수 있도록 할 수 있다.
 ### 작업순서
@@ -88,6 +102,34 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## Activity 에서 onCreateView 의 역할
+onCreateView 너는 뭐니?
+View onCreateView (String name, Context context, AttributeSet attrs)
+Standard implementation of LayoutInflater.onCreateView..
+### 어디서 쓰나?
+Fragment 생성 시, infalte를 호출하면 Activity에서 받아서 View를 구성할 수도 있음 
+
+## gradle error 'libsWithStripDebugSymbolForDebug'
+compileSdkVersion이 안 맞을 경우 발생한다.. 프로젝트에서
+compliSdkVersion 19 ->compliSdkVersion 21으로 변경하니 빌드됨
+
+## gradle error 'This version of android studio is incompatible with the gradle version used.Try disabling the instant run'
+> File → Settings → Preferences dialog → Build → Execution → Deployment → Instant Run  
+
+You can disable instant run
+[answer](http://stackoverflow.com/a/35252539/6811452)
+
+## gradle error 'org.gradle.internal.logging.LoggingManagerInternal'
+gradle version 문제로 gradle-wrapper.properties 에서 gradle version을 변경하니 해결됐다.
+[answer](http://stackoverflow.com/questions/38530788/solvedunable-to-load-class-org-gradle-internal-logging-loggingmanagerinternal)
+
+
+## @SupressLint("NewApi")
+해당 프로젝트의 설정 된 minSdkVersion 이후에 나온 API를 사용할때  warning을 없애고 개발자가 해당 APi를 사용할 수 있게 합니다.
+
+## Palette, Swatch 활용 이미지 테마 적용
+[Palette,Swatch를 활용해서 이미지의 테마색 가져오기](http://gun0912.tistory.com/67)
+
 ## OpenCV-android-sdk
 ### OpenCVLibrary 빌드 중 발생 에러
 프로젝트명이 "OpenCV Library 2.3.13.1" 로 빌드가 안되서 발생한 에러

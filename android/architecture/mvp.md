@@ -43,16 +43,16 @@ public class MainAcivity extends Activity {
 	public void onCreate(Bundle saveInstance) {
 		super.onCreate(saveInstance);
 		setContent(R.layout.main);
-		
+
 		mainModel = new MainModel();
-		
+
 		TextView textView = (TextView) findViewById(R.id.btn_confirm);
 		textView.setText("Non-Clicked");
-		
-		
+
+
 		findViewById(R.id.btn_confirm)
 			.setOnClickListener(new View.OnClickListener(){
-			
+
 				@Override
 				public void onClick(View view) {
 					String text = mainModel.getClickedText();
@@ -77,9 +77,9 @@ public class MainAcivity extends Activity {
 	public void onCreate(Bundle saveInstance) {
 		super.onCreate(saveInstance);
 		setContent(R.layout.main);
-		
+
 		mainViewModel = new MainViewModel(MainActivity.this);
-		
+
 	}
 
 }
@@ -99,7 +99,7 @@ public class MainViewModel {
 	private Activity activity;
 	private MainModel mainModel;
 	private TextView textView;
-	
+
 	public MainViewModel(Activity activity) {
 		this.activity = activity;
 		this.mainModel = new MainModel();
@@ -107,13 +107,13 @@ public class MainViewModel {
 	}
 
 	private void initView(Activity activity) {
-	
+
 		textView = (TextView) activity.findViewById(R.id.btn_confirm);
 		textView.setText("Non-Clicked");
-	
+
 		activity.findViewById(R.id.btn_confirm)
 			.setOnClickListener(new View.OnClickListener(){
-			
+
 				@Override
 				public void onClick(View view) {
 					String text = mainModel.getClickedText();
@@ -121,7 +121,7 @@ public class MainViewModel {
 				}
 			});
 	}
-	
+
 }
 ```
 ### MVP 모델
@@ -139,24 +139,24 @@ public interface MainPresenter {
 	public interface View {
 		void setConfirmText(String text);
 	}
-	
+
 }
 ```
 ```java
 public class MainAcivity extends Activity implements MainPresenter.View {
 
 	private MainPresenter mainPresenter;
-	
+
 	private Button confirmButton;
 
 	@Override
 	public void onCreate(Bundle saveInstance) {
 		super.onCreate(saveInstance);
 		setContent(R.layout.main);
-		
+
 		mainPresenter = new MainPresenterImpl(MainActivity.this);
 		mainPresenter.setView(this);
-		
+
 		confirmButton = (Button) findViewById(R.id.btn_confirm);
 		confirmButton.setOnClickListener(new View.OnClick() {
 			@Override
@@ -165,7 +165,7 @@ public class MainAcivity extends Activity implements MainPresenter.View {
 			}
 		});
 	}
-	
+
 	@Override
 	public void setButtonText(String text) {
 		confirmButton.setText(text);
@@ -191,29 +191,29 @@ public class MainPresenterImpl implements MainPresenter {
         this.activity = activity;
         this.mainModel = new MainModel();
     }
-    
+
     @Override
     public void setView(MainPresenter.View view) {
     	this.view = view;
     }
-    
+
     @Override
     public void onConfirm() {
     	if (view != null) {
     		view.setConfirmText(mainModel.getClickedText());
     	}
     }
-    
+
 
 }
 ```
 
 ### Test
-MVP에서 테스트는 Model Layer, View Layer, Presenter Layer 3개의 레이어를 따로 테스트한다. 
-Model은 전통적인 JUnit, 
-Presenter는 구글에서 제공하는 Android Test Support Library(ATSL)을 사용한다.. 
+MVP에서 테스트는 Model Layer, View Layer, Presenter Layer 3개의 레이어를 따로 테스트한다.
+Model은 전통적인 JUnit,
+Presenter는 구글에서 제공하는 Android Test Support Library(ATSL)을 사용한다..
 View는 ATSL에 더하여 Espresso를 사용해서 테스트 한다.
-종합예시는 아래 참고에 **GDG-ATSL-ON-MVP**를 참고한다.
+종합예시는 아래 참고에 **GDG-ATSL-ON-MVP** 를 참고한다.
 
 
 ### 참고
@@ -285,7 +285,7 @@ We'll be looking at these classes:
 |NotesContract.UserActionsListener|Defines the interaction between the View and Presenter layers|
 |NotesFragment|Concrete implementation of the View layer|
 |NotePresenter|The Presenter layer, implements the NotesContract.UserActionsListener to listen for user actions. It has a reference to the View to update it when the model changes|
- 
+
 ###### View layer
 ###### Presenter layer
 
