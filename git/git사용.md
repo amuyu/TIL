@@ -104,7 +104,7 @@ git checkout -- <파일 이름>
 로컬의 변경 내용을 변경 전 상태(HEAD)로 되돌려준다.
 다만, 이미 인덱스에 추가된 변경 내용과 새로 생성한 파일은 그대로 남는다.
 만약, 로컬에 있는 모든 변경 내용과 확정본을 포기하려면,
-아래 명령으로 원격 저장소의 최신 이력을 가져오고, 
+아래 명령으로 원격 저장소의 최신 이력을 가져오고,
 로컬 master 가지가 저 이력을 가리키도록 할 수 있다.
 ```bash
 git fetch origin
@@ -124,7 +124,7 @@ Git 매뉴얼 정의 내용은 다음과 같다
 - git-merge : join two or more development histories together.
 - git-rebase : Forward-port local commits to the updated upstream head
 
-무엇을 쓰는게 좋은가? 
+무엇을 쓰는게 좋은가?
 Merget를 사용할 때,
 히스토리 관리를 별로 신경쓰지 않고 혼자(소수)서만 커밋할 때, ?? 확인이 필요함
 
@@ -192,6 +192,27 @@ git remote add origin <저장소>
 git push origin master
 ```
 
+## 수정한 파일 임시 저장
+```bash
+// 저장
+git stash
+// list 확인
+git stash list
+//  최근 stash  적용
+git stash apply
+//  최근 strash  적용, staged 상태까지 복원
+git stash apply --index
+// strash 적용 후 바로 스택에서 제거
+git stash pop
+
+```
+
+## 원복
+```bash
+// untracked 파일 제거
+git clean -f
+git clean -f -d // 디렉토리 까지 제거
+```
 
 ## 참고
 - [git간편안내서](https://rogerdudler.github.io/git-guide/index.ko.html)

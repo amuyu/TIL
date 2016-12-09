@@ -97,12 +97,19 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## Data Binding
+
+### 참고
+[Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
+[DataBinding-findViewById 이제 안녕~](http://gogorchg.tistory.com/entry/Android-DataBinding-findViewById-%EC%9D%B4%EC%A0%9C-%EC%95%88%EB%85%95)
+[안드로이드 데이터 바인딩-SlideShare](http://www.slideshare.net/gdgkorea/databinding)
+
 ## Activity 에서 onCreateView 의 역할
 onCreateView 너는 뭐니?
 View onCreateView (String name, Context context, AttributeSet attrs)
 Standard implementation of LayoutInflater.onCreateView..
 ### 어디서 쓰나?
-Fragment 생성 시, infalte를 호출하면 Activity에서 받아서 View를 구성할 수도 있음 
+Fragment 생성 시, infalte를 호출하면 Activity에서 받아서 View를 구성할 수도 있음
 
 ## gradle error 'libsWithStripDebugSymbolForDebug'
 compileSdkVersion이 안 맞을 경우 발생한다.. 프로젝트에서

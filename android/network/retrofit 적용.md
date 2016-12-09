@@ -21,13 +21,9 @@ AsyncTask, HttpUrlConnection을 사용해서 직접 네트워크 통신 구현 �
 
 
 ```gradle
-
 compile 'com.squareup.retrofit2:retrofit:2.1.0'
-
 compile 'com.squareup.retrofit2:converter-gson:2.1.0' // gson 사용
-
 compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0' // rxjava와 연동
-
 ```
 
 ## Proguard
@@ -59,7 +55,7 @@ public interface GitHubService {
 
     List<Repo> listRepos(@Path("user") String user);
 
-} 
+}
 
 ```
 
@@ -93,7 +89,7 @@ public class Repo {
 
     String full_name;
 
-    
+
 
     @get,set
 
@@ -253,7 +249,7 @@ class TaskCheckVersion extends AsyncTask<Void, Void, String>{
 
     			Gson gson = new Gson();
 
-    			VersionCheckData data = gson.fromJson(result, VersionCheckData.class); 
+    			VersionCheckData data = gson.fromJson(result, VersionCheckData.class);
 
     			Log.d(TAG, "result : " + result);    			
 
@@ -293,7 +289,7 @@ public String getCheckVersion(String type, String version, String os_version){
 
                 .appendQueryParameter("os_version", os_version);
 
-        
+
 
         Logger.d(TAG, "create() uri:" + uri.build().toString());
 
@@ -434,7 +430,7 @@ public Observable<VersionCheckData> retroTest(@Query("device_type") String devic
 ```
 
 ### Get raw HTTP response
-To get access to the raw response, use `ResponseBody` from okhttp as your call type. 
+To get access to the raw response, use `ResponseBody` from okhttp as your call type.
 ```java
 Call<ResponseBody> myCall = myApi.login(...)
 myCall.enqueue(new Callback<ResponseBody>() {
@@ -486,16 +482,38 @@ RequestBody formBody = new OkHttpFormBuilder()
                 .observeOn(AndroidSchedulers.mainThread());
 ```
 
+### Logging
+#### gradle
+```gradle
+compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'  
+```
+#### Source
+```java
+HttpLoggingInterceptor logging = new HttpLoggingInterceptor();  
+// set your desired log level
+logging.setLevel(Level.BODY);
+
+OkHttpClient.Builder httpClient = new OkHttpClient.Builder();  
+// add your other interceptors …
+
+// add logging as last interceptor
+httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+Retrofit retrofit = new Retrofit.Builder()  
+   .baseUrl(API_BASE_URL)
+   .addConverterFactory(GsonConverterFactory.create())
+   .client(httpClient.build())
+   .build();
+```
+
+
+
 ## 참고
-
 [Retrofit 공식 사이트](http://square.github.io/retrofit/)
-
 [Retrofit2를 이용한 RestAPI 통신하기](http://falinrush.tistory.com/5)
-
 [안드로이드 http통신 retrofit 2.0](http://mythinkg.blogspot.kr/2015/11/http-retrofit-20.html)
-
 [Retrofit2과 함께하는 정말 쉬운 HTTP](https://realm.io/kr/news/droidcon-jake-wharton-simple-http-retrofit-2/)
-
 [Retrofit2 + okhttp3 + Rxandroid 사용법](http://tiii.tistory.com/11)
 [Get raw HTTP response with Retrofit](http://stackoverflow.com/questions/33282889/get-raw-http-response-with-retrofit)
 [Logging In Retrofit2](https://futurestud.io/tutorials/retrofit-2-log-requests-and-responses)
+[file upload multipart](https://futurestud.io/tutorials/retrofit-2-how-to-upload-files-to-server)

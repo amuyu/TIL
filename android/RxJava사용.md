@@ -183,6 +183,9 @@ onNext : 마루 사랑합니다.
 onNext : 마루 고맙습니다.
 onCompleted
 ```
+##### flatMap과 concatMap 비교
+concatMap은 concat 연산자를 사용하고 이벤트 스트림을 통해 전달된 항목 하나에 대한 처리가 완료된 후에 다음 항목을 처리한다. 순서가 뒤바뀌지 않는다.
+flatMap은 merge 연산자를 사용하고 이벤트 스트림에 항목 순서와 출력되는 순서가 달라질 수 있다.
 
 ### Observable 합성하기
 두 개 이상의 Observable을 합성
@@ -408,6 +411,8 @@ together.subscribe(text -> ((TextView) findViewById(R.id.textView)).setText(text
 together.map(text -> text.toUpperCase())
         .subscribe(text -> Toast.makeText(this, text, Toast.LENGTH_SHORT).show());
 ```
+An onError notification from any of the source Observables will immediately be passed through to observers and will terminate the merged Observable. 
+
 ### scan
 병합된 데이터를 누적으로 처리할 수 있다
 다음은 두 가지 scan을 예로 들었는데, 첫번째 scan은 together 옵저버블을 통해 전달되는 값을 number로 받지만 전혀 사용하고 있지 않고 1씩 증가한다
@@ -426,6 +431,14 @@ together.scan(0, (sum, number) -> sum + number)
         ((TextView) findViewById(R.id.number)).setText(number.toString()));
 ```
 
+# TIP
+## MissingBackpressureException
+Observable에서 항목을 보내는 속도보다 처리하는 속도가 느릴 때 발생한다.
+RxAndroid를 사용하는 경우, 수신된 데이터를 UI 표시하기 위해 observeOn(AndroidSchedulers.mainThread())  를 많이 사용하는데,
+이 과정에서 UI 쓰레드 내에서 다른 작업이 수행되고 있어 Observable에서 보낸 항목을 바로 처리하지 못할 경우 MissingBackpressureException 발생
+### 해결책
+- onBackpressureBuffer() : Observable에서 보낸 항목을 큐에 계속 쌓아두어, 항목을 처리하는 쪽에서 해당 항목을 나중에 처리할 수 있도록 한다.
+- onBackpressureDrop() : Observable에서 항목을 보냈을 때 바로 처리되지 못한 데이터는 무시
 
 ## 참고
 [RxJava의 PublishSubject 알아보기](https://realm.io/kr/news/rxjava-publish-subject/)
@@ -437,3 +450,5 @@ together.scan(0, (sum, number) -> sum + number)
 [Retrofit2.0과 RxJava(Observable)사용](http://blog.naver.com/PostView.nhn?blogId=artisan_ryu&logNo=220629095154)
 [안드로이드 동시성 프로그래밍](http://www.slideshare.net/deview/1b4-39616041)
 [RxAndroid로 리액티브 앱 만들기](https://realm.io/kr/news/rxandroid/)
+[RxJava/RxAndroid](http://kunny.github.io/community/2016/02/08/gdg_korea_android_weekly_02_1/)
+[ReactiveX Wiki](http://reactivex.io/documentation/operators/merge.html)

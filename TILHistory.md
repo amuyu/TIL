@@ -1,6 +1,12 @@
 **TILHistory의 필요성을 못 느끼겠음... 데이터가 많이 쌓이면 보기가 힘들다.**
 **조사는 못해보는 것들에 대한  내용 기록**
 
+# DataBinding
+
+
+# RxAndroid
+[RxJava/RxAndroid](http://kunny.github.io/community/2016/02/08/gdg_korea_android_weekly_02_1/)
+[리액티브 프로그래밍 도입기:사운드 클라우드 아키텍처](https://realm.io/kr/news/gotocph-mattias-kappler-reactive-architecture-android/)
 
 ## 2016년 11월 22일
 @SupressLint("NewApi")
