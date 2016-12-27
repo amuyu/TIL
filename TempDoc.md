@@ -1,4 +1,15 @@
 # TIL
+# Mac
+## Homebrew
+Apple에서 제공하지 않는 유용한 패키지 관리자 설치
+## OpenCV 설치
+```bash
+brew tap homebrew/science
+brew install opencv3 --HEAD --with-contrib
+echo /usr/local/Cellar/opencv3/HEAD-85e01f3_4/lib/python2.7/site-packages >> /usr/local/lib/python2.7/site-packages/opencv3.pth
+```
+[Installing opencv-3.1.0 on MacOS Sierra to use with python](http://stackoverflow.com/a/39775148/6811452)
+
 # 업무
 ## 개발 프로세스
 [토스랩, 이렇게 일하고 있습니다.](http://tosslab.github.io/process/2016/02/25/how-to-work-in-tosslab.html)
@@ -97,6 +108,7 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+<<<<<<< HEAD
 ## 태블릿 확인
 value 에 sw-600dp 에 boolean 값을 넣고  value 로 확인
 ```xml
@@ -111,6 +123,10 @@ value 에 sw-600dp 에 boolean 값을 넣고  value 로 확인
 [DataBinding-findViewById 이제 안녕~](http://gogorchg.tistory.com/entry/Android-DataBinding-findViewById-%EC%9D%B4%EC%A0%9C-%EC%95%88%EB%85%95)
 [안드로이드 데이터 바인딩-SlideShare](http://www.slideshare.net/gdgkorea/databinding)
 
+=======
+## dimension 안될때
+[왜 android:elevation이 안되지!](http://sunphiz.me/wp/archives/2000)
+>>>>>>> 449bd35757ad4be2b3781752bc27d4036c2ae380
 ## Activity 에서 onCreateView 의 역할
 onCreateView 너는 뭐니?
 View onCreateView (String name, Context context, AttributeSet attrs)

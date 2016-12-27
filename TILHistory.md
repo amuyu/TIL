@@ -11,6 +11,11 @@
 ## 2016년 11월 22일
 @SupressLint("NewApi")
 
+
+## 2016년 11월 19일
+# Mac
+## Homebrew
+
 ## 2016년 11월 16일
 # Android Test
 InstrumentationRegistry.getTargetContext()
