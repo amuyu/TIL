@@ -97,7 +97,14 @@ Service와 Persistence 계층
 
 
 # 안드로이드
-## Data Binding
+## 태블릿 확인
+value 에 sw-600dp 에 boolean 값을 넣고  value 로 확인
+```xml
+// 일반
+<bool name="isTablet">false</bool>
+// sw600dp
+<bool name="isTablet">true</bool>
+```
 
 ### 참고
 [Data Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html)
