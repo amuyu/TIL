@@ -2,7 +2,13 @@
 # Mac
 ## Homebrew
 Apple에서 제공하지 않는 유용한 패키지 관리자 설치
-
+## OpenCV 설치
+```bash
+brew tap homebrew/science
+brew install opencv3 --HEAD --with-contrib
+echo /usr/local/Cellar/opencv3/HEAD-85e01f3_4/lib/python2.7/site-packages >> /usr/local/lib/python2.7/site-packages/opencv3.pth
+```
+[Installing opencv-3.1.0 on MacOS Sierra to use with python](http://stackoverflow.com/a/39775148/6811452)
 
 # 업무
 ## 개발 프로세스
@@ -102,12 +108,14 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## dimension 안될때
+[왜 android:elevation이 안되지!](http://sunphiz.me/wp/archives/2000)
 ## Activity 에서 onCreateView 의 역할
 onCreateView 너는 뭐니?
 View onCreateView (String name, Context context, AttributeSet attrs)
 Standard implementation of LayoutInflater.onCreateView..
 ### 어디서 쓰나?
-Fragment 생성 시, infalte를 호출하면 Activity에서 받아서 View를 구성할 수도 있음 
+Fragment 생성 시, infalte를 호출하면 Activity에서 받아서 View를 구성할 수도 있음
 
 ## gradle error 'libsWithStripDebugSymbolForDebug'
 compileSdkVersion이 안 맞을 경우 발생한다.. 프로젝트에서
