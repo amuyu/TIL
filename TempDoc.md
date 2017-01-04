@@ -15,14 +15,19 @@ echo /usr/local/Cellar/opencv3/HEAD-85e01f3_4/lib/python2.7/site-packages >> /us
 [토스랩, 이렇게 일하고 있습니다.](http://tosslab.github.io/process/2016/02/25/how-to-work-in-tosslab.html)
 
 ## 코드리뷰
-### 요청 방법
+### 요청 방법(토스랩)
 - Title
   - Featur/Bug-fix 건
   - 어떤 목적
 - 어떤 이슈와 연결됐는지
 - Description
   - 어떤 로직을 추가/수정했는지
-  - 어떻게 추가 수정했는지
+  - 어떻게 추가 수정했는지  
+
+###  코드리뷰 Tool
+Upsource
+[Code review process with JetBrains UpSource ](http://www.slideshare.net/oprohonnyi/code-review-process-with-jetbrains-upsource)
+GitHub 의 PullRequest 에 대한 개념을 이해해야 할듯
 
 
 ### 코드리뷰는 언제?
@@ -108,6 +113,9 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## DialogFragment
+width, height 값을 조정하기 위해서 minWidth와 minHeight 을 사용
+
 <<<<<<< HEAD
 ## 태블릿 확인
 value 에 sw-600dp 에 boolean 값을 넣고  value 로 확인
