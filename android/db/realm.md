@@ -1,6 +1,13 @@
 
-## Realm 이란?
+## Realm 이란? 렘
 Mobile Database
+
+## 사용하는 이유
+- 기존 데이터베이스보다 속도가 빠르다
+- ORM과 같은 뛰어난 사용성
+- RealmResults이 자동으로 DB의 현재 상태를 반영한다
+- 오픈소스
+
 
 ## 사용방법
 ### Gradle 설정
@@ -30,23 +37,23 @@ Realm realm = Realm.getDefaultInstance();
 Realm에서는 VO 객체를 통해서 테이블이 생성된다.
 ```java
 public class UserVO extends RealmObject{
- 
+
     @PrimaryKey
     private String name;
     private int age;
- 
+
     public String getName() {
         return name;
     }
- 
+
     public void setName(String name) {
         this.name = name;
     }
- 
+
     public int getAge() {
         return age;
     }
- 
+
     public void setAge(int age) {
         this.age = age;
     }
@@ -82,9 +89,9 @@ private void deleteuserData(){
 }
 ```
 ### 질의 예
-2살 보다 어린 모든 개에 대한 Realm 질의 
+2살 보다 어린 모든 개에 대한 Realm 질의
 ```java
-final RealmResults<도그> puppies = realm.where(Dog.class).lessThan("age", 2).findAll(); 
+final RealmResults<도그> puppies = realm.where(Dog.class).lessThan("age", 2).findAll();
 puppies.size(); // => Realm에 아직 개가 추가되지 않았기 때문에 0
 ```
 ### 리스너
@@ -145,8 +152,6 @@ Realm.getDefaultInstance()에서 발생하는 문제, 해결방법 없음
 - Collate Localized ASC – Java 코드에서 결과값을 한번 더 Sorting 하였습니다.
 - CASE WHEN – int 값을 저장하는 Language Order Column을 별도로 생성하였습니다.
 - MATCH – 명함은 데이터가 많으므로 Contains로는 검색 속도가 나오지 않습니다(Table을 Full Scan 하기 때문입니다). Full Text Search를 활용해야 원하는 속도를 얻을 수 있습니다. 하지만 Full Text Search의 MATCH 쿼리는 Sqlite에서만 지원합니다. 그래서 Sqlite로 명함 Index를 저장, 검색하고 Realm에서 명함을 가져오는 방식으로 DB를 조합하였습니다.
-
-
 
 
 ## 참고

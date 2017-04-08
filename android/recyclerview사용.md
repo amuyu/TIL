@@ -45,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         return items.size();
     }
 
-    public final static class ListItemViewHolder 
+    public final static class ListItemViewHolder
            extends RecyclerView.ViewHolder {
         // ViewHolder
     }
@@ -61,8 +61,15 @@ recyclerView.setItemAnimator(new DefaultItemAnimator());
 ```
 
 
+## filter 사용
+Adapter 의 filter 기능을 사용해보자
+### RecyclerView.Adapter 에 Filterable 인터페이스를 사용
+### Filter클래스 생성
+Filter를 상속받는 클래스를 만들고 performFiltering 과 publishResults 를 구현한다
+
 
 
 ## 참고
 [http://www.kmshack.kr/2014/10/android-recyclerview/](http://www.kmshack.kr/android-recyclerview/)
 [Android support v7 widget RecyclerView 사용하기](http://iw90.tistory.com/214)
+[RecyclerView.Adapter Filterable](http://stackoverflow.com/a/29792313)

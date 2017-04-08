@@ -113,6 +113,71 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## Doze mode test
+(https://developers-kr.googleblog.com/2015/08/testyourapponandroid60.html)
+Apps that have been running foreground services (with the associated notification) are not restricted by doze.
+(http://stackoverflow.com/a/33077301)
+[Doze mode와 foreground서비스](https://brunch.co.kr/@huewu/3)
+## 메뉴
+(https://developer.android.com/guide/topics/ui/menus.html?hl=ko)
+## G pad 연결
+usb 연결을 mtp->ptp 로 변경해서 테스트 한다...
+(http://www.clien.net/cs2/bbs/board.php?bo_table=cm_app&wr_id=12979)
+## TextView 마지막 글자 안짤리게
+android:textAlignment="viewEnd"
+## NDK 빌드할 때... multiple target patterns. Stop.
+다음 폴더를 지우면 해결된다.
+프로젝트/obj/local/armeabi
+
+## AlertDialog positiveButton dismiss 막기
+alertDialog.setOnShowListener 사용 (http://stackoverflow.com/a/26087947)
+
+## Activity 중복 실행 막기
+```xml
+android:launchMode="singleInstance"
+android:excludeFromRecents="true"
+```
+SingleTask 모드
+startActivity()실행시 Activity가 존재하면 Activity를 Destroy하고 재생성한다.
+Activity에서 startActivityForResult() 실행시 결과를 받을수 없다.
+(일반적인 어플에서 사용 불필요)
+
+SingleInstance 모드
+startActivity()실행시 ​Activity가 존재하면 재생성하지 않고 기존 Activity를 재활용한다.
+Activity에서 startActivityForResult() 실행시 결과를 받을수 없다.
+​(일반적인 어플에서 사용 불필요)
+onStart()에서 getIntent()사용하지 말고 onNewIntent()로 받아야 한다.﻿
+​
+SingleTop 모드
+startActivity()실행시 Activity가 존재하면 재생성하지 않고 기존의 Activity를 재활용한다.
+Activity에서 startActivityForResult() 실행시 결과를 받을수 있다.
+
+Standard 모드(기본값)
+startActivity()실행시 Activity 존재여부에 상관없이 재생성하므로 동일 Activity가 여러개 될수 있다.
+Activity에서 startActivityForResult() 실행시 결과를 받을수 있다.
+[출처] 안드로이드사이드 - http://www.androidside.com/bbs/board.php?bo_table=B49&wr_id=145947#c_145963
+## style
+```xml
+<item name="colorPrimary">#e0e0e0</item>
+<item name="colorPrimaryDark">#a6a6a6</item>
+<item name="colorAccent">#a6a6a6</item>
+```
+## Editable, span
+### Spannable
+문자열의 확장판
+[Spannable 너는 뭐 하는 녀석이냐?](http://aroundck.tistory.com/300)
+
+
+## MultiAutoCompleteTextView
+Adpater 가 있는 상태에서 filter 를 사용하게 된다
+performFiltering 에 tokenizer 를 사용함, findTokenStart로 시작위치를 찾음
+performFiltering 를 상속받아서 사용하면 될듯
+onEditorAction - handleDone 키보드에서 완료 버튼 선택
+performCompletion(select), replaceText(keyboard)
+Adapter 가 없을 때는? filter를 추가하면?
+
+setFilter로 추가하면 단어만 남음, 알아서 필터해주나? setFilter 쓰느겍 낫남?
+
 ## DialogFragment
 width, height 값을 조정하기 위해서 minWidth와 minHeight 을 사용
 

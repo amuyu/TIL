@@ -330,6 +330,11 @@ public class UserListFragment extends Fragment {
 }
 ```
 
+### 생명주기
+#### doOnSubscribe
+
+
+
 ## 변경 알림 흐름을 쫓기 어려워진 문제
 표시할 때마다 Fragment에서 Model을 호출하는 장소에서 변경 알림 이벤트에 의한 View의 갱신을 가하면 호출의 흐름이 복잡하게 되어 버린다. EventBus를 통해서 구현하면 그 이벤트가 어디서 날아오는지 명확히 알 수 없다.
 이것을 Observer 패턴을 이용하면 변경 내용이 통지될 때마다 render하는 것만으로도 괜찮아지며, 또 subscribe 할 때에 Model을 참조하기 때문에 가독성이 높아진다.
@@ -411,7 +416,7 @@ together.subscribe(text -> ((TextView) findViewById(R.id.textView)).setText(text
 together.map(text -> text.toUpperCase())
         .subscribe(text -> Toast.makeText(this, text, Toast.LENGTH_SHORT).show());
 ```
-An onError notification from any of the source Observables will immediately be passed through to observers and will terminate the merged Observable. 
+An onError notification from any of the source Observables will immediately be passed through to observers and will terminate the merged Observable.
 
 ### scan
 병합된 데이터를 누적으로 처리할 수 있다
@@ -452,3 +457,6 @@ RxAndroid를 사용하는 경우, 수신된 데이터를 UI 표시하기 위해 
 [RxAndroid로 리액티브 앱 만들기](https://realm.io/kr/news/rxandroid/)
 [RxJava/RxAndroid](http://kunny.github.io/community/2016/02/08/gdg_korea_android_weekly_02_1/)
 [ReactiveX Wiki](http://reactivex.io/documentation/operators/merge.html)
+[RxJava, Observable lifecycle](https://brunch.co.kr/@lonnie/17)
+[RecyclerView와 Realm으로 만드는 Grid Layout](https://realm.io/kr/news/android-recycler-view/)
+[Ream in 리멤버](https://www.slideshare.net/SeungminLee13/201603-61412271)

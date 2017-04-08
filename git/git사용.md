@@ -39,6 +39,16 @@ git push origin master
 ```bash
 git remote add origin <원격 서버 주소>
 ```
+원격 저장소 변경
+```bash
+$ git remote -v
+ 	# View existing remotes
+origin  https://github.com/user/repo.git (fetch)
+origin  https://github.com/user/repo.git (push)
+
+$ git remote set-url origin https://github.com/user/repo2.git
+# Change the 'origin' remote's URL
+```
 
 ### 가지치기
 안전하게 격리된 상태에서 만들 때 사용한다
@@ -65,7 +75,7 @@ git pull	// fetch + merge
 다른 가지의 내용을 현재 가지에 병합하려면 아래 명령을 실행한다.
 ```bash
 git merge <가지 이름>
-git merge -Xtheris <가지 이름>
+git merge -Xtheirs <가지 이름>
 git merge -Xours <가지 이름>
 ```
 충돌이 발생하면 git이 알려주는 파일의 충돌 부분을 직접 수정해서 병합이 가능하도록 해야 한다. 충돌을 해결했다면 git에게 수정한 파일을 병합하라고 알려준다.
@@ -204,7 +214,8 @@ git stash apply
 git stash apply --index
 // strash 적용 후 바로 스택에서 제거
 git stash pop
-
+// 제거
+git stash drop
 ```
 
 ## 원복
@@ -212,6 +223,11 @@ git stash pop
 // untracked 파일 제거
 git clean -f
 git clean -f -d // 디렉토리 까지 제거
+```
+
+## commit 변경
+```bash
+git commit --amend
 ```
 
 ## 참고
