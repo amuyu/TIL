@@ -261,21 +261,24 @@ when(p.getName()).thenReturn("JDM");
 when(p.getAge()).thenReturn(20);
 assertTrue("JDM".equals(p.getName()));
 assertTrue(20 == p.getAge());
-```
-지정 메소드에 대해 반환해줄 값을 설정할 수 있다.
+```  
+지정 메소드에 대해 반환해줄 값을 설정할 수 있다  
 ```java
-public List<스트링> getList(String name, int age){ // do something code }
+public List<String> getList(String name, int age) {
+// do something code
 // list에 대한 호출
 when(mockIns.getList(anyString(), anyInt()))
     .thenReturn(
-        new ArrayList<스트링>(){
+        new ArrayList<String>(){
             { this.add("JDM"); this.add("BLOG"); }
         }
     );
 
 // 매개 변수에 특정 값을 넣어야 한다면 eq()를 사용
 when(mockIns.getList(eq("JDM"), anyInt()))
+}
 ```
+
 ### doThrow()
 예외를 던지고 싶을 때, doThrow() 사용
 ```java
@@ -331,8 +334,10 @@ public class AuthService{
     }
 }
 public class AuthDao {
-    public boolean isLogin(String id){ //some code ... }
+    public boolean isLogin(String id){ //some code ...
+    }
 }
+
 
 // mockito 처리
 @Mock
@@ -643,15 +648,17 @@ context 객체를 any 로 변경했더니 에러가 사라짐
 when(dataManagerImpl.getLabeIndex(any(Context.class), any(Integer.class))).thenReturn(1);
 ```
 ### presenter Test AndroidJUnit4 에서 해야 하나?
- android 객체를 사용하려면 androidTest 를 하는게 낫다(Log나 intent rkxdmsrj)
+ android 객체를 사용하려면 androidTest 를 하는게 낫다(Log나 intent  같은거)
  android 객체를 사용하지 않으면 그냥 test를 해도 된다.
 
 
 
 ## 참고
+- [Android Testing Codelab](https://codelabs.developers.google.com/codelabs/android-testing/#5)
 - [안드로이드 스튜디오에서 단위 테스트 작성 및 실행하기](http://androidhuman.com/536)
   - 폴더 생성 부터~ Android Junit 테스트 설명, gradle 테스트 실행 명령
 - [Android Studio Tips: Unit Testing 적용하기 (Part 1)](https://www.davidlab.net/ko/tech/android-studio-tips-applying-unit-testing-part1/)
+  - http://davidlab.net/blog/applying-unit-testing-on-android-studio-part1
   - Junit 테스트 설명, mock object 사용
 - [Android App과 TDD 밑에 자료 보고난 후 공유](http://blog.benelog.net/3017442)
 - [Android App과 TDD-kakao임유진](https://docs.google.com/file/d/0B-SpjDXB7EMTMjFsM0k2YTFDbWM/edit)
@@ -668,8 +675,7 @@ when(dataManagerImpl.getLabeIndex(any(Context.class), any(Integer.class))).thenR
 - [Building Local Unit Tests - Mockito](https://developer.android.com/training/testing/unit-testing/local-unit-tests.html#build)
 - [mockito site](http://site.mockito.org/)
 - [mockito 사용법](http://jdm.kr/blog/222)
-- [Android Testing Codelab](https://codelabs.developers.google.com/codelabs/android-testing/#5)
-- [Android-testing-templates](https://github.com/googlesamples/android-testing-templates/blob/master/AndroidTestingBlueprint/app/proguard-test-rules.pro)
+- [mockito로 비동기 메소드를 테스트 하기](http://eyeahs.github.io/unit/test/blog/2016/02/12/UnitTestingAsynchronous/) [Android-testing-templates](https://github.com/googlesamples/android-testing-templates/blob/master/AndroidTestingBlueprint/app/proguard-test-rules.pro)
 - [To test incoming intent](http://stackoverflow.com/a/34625825/6811452)
 - [android-test-demo](https://github.com/chiuki/android-test-demo) - di 사용한 테스트 샘플 코드
 - [android-testing-runtime-permissions](https://github.com/Egorand/android-testing-runtime-permissions)

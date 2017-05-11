@@ -70,6 +70,8 @@ GitHub 의 PullRequest 에 대한 개념을 이해해야 할듯
 
 
 # 코딩
+## json to pojo
+http://www.jsonschema2pojo.org/
 ## Gvim
 ### CommandT 플러그인
 [Vim에서 파일브라우징을 위한 플러그인](https://blog.outsider.ne.kr/608)
@@ -111,8 +113,30 @@ Service와 Persistence 계층
 
 
 
-
 # 안드로이드
+## android:includeFontPadding
+폰트의 여백 제거
+## AdapterDelegate
+[JOE'S GREAT ADAPTER HELL ESCAPE](http://hannesdorfmann.com/android/adapter-delegates)
+## annotation
+[Between 사용 사례: APT를 활용한 Realm 마이그레이션](https://news.realm.io/kr/news/realm-meetup-vcnc-between-case-study/)
+## 안드로이드 플랫폼 빌드 관련
+[AndroidPlatformBuilder](https://github.com/ganadist/AndroidPlatformBuilder)
+[샘플](https://android.googlesource.com/device/sample/+/android-7.1.2_r6/products/sample_addon.mk)
+## DiffUtil
+[RecyclerView DiffUtil로 성능 향상하기](http://www.kmshack.kr/2017/04/recyclerview-diffutil/)
+## layout에 관한 이야기
+layout 퍼포먼스??
+LinearLayout << RelativeLayout <<<<< ConstrainLayout
+### RelativeLayout vs ConstraintLayout
+weight + depth 들어가면 RelativeLayout 이 더 낫고요
+뷰 간 관계가 많아지면 ConstraintLayout
+## webview posturl 통신
+```java
+Response response = okHttpClient.newCall(request).execute();
+mWebView.loadDataWithBaseURL(mUrl, response.body().string();, "text/html", "utf-8", null);
+```  
+
 ## Doze mode test
 (https://developers-kr.googleblog.com/2015/08/testyourapponandroid60.html)
 Apps that have been running foreground services (with the associated notification) are not restricted by doze.

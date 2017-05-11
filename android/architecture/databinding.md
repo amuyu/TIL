@@ -181,12 +181,53 @@ private static class User extends BaseObservable {
 ```
 Bindable 주석은 컴파일 중에 BR 클래스 파일에 항목을 생성한다.
 
+## 식 언어
+### null 병합 연산자
+?? 는 왼쪽 피연산자가 null이 아니면 왼쪽 피연산자를 선택하고, null이면 오른쪽 피연산자를 선택합니다.
+
+## ListView databinding
+### listview 에 데이터를 추가하는 방법 - ListBiding 사용
+viewModel 의 데이터 갱신 후, Adapter의 데이터를 set하기 위해서 아래와 같은 형태의 Binding클래스를 생성한다.
+```java
+public class TasksListBindings {
+
+    @SuppressWarnings("unchecked")
+    @BindingAdapter("app:items")
+    public static void setItems(ListView listView, List<Task> items) {
+        TasksFragment.TasksAdapter adapter = (TasksFragment.TasksAdapter) listView.getAdapter();
+        if (adapter != null)
+        {
+            adapter.replaceData(items);
+        }
+    }
+}
+```
+위 클래스 생성 후, 아래처럼 xml 의 listview에서 app:items 태그 사용이 가능해진다
+```xml
+<ListView
+      android:id="@+id/tasks_list"
+      app:items="@{viewmodel.items}"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+```
+호출 순서를 정리해보면 ViewModel의 items에서 데이터 갱신이 이루어지면
+TasksListBindings 의 setItems 가 호출이 되고 adapter의 데이터 갱신 함수를 호출함으로써
+adpater의 데이터 까지 갱싱이 이루어지게 된다.
+### ViewModel의 데이터와 Adapter 의 데이터를 분리하면서 얻게 되는 이점?
+viewModel의 데이터를 직접 사용하면 viewModel의 데이터가 빠르게 변경되는 경우
+adapter에서 view를 구성하기 위해 viewModel 데이터 호출 시점과 실제 데이터 호출의 싱크가 맞지 않는 경우가 발생한다.
+이를 막기위해서 binding 클래스에서 view에서 호출되는 값들의 valid 체크를 해줘야하는 코드가 발생하게 된다
+예를 들어 viewModel의 데이터가 100개에서 90개로 줄어들었을 때, adapter에서는 100개의 데이터를 보여주려고 하는 경우
+
+
 
 ## 실제로 해보자
 레이아웃 작성,
 View에 대한 model 필요,
 View 이벤트 필요 -> presenter
 Binding 호출
+
+
 
 
 ## 참고

@@ -5,7 +5,7 @@
 
 
 ### Gradle 사용
-1.설치 
+1.설치
   - 파일 다운로드 [그레이들](http://www.gradle.org)
   - 특정 디렉토리에 복사  
 
@@ -42,7 +42,6 @@ war 태스크를 실행하면 build/libs 디렉토리에 WAR 파일이 생성된
 
 #### 그레이들 데몬
 그레이들 데몬을 사용하면 JVM을 상주시키기 때문에 매번 JVM을 실행하거나 정지하지 않아도 되서 명령 실행에 걸리는 시간을 줄여준다.
-
 그레디을 데몬의 사용법은 매우 간단하다. gradle 명령 실행 시 옵션 --daemon을 지정하면 끝이다.
 ```bash
 $ gradle --daemon hello
@@ -75,7 +74,95 @@ gradlew.bat|그레이들 래퍼 실행용 배치 파일(윈도용)
 - 사용할 그레이들 버전을 고정할 수 있다. 그레이들의 버전 차이에 따른 빌드 오류를 방지할 수 있다.
 - 젠킨스 같은 CI 툴 실행 환경에 그레이들을 설치하지 않아도 된다. CI 환경을 구축하는데 드는 수고를 덜 수 있다.
 
+### Gradle general task
+- assemble
+The task to assemble the output(s) of the project.
+- check
+The task to run all the checks.
+- build
+This task does both assemble and check.
+- clean
+This task cleans the output of the project.
+
 ### 자바 프로젝트 빌드
 #### Java 플러그인이란
 Java 플러그인은 자바 빌드에 필요한 '태스크', 설정을 단순화하는 '규칙' 그리고 그것을 구현하기 위한 '속성' 및 '소스 세트'가 패키지로 구성된 빌드 기능 컴포넌트다.
 
+## 안드로이드 gradle
+### 구성요소
+#### setting.gradle
+멀티프로젝트에 포함되는 하위 모듈 목록
+#### gradle.properties
+기타 환경 변수 설정
+- 사용 예
+gradle.properties 에 다음과 같이 변수를 설정하고
+```
+// gradle.properties
+daum_api_key=xxx
+```
+build.gradle 에서 사용할 수 있다.
+```
+// build.gradle
+${daum_api_key}
+```
+#### local.properties
+SDK Home 설정
+
+### 타입별로 빌드
+#### buildConfigField
+buildConfigField 를 사용해서 flavor에 따라 변수의 값을 셋팅할 수 있다
+
+### apk 이름 설정 방법
+app의 build.gradle 에 아래와 같이 셋팅한다
+```sh
+// android 객체나 android-buildTypes 객체에 셋팅할 수 있다
+applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFilename = output.outputFile.name;
+            outputFilename = outputFilename.replace(
+                        ".apk", "-${variant.versionName}.apk")
+            output.outputFile = new File(output.outputFile.parent, outputFilename);
+        }
+    }
+```
+혹은 defaultConfig 에 archivesBaseName 으로 셋팅할 수 있다
+```sh
+archivesBaseName = "app-$versionName"
+```
+
+### 생성된 apk 복사, 소스 압축
+```sh
+task archiveSource(type: Zip) {
+    archiveName = "$appVersionName-rc$rc/appname-$appVersionName-source.zip"
+    from(rootProject.projectDir) {
+        include('*/**')
+        exclude('**/docs/**')
+        exclude('**/logger/**')
+        exclude('**/logs/**')
+        exclude('**/build/**')
+        exclude('**/.gradle/**')
+        exclude('**/local.properties')
+        exclude('**/.idea/**')
+        exclude('**/.DS_Store')
+        exclude('**/*.iml')
+    }
+}
+
+task archiveProject(type: Copy) {
+    def destination = "$project.buildDir/distributions/$appVersionName-rc$rc"
+    def binaryFile = "$project.buildDir/outputs/apk/appname-$appVersionName-release-unsigned.apk"
+    println "destination:$destination"
+    println "binaryFile:$binaryFile"
+    from(binaryFile)
+    into(destination)
+}
+
+archiveSource.dependsOn 'assembleProdRelease'
+archiveProject.dependsOn 'archiveSource'
+```
+
+
+
+## 참고
+[gradle 개인 wiki](https://slipp.net/wiki/display/IDE/Gradle)
+[안드로이드를 위한 gradle 맛들이기](https://www.slideshare.net/koreacio/gradle-64458419)

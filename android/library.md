@@ -16,6 +16,11 @@ dependencies {
 }
 ```
 
+# export aar
+```
+./gradleW :library:aR
+```
+
 
 # 안드로이드 라이브러리 만들기
 [Android Library Project 만들어서 jar 파일로 추출하기](http://eunplay.tistory.com/54)
@@ -29,6 +34,6 @@ dependencies {
 
 
 # 참고
-
 [Providing the SDK as an aar archive](https://docs.onegini.com/msp/android-sdk/5.04.01/topics/setting-up-the-project.html#providing-the-sdk-as-an-aar-archive)
 [how do I include a local jar from a dependent java project in an Android build?](http://stackoverflow.com/questions/22360737/gradle-how-do-i-include-a-local-jar-from-a-dependent-java-project-in-an-android/22415260#22415260)
+[How to Build *.so Library Files into AAR Bundle in Android Studio](http://www.codepool.biz/build-so-aar-android-studio.html)
