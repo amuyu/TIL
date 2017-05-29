@@ -10,11 +10,19 @@ echo /usr/local/Cellar/opencv3/HEAD-85e01f3_4/lib/python2.7/site-packages >> /us
 ```
 [Installing opencv-3.1.0 on MacOS Sierra to use with python](http://stackoverflow.com/a/39775148/6811452)
 
+# 프로토콜?
+## http websocket
+http w3c 문서...가 재밋다...?
+http 는 rfc 문서..? 고통의 2616 문서
+https://tools.ietf.org/html/rfc2616
+
 # 업무
 ## 개발 프로세스
 [토스랩, 이렇게 일하고 있습니다.](http://tosslab.github.io/process/2016/02/25/how-to-work-in-tosslab.html)
 
 ## 코드리뷰
+### Airbnb에서 사용하는 코드리뷰 툴
+https://www.phacility.com - 근데 유료
 ### 요청 방법(토스랩)
 - Title
   - Featur/Bug-fix 건
@@ -114,6 +122,20 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## pidcat
+[logcat color script](https://github.com/JakeWharton/pidcat/)
+## bazel
+TensorFlow 안드로이드 데모를 하기 위해 필요하다
+TensorFlow: 머신러닝
+[Bazel 알아보기](http://limelab.tistory.com/20)
+gradle 처럼 빌드 시스템, gradle보다 빠르게 빌드할 수 있다
+## fullt text Search
+sqlite 에서 보다 빠르게 문자열 검색
+[full-text-sarch](http://stackoverflow.com/questions/29815248/full-text-search-example-in-android)
+## LeakCanary
+[Android Memory Leak 해결을 위한 LeakCanary](http://dev2.prompt.co.kr/68)
+## WeakReference
+메모리 관리를 위해 사용,
 ## android:includeFontPadding
 폰트의 여백 제거
 ## AdapterDelegate

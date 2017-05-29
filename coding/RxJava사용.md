@@ -81,10 +81,11 @@ subscribe 하면 특정 function을 실행하고 subscriber에 이벤트를 전�
 #### 비동기 처리를 위한 subscribeOn과 observeOn
 Observable.defer()와 subscribeOn, observeOn을 사용하면 쉽게 비동기 처리를 할수 있음
 ##### subscribeOn
-observable에 subscribe 이루어지는 thread
+observable에 subscribe 이루어지는 thread, subscription 이 실행되는 스레드를 변경
 ##### observeOn
 Subscriber(observer)에서 이벤트를 처리할 때 사용되는 thread
 Observable이 이벤트를 전파할 때, 사용되는 thread
+호출할 때마다 이 시점 이후의 쓰레드가 변경됨
 
 ### 스케줄러
 스케줄러는 observable, subscribe, operator 를 어떤 스레드에서 수행할지 결정하는 것 subscribeOn과 observeOn으로 지정
@@ -436,6 +437,9 @@ together.scan(0, (sum, number) -> sum + number)
         ((TextView) findViewById(R.id.number)).setText(number.toString()));
 ```
 
+### compose
+공통적인 오퍼레이션을 묶어줌
+
 # TIP
 ## MissingBackpressureException
 Observable에서 항목을 보내는 속도보다 처리하는 속도가 느릴 때 발생한다.
@@ -460,3 +464,6 @@ RxAndroid를 사용하는 경우, 수신된 데이터를 UI 표시하기 위해 
 [RxJava, Observable lifecycle](https://brunch.co.kr/@lonnie/17)
 [RecyclerView와 Realm으로 만드는 Grid Layout](https://realm.io/kr/news/android-recycler-view/)
 [Ream in 리멤버](https://www.slideshare.net/SeungminLee13/201603-61412271)
+[Rxjava-study](https://gist.github.com/QuadFlask/145e80b4ac54d1541e2d38d9ce762a57)
+[그림으로 보는 rxjava operator](http://rxmarbles.com/#combineLatest)
+[Airbnb는 어떻게 Rxjava를 적용했을까요](https://news.realm.io/kr/news/kau-felipe-lima-adopting-rxjava-airbnb-android/)

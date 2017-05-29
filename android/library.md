@@ -21,6 +21,15 @@ dependencies {
 ./gradleW :library:aR
 ```
 
+# aar dependency
+```
+// 1
+compile (name:'scanlibrary-release', ext:'aar')
+// 2
+compile ('com.noco.android.ocrlibrary:ocrlibrary:1.0.0@aar') {
+        transitive = true
+}
+```
 
 # 안드로이드 라이브러리 만들기
 [Android Library Project 만들어서 jar 파일로 추출하기](http://eunplay.tistory.com/54)
