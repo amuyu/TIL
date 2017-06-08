@@ -1,3 +1,16 @@
+# 라이브러리 프로젝트 만들기
+## Gradle 설정 변경
+app/build.gradle 맨 위
+```groovy
+apply plugin:'com.android.application'
+```
+부분을 라이브러리로 수정한다
+```groovy
+apply plugin:'com.android.library'
+```
+defaultConfig 부분의 applicationId 라인을 삭제한다
+
+
 # export jar
 ```gradle
 // This is the actual solution, as in http://stackoverflow.com/a/19037807/1002054
@@ -39,8 +52,8 @@ compile ('com.noco.android.ocrlibrary:ocrlibrary:1.0.0@aar') {
 [How to add .aar dependency in library module?](http://stackoverflow.com/questions/34765190/how-to-add-aar-dependency-in-library-module)
 [How to export library to Jar in Android Studio?](http://stackoverflow.com/questions/16763090/how-to-export-library-to-jar-in-android-studio)
 [android studio에서 jar 만들기](https://dotkebi.blogspot.kr/2016/02/android-studio-jar.html)
-
-
+[Android Module을 Bintray(JCenter)에 배포하는 방법](http://thdev.tech/androiddev/2016/09/01/Android-Bintray(JCenter)-Publish.html)
+[Android lib jcenter로 배포하기](https://brunch.co.kr/@nser789/1)
 
 # 참고
 [Providing the SDK as an aar archive](https://docs.onegini.com/msp/android-sdk/5.04.01/topics/setting-up-the-project.html#providing-the-sdk-as-an-aar-archive)

@@ -78,6 +78,8 @@ GitHub 의 PullRequest 에 대한 개념을 이해해야 할듯
 
 
 # 코딩
+## volatile
+멀티쓰레딩 환경 시 동기화
 ## json to pojo
 http://www.jsonschema2pojo.org/
 ## Gvim
@@ -122,18 +124,25 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## Chronometer
+안드로이드에서 제공하는 타이머
+Handler.sendMessageDelayed 를 사용해서 표시하고 있음
+## fragment commit exception
+commit()은 Activity의 onSaveInstanceState() 하기전에 수행되어야 하며, 이를 어길시 java.lang.IllegalStateException: Can not perform this action after onSaveInstanceState 예외가 발생된다
+화면갱신이 필요한 경우에는 commit()을 쓰지 말고 commitAllowingStateLoss()를 호출 해서 onSaveInstanceState()와 무관하게 commit를 할 수 있다.
+[fragmenttransaction에 대해서..](http://www.kmshack.kr/2013/08/fragment-파헤치기-3-fragmentmanager-fragmenttransaction에-대해서/)
+
 ## pidcat
 [logcat color script](https://github.com/JakeWharton/pidcat/)
 ## bazel
 TensorFlow 안드로이드 데모를 하기 위해 필요하다
 TensorFlow: 머신러닝
+[tensorflow](https://tensorflow.blog/텐서플로-첫걸음/)
 [Bazel 알아보기](http://limelab.tistory.com/20)
 gradle 처럼 빌드 시스템, gradle보다 빠르게 빌드할 수 있다
 ## fullt text Search
 sqlite 에서 보다 빠르게 문자열 검색
 [full-text-sarch](http://stackoverflow.com/questions/29815248/full-text-search-example-in-android)
-## LeakCanary
-[Android Memory Leak 해결을 위한 LeakCanary](http://dev2.prompt.co.kr/68)
 ## WeakReference
 메모리 관리를 위해 사용,
 ## android:includeFontPadding

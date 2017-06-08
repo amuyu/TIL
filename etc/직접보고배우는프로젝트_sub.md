@@ -134,3 +134,83 @@ onStop()은 onDestroy()
 하나의 stream에 여러 subscriber 인 경우 - Observable.publish().refCount()
 하나의 stream에 여러 subscriber 이고 이전에 emit된 item 이 필요한 경우 - Observable.replay().refCount()
 하나의 stream에 여러 subscriber 이고 최근 emit된 item이 필요한 경우 - Observable.compose(ReplayingShare.instance())
+
+
+
+======================================
+# logger
+log 저장하는 라이브러리 프로젝트
+dependencies가 없다(dependencies 어떻게 하는지 보려고 했는데..)
+## 클래스 호출
+Logger > LoggerPrinter > LogAdapter > FormatStrategy
+Logger에서는 LoggerPrinter를 사용해서 log message print
+LoggerPrinter에서는 List<LogAdapater> 에 log 메시지 전달
+LogAdapter에서 FormatStrategy 설정에 따라 log 메시지 print
+### Logger 클래스
+사용자가 호출하는 인터페이스, 호출하기 쉽도록 static 메소드/변수 사용
+### LoggerPrinter
+사용자가 호출하는 메소드를 LogAdapter에 전달할 수 있도록 정리
+(여러 종류의 LogAdapter 사용 가능)
+### LogAdapter
+출력 장소에 따라 클래스를 분리 AndroidLogAdapter, DiskLogAdapter
+실제 출력은 FormatStrategy 에서 이루어지지만 사용자가 용도에 따라 사용할 있도록 인터페이스 용도로 사용
+인터페이스 클래스보다는 추상 클래스로 사용이 더 나은 듯....
+#### AndroidLogAdapter
+Logcat 에 출력되는 메시지 PrettyFormatStrategy 클래스에 메시지 전달
+### FormatStrategy
+실제 메시지 출력 담당
+### PrettyFormatStrategy
+log를 예쁘게 출력
+
+======================================
+# Timber
+log 저장하는 라이브러리 프로젝트
+## tree(abstract)
+로그 호출 인터페이스
+### ThreadLocal
+쓰레드 단위로 로컬 변수를 할당한다,
+쓰레드 영역에 변수를 설정한다.
+쓰레드 기준으로 동작하는 기능 구현시 , 유용하게 사용가능하다
+Tree에서 ThreadLocal을 사용한 이유는 뭘까? 다른 thread 에서 tag를 채가지 않도록 하기 위해서
+tag 입력은 기존의 입력처럼 Logger(tag, message) 형태로 사용하도록 하는게 나을듯
+## TREE_OF_SOULS
+tree 호출(리스트) - adapter 역할
+## DebugTree
+실제 동작하는 tree
+## Test
+Robolectric, festassert 사용
+shadowlog, LogAssert
+
+## 배울점
+### 멀티쓰레딩
+volatile, synchronized, threadlocal
+### list
+unmodifiableList
+
+
+======================================
+# android component architecture
+## ProduceListFragment
+Databinding, LifecycleFragment, ProductListViewModel,
+### databinding inflate
+'DataBindingUtil.inflate' 를 사용하여 binding 생성
+ViewDataBinding.bind() 와는 큰 차이는 없음
+```java
+DataBindingUtil.inflate(inflater, R.layout.list_fragment, container, false)
+```
+### Recyclerview 와 binding
+ViewHolder에 멤버변수로 binding 사용
+```
+static class ProductViewHolder extends RecyclerView.ViewHolder {
+
+  final ProductItemBinding binding;
+
+  public ProductViewHolder(ProductItemBinding binding) {
+      super(binding.getRoot());
+      this.binding = binding;
+  }
+}
+```
+## ProduceListViewModel
+## LifecycleFragment
+## LiveData

@@ -307,7 +307,39 @@ inline fun SQLiteDatabase.transaction(body: () -> Unit) {
   }
 }
 ```
-## declare(init)
+## Properties and Fields
+### get/set
+property 선언의 full syntax
+```
+var <propertyName>[: <PropertyType>] [= <property_initializer>]
+    [<getter>]
+    [<setter>]
+```
+initializer 와 getter, setter 는 선태적으로 입력할 수 있다.
+```kotlin
+var allByDefault: Int? // error: explicit initializer required, default getter and setter implied
+var init = 1 // has type int, default getter and setter
+
+// custom getter
+val isEmpty: Boolean
+    get() = this.size == 0
+// custom getter and setter
+var stringRepresentation: String
+    get() = this.toString()
+    set(value) {
+        setDataFromString(value) // parses the string and assigns values to other properties
+    }    
+```
+### backing field
+
+```kotlin
+var counter = 0 // the initializer value is written directly to the backing field
+    set(value) {
+        if (value >= 0) field = value
+    }
+```
+
+
 ### lateinit/lazy
 늦은 초기화 변수 선언
 lateinit : var 변수 초기화
@@ -358,7 +390,34 @@ subject one : 제목 초기화
 subject two : 제목 초기화
 subject three : 제목 초기화
 ```
-### Delegates.observable (lazy)
+### Delegates
+getter와 setter 구현을 다른 객체에 넘기는 것이 가능
+#### Delegates
+Delegate 사용 예제
+```kotlin
+class Example {
+    var p: String by Delegate()
+}
+
+class Delegate {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+        return "$thisRef, thank you for delegating '${property.name}' to me!"
+    }
+
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+        println("$value has been assigned to '${property.name} in $thisRef.'")
+    }
+}
+```
+```kotlin
+val e = Example()
+println(e.p)
+
+// result
+Example@33a17727, thank you for delegating ‘p’ to me!
+```
+
+#### Delegates.observable (lazy)
 ```kotlin
 private var name by Delegates.observable("jane") {
             prop,old, new -> println("name changed from $old to $new")
@@ -376,8 +435,84 @@ name:jane
 name changed from jane to kane
 name:kane
 ```
-### Delegates.notNull
-### bindView
+#### Delegates.notNull
+설정되지 않은 상태에서 getter가 호출될 경우 크래시 발생
+#### bindView
+'kotterknife' kotlin 버전의 butterknife
+## 코틀린의 유용한 함수들
+### let()
+let()은 함수를 호출하는 객체를 이어지는 블록의 인자로 넘기고, 블록의 결과값을 반환합니다.
+```kotlin
+fun <T, R> T.let(block: (T) -> R): R
+```
+사용 예, 일반적으로 padding 값을 설정하는 코드
+```
+val padding = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics).toInt()
+// 왼쪽, 오른쪽 padding 설정
+setPadding(padding, 0, padding, 0)
+```
+let을 사용하면 불필요한 선언을 방지할 수 있음
+```
+TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f,
+        resources.displayMetrics).toInt().let { padding ->
+    // 계산된 값을 padding 이라는 이름의 인자로 받음
+    setPadding(padding, 0, padding, 0)
+}
+```
+let 을 '?'과 사용하면 'if(null != obj)' 를 대체 할 수 있음
+```
+// null일 수 있는 변수 obj
+var obj: String?
+
+// ...작업 수행...
+
+// obj가 null이 아닐 경우 작업 수행 (기존 방식)
+if (null != obj) {
+    Toast.makeText(applicationContext, obj, Toast.LENGTH_LONG).show()
+}
+
+// obj가 null이 아닐 경우 작업 수행 (Safe calls + let 사용)
+obj?.let {
+    Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
+}
+```
+### apply()
+함수를 호출하는 객체를 이어지는 블록의 리시버 로 전달하고, 객체 자체를 반환합니다.
+리시버란, 바로 이어지는 블록 내에서 메서드 및 속성에 바로 접근할 수 있도록 할 객체를 의미합니다.
+```
+fun <T> T.apply(block: T.() -> Unit): T
+```
+사용 예, LayoutParams 객체를 생성하고 속성을 지정하는 코드
+```
+val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT)
+param.gravity = Gravity.CENTER_HORIZONTAL
+param.weight = 1f
+param.topMargin = 100
+param.bottomMargin = 100
+```
+apply를 사용하면
+```
+val param = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+    gravity = Gravity.CENTER_HORIZONTAL
+    weight = 1f
+    topMargin = 100
+    bottomMargin = 100
+}
+```
+### run()
+run() 함수는 인자가 없는 익명 함수처럼 동작하는 형태와 객체에서 호출하는 형태 총 두 가지가 있습니다.
+인자가 없는 경우, 인자 없는 익명 함수처럼 사용할 수 있습니다.
+```
+fun <R> run(block: () -> R): R
+```
+객체에서 호출하는 경우,
+```
+fun <T, R> T.run(block: T.() -> R): R
+```
+객체를 리시버로 전달받으므로, 특정 객체의 메서드나 필드를 연속적으로 호출하거나 값을 할당할 때 사용합니다.
+apply()와 비슷하지만 apply()는 새로운 객체를 생성함과 동시에 연속된 작업이 필요할 때 사용하고
+run()은 이미 생성된 객체에 연속된 작업이 필요할 때 사용한다는 점이 조금 다릅니다.
 
 # 참고
 [Android Kotlin 시작하기](http://thdev.tech/androiddev/kotlin/2016/07/31/Kotlin-Android-Start.html)
