@@ -11,6 +11,24 @@ LifecycleActivity, LifecycleFragment 에서 getLifecycle() 인터페이스로 �
 ## LifecycleRegistry
 addObserver를 통해서 LifeCycle 이벤트를 observe 할 수 있다
 
+#### download
+viewmodel 을 사용하기 위해서 dependencies 를 추가한다.
+*project/build.gradle*
+```groovy
+allprojects {
+    repositories {
+        jcenter()
+        maven { url 'https://maven.google.com' }
+    }
+}
+```
+*app/build.gradle*
+```groovy
+compile "android.arch.lifecycle:runtime:1.0.0-alpha1"
+compile "android.arch.lifecycle:extensions:1.0.0-alpha1"
+annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha1"
+```
+
 ======
 # LiveData
 lifecycle 에 따라 동작하는 data holder class 이다.
@@ -94,6 +112,13 @@ public class MyActivity extends AppCompatActivity {
 ```
 ## onCleared
 lifecycle finish 가 되면 onCleared가 호출됨
+## 궁금증
+BaseObserver와 같이 사용할 수 있는가..  
+ovservable fields를 사용하면 같이 사용할 수 있을듯. 근데 또, LiveData를 생각하면
+ui - viewmodel(baseobserver) - presenter -
+(databinding + viewmodel) class 하나 만들자
+## 적용
+ViewModel 은 bundle 같이 초기에 넘어오는 데이터로 셋팅해서 사용할 수 있을 듯? (BaseObserver 를 사용하는 경우?)
 
 
 # 참고

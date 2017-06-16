@@ -110,6 +110,16 @@ git push 명령은 자동으로 리모트 서버에 태그를 전송하지 않�
 ```bash
 git push origin <tag>
 ```
+### 태그 삭제하기
+'-d' 옵션 사용
+```bash
+git tag -d <tag>
+```
+### 원격 저장소 태그 삭제하기
+':'를 사용하여 삭제
+```bash
+git push origin :<tag>
+```
 
 
 ### 로컬 변경 내용 되돌리기

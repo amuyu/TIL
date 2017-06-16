@@ -11,10 +11,22 @@ Mobile Database
 
 ## 사용방법
 ### Gradle 설정
+*project/build.gradle*
 ```gradle
-// app-gradle
-compile 'io.realm:realm-android:0.87.4'
-
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.realm:realm-gradle-plugin:3.3.2"
+    }
+}
+```
+*app/build.gradle*
+```gradle
+apply plugin: 'realm-android'
+```
+```proguard
 // proguard
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *
@@ -26,7 +38,8 @@ compile 'io.realm:realm-android:0.87.4'
 ### RealmConfiguration 생성
 패키지의 "files" 디렉토리의 Realm파일을 저장하는 RealmConfiguration 생성하기.
 ```java
-RealmConfiguration realmConfig = new RealmConfiguration.Builder(context).build();
+Realm.init(app);
+RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
 Realm.setDefaultConfiguration(realmConfig);
 ```
 ### Realm 인스턴스 얻기

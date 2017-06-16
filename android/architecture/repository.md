@@ -10,3 +10,13 @@ cache 데이터가 없는 경우 local 데이터를 호출한다.
 # Repository class 생성
 Repository class는 single 패턴을 사용하여 어디서든 사용할 수 있도록 한다
 Injection 클래스를 사용하면 테스트 등이 용이하다.
+
+# 구조
+DataSource - 인터페이스 (remote, local, repository)
+Repository - cache, remote, local 관리
+ui - repository - local,cache,remote
+
+# inject
+
+## 참고
+[todo-app](https://github.com/googlesamples/android-architecture/tree/todo-mvvm-databinding/)

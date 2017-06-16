@@ -124,6 +124,13 @@ Service와 Persistence 계층
 
 
 # 안드로이드
+## flavorDimensions
+
+## firebase remote config?
+Firebase 원격 구성으로 클라우드에서 앱의 매개변수를 정의하고 업데이트하면 앱 업데이트를 배포하지 않고도
+앱의 모양과 동작을 수정할 수 있습니다. 이 가이드에서는 앱에서 다음 단계에 따라 원격 구성을 사용하는 방법을 다룹니다.
+## PreferenceScreen
+xml에서 사용, CheckBoxPreference 뭥미
 ## Chronometer
 안드로이드에서 제공하는 타이머
 Handler.sendMessageDelayed 를 사용해서 표시하고 있음
