@@ -251,3 +251,4 @@ git commit --amend
 - [git merge와 rebase 비교하기](https://blog.outsider.ne.kr/666)
 - [svn 대비 git의 차별점](http://seungzzang.blogspot.kr/2013/04/git-svn-svn-git.html)
 - [Git브랜치-Rebase하기](https://git-scm.com/book/ko/v1/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase%ED%95%98%EA%B8%B0)
+- [초심자를 위한 github 협업 튜토리얼](https://blog.weirdx.io/post/45529)

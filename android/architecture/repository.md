@@ -6,6 +6,13 @@ Repository는 데이터를 가져올 수 있는 곳을 local과 remote로 나눈
 그렇지 않은 경우 cache 데이터가 있으면 cache 데이터를 리턴하고
 cache 데이터가 없는 경우 local 데이터를 호출한다.
 만약 local 데이터가 없으면 remote 데이터를 가져온다.
+```java
+public class Repository implements DataSource {
+    private DataSource localDataSource;
+    private DataSource remoteDataSource;
+    private HashMap<> cache;
+}
+```
 
 # Repository class 생성
 Repository class는 single 패턴을 사용하여 어디서든 사용할 수 있도록 한다

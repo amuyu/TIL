@@ -121,9 +121,22 @@ Html 파서 라이브러리
 Service와 Persistence 계층
 ## GUI 프로그래밍의 TDD??
 
-
+# 웹앱
+## AMP, PWA
+[구글이 제시하는 미래의 웹](https://byline.network/2016/05/1-169/)
 
 # 안드로이드
+## 가속도 센서로 속도 구하기
+[가속도센서](http://ko.android.wikia.com/wiki/가속도_센서)
+[calculate speed from accelerometer](https://physics.stackexchange.com/questions/153159/calculate-speed-from-accelerometer)
+## 용량줄이기
+[application 용량 줄이기](https://www.slideshare.net/HosukShin1/application-77456003)
+## navigation bar check
+[stackoverflow answer](https://stackoverflow.com/questions/16092431/check-for-navigation-bar)
+## JobIntentService
+[Android O에서의 백그라운드 처리를 위한 JobIntentService](https://medium.com/@cwdoh/android-o에서의-백그라운드-처리를-위한-jobintentservice-250af2f7783c)
+## NestedScrollView
+NestedScrollView를 이용하면 ScrollView안에 ScrollView를 구현할 수 있다.
 ## flavorDimensions
 
 ## firebase remote config?

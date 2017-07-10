@@ -35,15 +35,24 @@ apply plugin: 'realm-android'
 -dontwarn javax.**
 -dontwarn io.realm.**
 ```
-### RealmConfiguration 생성
+### RealmConfiguration 생성 및 설정
 패키지의 "files" 디렉토리의 Realm파일을 저장하는 RealmConfiguration 생성하기.
 ```java
 Realm.init(app);
+// default configuration
 RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
+// typical configuration
+RealmConfiguration config = new RealmConfiguration.Builder()
+  .name("myrealm.realm")
+  .encryptionKey(getKey())
+  .schemaVersion(42)
+  .modules(new MySchemaModule())
+  .migration(new MyMigration())
+  .build();
 Realm.setDefaultConfiguration(realmConfig);
 ```
 ### Realm 인스턴스 얻기
-```
+```java
 Realm realm = Realm.getDefaultInstance();
 ```
 ### 테이블 생성
@@ -172,3 +181,4 @@ Realm.getDefaultInstance()에서 발생하는 문제, 해결방법 없음
 - [Realm 데이터베이스, 제대로 알고 안드로이드에서 사용하기](http://blog.dramancompany.com/2016/03/realm-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4/)
 - [realm 사용 - android](https://devgooda.wordpress.com/2016/08/29/realm-%EC%82%AC%EC%9A%A9/)
 - [realm ref site](https://realm.io/docs/java/latest/#getting-started)
+- [Realm Module을 이용해서 멀티 Schema 활용하기](http://developer88.tistory.com/76)

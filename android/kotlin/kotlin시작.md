@@ -1,7 +1,7 @@
 
 # kotlin
 ## 좋은 점
-생선성이 좋아진다~
+생산성이 좋아진다~
 
 ## Setup
 ### app/build.gradle
@@ -515,7 +515,7 @@ apply()와 비슷하지만 apply()는 새로운 객체를 생성함과 동시에
 run()은 이미 생성된 객체에 연속된 작업이 필요할 때 사용한다는 점이 조금 다릅니다.
 
 # 참고
-[Android Kotlin 시작하기](http://thdev.tech/androiddev/kotlin/2016/07/31/Kotlin-Android-Start.html)
+[Android Kotlin 시작하기](http://thdev.tech/androiddev/2017/07/09/Kotlin-Android-Start.html)
 [Android 개발을 수주해서 Kotlin을 제대로 써봤더니 최고였다](https://gist.github.com/Hazealign/1bbc586ded1649a8f08f)
 [Getting started with Android and Kotlin](https://kotlinlang.org/docs/tutorials/kotlin-android.html)
 [코틀린의 유용한 함수들 - let, apply, run, with](http://kunny.github.io/lecture/kotlin/2016/07/06/kotlin_let_apply_run_with/)
