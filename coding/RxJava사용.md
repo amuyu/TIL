@@ -188,6 +188,14 @@ onCompleted
 concatMap은 concat 연산자를 사용하고 이벤트 스트림을 통해 전달된 항목 하나에 대한 처리가 완료된 후에 다음 항목을 처리한다. 순서가 뒤바뀌지 않는다.
 flatMap은 merge 연산자를 사용하고 이벤트 스트림에 항목 순서와 출력되는 순서가 달라질 수 있다.
 
+#### sample
+emit the most recent items emitted by an Observable within periodic time intervals
+AbstractFlowableWithUpstream를 상속받는 FlowableSampleTimed 구현
+Flowable 에 subscribeActual 추상 메소드를 구현해서 실행한다. (rxjava 의 method 들은 이런식으로 구현되어 있음)
+
+#### distinctUntilChanged
+AbstractFlowableWithUpstream를 상속받는 FlowableDistinctUntilChanged 구현
+
 ### Observable 합성하기
 두 개 이상의 Observable을 합성
 #### zip
@@ -251,6 +259,39 @@ subject.onNext("네번째 호출");
 onNext : 두번째 호출
 onNext : 세번째 호출
 onNext : 네번째 호출
+```
+
+### BehaviorProcessor
+구독자에게 가장 최근 이벤트를 emit 함
+```java
+// observer will receive all events.
+BehaviorProcessor<Object> processor = BehaviorProcessor.create("default");
+processor.subscribe(observer);
+processor.onNext("one");
+processor.onNext("two");
+processor.onNext("three");
+
+// observer will receive the "one", "two" and "three" events, but not "zero"
+BehaviorProcessor<Object> processor = BehaviorProcessor.create("default");
+processor.onNext("zero");
+processor.onNext("one");
+processor.subscribe(observer);
+processor.onNext("two");
+processor.onNext("three");
+
+// observer will receive only onComplete
+BehaviorProcessor<Object> processor = BehaviorProcessor.create("default");
+processor.onNext("zero");
+processor.onNext("one");
+processor.onComplete();
+processor.subscribe(observer);
+
+// observer will receive only onError
+BehaviorProcessor<Object> processor = BehaviorProcessor.create("default");
+processor.onNext("zero");
+processor.onNext("one");
+processor.onError(new RuntimeException("error"));
+processor.subscribe(observer);
 ```
 
 ## 왜 RxJava를 도입했는가?
@@ -449,6 +490,18 @@ RxAndroid를 사용하는 경우, 수신된 데이터를 UI 표시하기 위해 
 - onBackpressureBuffer() : Observable에서 보낸 항목을 큐에 계속 쌓아두어, 항목을 처리하는 쪽에서 해당 항목을 나중에 처리할 수 있도록 한다.
 - onBackpressureDrop() : Observable에서 항목을 보냈을 때 바로 처리되지 못한 데이터는 무시
 
+# Observable 과 flowable 비교
+## Observable을 써야할 때,
+- 만약 플로우에 1000개 이하의 항목이 있다면, 시간이 지나면서 항목이 대부분 없어지기 때문에 애플리케이션에서 OutOfMemoryError가 발생할 일이 없습니다.
+- 마우스 움직임이나 터치 이벤트와 같은 GUI 이벤트를 처리할 때는 합리적으로 Backpressure를 줄 수 없으며, 빈번하지도 않습니다. Observable을 사용하면 초당 1000개 혹은 그 이하의 항목을 처리할 수 있지만 샘플링이나 디바운싱을 사용하는 것이 좋습니다.
+- 플로우가 본질적으로는 동기식이지만 플랫폼이 Java 스트림을 지원하지 않거나 그런 기능이 있다는걸 놓쳤을 때, Observable을 쓰는 것이 Flowable을 쓰는 것보다 대부분 오버헤드가 적습니다. (Java 6+를 지원하는 Iterable 플로우에 최적화된 IxJava도 고려할 수 있습니다.)
+## Flowable을 써야할 때,
+- 어딘가에서 생성되는 10000개 이상의 요소를 처리할 때, 체인은 소스가 생성되는 양을 제한할 수 있습니다.
+- 파일을 디스크에서 읽거나 파싱하는 일은 본질적으로 블로킹이고, 풀에 기반(Pull-based)합니다. 이럴 때는 Backpressure를 통해 사용자가 제어할 수 있습니다.
+- JDBC를 통해 데이터베이스를 읽는 것 또한 블로킹이고 풀에 기반을 두며, 각 다운스트림 요청에 대해 ResultSet.next()를 호출해서 사용자가 제어할 수 있습니다.
+- 네트워크를 거치거나, 논리적 리소스를 요청하는 프로토콜을 사용하는 네트워크 (스트리밍) 입출력
+- 추후에 논블로킹 리액티브 API 혹은 드라이버를 지원하게 될 수 있는, 블로킹이거나 풀에 기반을 둔 데이터 소스
+
 ## 참고
 [RxJava의 PublishSubject 알아보기](https://realm.io/kr/news/rxjava-publish-subject/)
 [RxJava를 3일만에 입문해서, 안드로이드 애플리케이션의 리스트 작업이나 비동기 처리와 알림을 해결한 이야기](http://realignist.me/code/2016/05/29/rxjava-on-android.html)
@@ -467,3 +520,4 @@ RxAndroid를 사용하는 경우, 수신된 데이터를 UI 표시하기 위해 
 [Rxjava-study](https://gist.github.com/QuadFlask/145e80b4ac54d1541e2d38d9ce762a57)
 [그림으로 보는 rxjava operator](http://rxmarbles.com/#combineLatest)
 [Airbnb는 어떻게 Rxjava를 적용했을까요](https://news.realm.io/kr/news/kau-felipe-lima-adopting-rxjava-airbnb-android/)
+[RxJava 1.x/2.x DuplicateFileException 예외처리](http://thdev.tech/androiddev/2017/01/22/RxJava-DuplicateFileException.html)

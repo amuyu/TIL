@@ -9,3 +9,7 @@ if (!OpenCVLoader.initDebug()) {
 			Log.v(TAG, "init OpenCV");
 		}
 ```
+
+
+## 참고
+[javacv](https://github.com/bytedeco/javacv)

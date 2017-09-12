@@ -246,6 +246,13 @@ git clean -f -d // 디렉토리 까지 제거
 git commit --amend
 ```
 
+## pull request 협업하기
+저장소를 fork 한다. (저장소에 push 권한이 없을 것임)
+저장소를 clone 한다.
+local 저장소에 fork한 저장소를 원격 저장소에 추가한다
+```bash
+```
+
 ## 참고
 - [git간편안내서](https://rogerdudler.github.io/git-guide/index.ko.html)
 - [git merge와 rebase 비교하기](https://blog.outsider.ne.kr/666)

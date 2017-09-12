@@ -179,7 +179,7 @@ layout/view 에 접근하기 쉽게 한다 (findViewId 등의 코드가 필요�
 ## Setup
 ### app/build.gradle
 ```groovy
-apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 ```
 
 # Android kotlin
@@ -356,7 +356,13 @@ class Test {
 	lateinit var subject: String
 }
 ```
+- var(mutable)만 사용 가능
+- null을 사용해서 초기화 불필요
+- 늦은 초기화이므로 초기화 전에 사용하면 오류 발생
+- lateinit property subject has not been initialized
+- 변수에 대한 setter/getter 사용할 수 없음
 #### lazy
+변수 사용 시점에 초기화 진행
 ```kotlin
 fun main(args: Array<String>) {
     val test = Test()
@@ -514,13 +520,86 @@ fun <T, R> T.run(block: T.() -> R): R
 apply()와 비슷하지만 apply()는 새로운 객체를 생성함과 동시에 연속된 작업이 필요할 때 사용하고
 run()은 이미 생성된 객체에 연속된 작업이 필요할 때 사용한다는 점이 조금 다릅니다.
 
+### let apply run with 비교
+let 도 apply 처럼 사용이 가능하다
+let은 객체를 사용하여 다른 메서드를 실행하거나 연산을 수행할 때 사용하기 편하고
+apply는 객체의 메서드 및 속성에 접근해서 값을 변경하는데 쓰기 편하다
+run 은 let과 apply 은 혼합형처럼 보인다.
+apply()는 새로운 객체를 생성하고 객체에 대한 연속된 작업 수행 후, 해당 객체를 사용할 때 사용하고
+run()은 해당 객체를 사용할 필요가 없거나 연속된 작업에 대한 결과가 필요할 때 사용하면 될 듯 하다.
+╔══════════╦═════════════════╦═══════════════╦═══════════════╗
+║ Function ║ Receiver (this) ║ Argument (it) ║    Result     ║
+╠══════════╬═════════════════╬═══════════════╬═══════════════╣
+║ let      ║ this@MyClass    ║ String("...") ║ Int(42)       ║
+║ run      ║ String("...")   ║ N\A           ║ Int(42)       ║
+║ run*     ║ this@MyClass    ║ N\A           ║ Int(42)       ║
+║ with*    ║ String("...")   ║ N\A           ║ Int(42)       ║
+║ apply    ║ String("...")   ║ N\A           ║ String("...") ║
+║ also     ║ this@MyClass    ║ String("...") ║ String("...") ║
+╚══════════╩═════════════════╩═══════════════╩═══════════════╝
+
+## Static Fields
+Companion object 를 사용해서 static field 로 만들어준다
+다음과 같이 companion object 키워드를 사용한다.
+```kotlin
+class Key(val value: Int) {
+    companion object {
+        val COMPARATOR: Comparator<Key> = compareBy<Key> { it.value }
+        fun bar() {}
+    }
+}
+```
+위와 같이 작성하면 아래와 같은 형태로 호출할 수 있다.
+```kotlin
+Key.COMPARATOR
+Key.bar()
+```
+### java 에서 호출하는 경우
+java에서 코틀린 static field를 호출하기 위해서는 @JvmField, @JvmStatic annotation 을 사용한다.
+다음과 같이 field 키워드 앞에 annotation 을 붙여준다.
+```kotlin
+class Key(val value: Int) {
+    companion object {
+        @JvmField val COMPARATOR: Comparator<Key> = compareBy<Key> { it.value }
+        @JvmStatic fun bar() {}
+    }
+}
+```
+위와 같이 작성하면 java에서 아래와 같은 형태로 호출할 수 있다.
+```java
+Key.COMPARATOR;
+Key.bar();
+```
+
+### databinding 사용하기
+```groovy
+apply plugin: 'kotlin-kapt'
+...
+dependencies {
+    kapt "com.android.databinding:compiler:2.3.2"
+}
+```
+
+
+### dagger 사용하기
+
+
 # 참고
 [Android Kotlin 시작하기](http://thdev.tech/androiddev/2017/07/09/Kotlin-Android-Start.html)
 [Android 개발을 수주해서 Kotlin을 제대로 써봤더니 최고였다](https://gist.github.com/Hazealign/1bbc586ded1649a8f08f)
 [Getting started with Android and Kotlin](https://kotlinlang.org/docs/tutorials/kotlin-android.html)
 [코틀린의 유용한 함수들 - let, apply, run, with](http://kunny.github.io/lecture/kotlin/2016/07/06/kotlin_let_apply_run_with/)
+[The difference between Kotlin’s functions: ‘let’, ‘apply’, ‘with’, ‘run’ and ‘also’](https://medium.com/@tpolansk/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8)
 [What's Good About Kotlin in Android Development](http://pluu.github.io/blog/android/2017/01/15/whats_good_about_kotlin_in_android_development/)
 [kotlin 예제](https://github.com/taehwandev/AndroidBase)
 [제이크옹 kotlin 발표 자료](https://speakerdeck.com/jakewharton/life-is-great-and-everything-will-be-ok-kotlin-is-here-google-io-2017)
 [kortlin-android-mvp](https://github.com/general-mobile/kotlin-android-mvp-starter?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=5791)
 [kotlin 코딩 팁](https://cchcc.github.io/blog/Kotlin-코딩-팁/)
+[android-kotlin-demo](https://github.com/yodle/android-kotlin-demo)
+[코틀린에는 static이 없다? - companion object](http://kunny.github.io/lecture/kotlin/2016/07/10/kotlin_companion_object/)
+[Calling Kotlin from Java](https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html)
+[Singleton in kotlin](https://medium.com/@adinugroho/singleton-in-kotlin-502f80fd8a63)
+[똑똑, 프로젝트에 코틀린을 도입하려고 합니다.](http://woowabros.github.io/experience/2017/07/18/introduction-to-kotlin-in-baeminfresh.html)
+
+## 참고소스
+[kotlin 으로 짠 DI](https://github.com/SalomonBrys/Kodein)

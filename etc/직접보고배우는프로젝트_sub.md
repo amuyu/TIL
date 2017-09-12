@@ -1,13 +1,39 @@
 # delicious
-## source
-[mvp 패턴 사용](https://github.com/delicious-mvp/delicious)
 ## summary
 daum api 사용, 검색 기능, webview 사용 검색 결과 호출
-## 정리
-### BaseActivity, BaseFragment
-Activity, Fragment 사용시 BaseActivity, BaseFragment 상속받아 사용
-#### BaseActivity
-Toolbar 셋팅
+
+## 배울 점
+gradle.properties를 사용(daum_api_key 관리)
+dependencies의 version 을 별도로 관리(project.gradle의 ext 에 입력)
+BuildConfigField 사용
+인터페이스 활용 : 클래스에서 서로 호출하는 부분은 인터페이스를 사용
+adapterdelegate 사용
+
+## daum_api_key
+project.hasProperty 를 사용해서 daum_api_key 를 입력했는지 확인하고 입력이 안되어 있으면 빌드되지 않도록 구현
+
+## source
+[mvp 패턴 사용](https://github.com/delicious-mvp/delicious)
+### Application 클래스
+applicationHandler를 static으로 두고 사용함, Global 클래스에서 사용하고 다른 클래스에서 Global 클래스를 통해 Handler를 사용함
+
+### BaseActivity
+Activity 의 boilerplate 코드 담당
+Toolbar 셋팅, Butterknife.bind 호출
+
+### MainActivity
+#### layout
+include 를 사용해서 부분별(toolbar, main, naviview)로 나눠서 관리함
+DrawerLayout, NavigationView 사용
+#### ui
+Snackbar 메시지, DrawerToggle, naviationview 사용
+#### Network
+rxjava, okhttp 를 사용해서 네트워크 통신함
+
+### MainActivity
+#### layout
+CoordinatorLayout,
+
 #### BaseFragment
 presenter를 Generic Type으로 사용
 ##### 공통으로 사용하는 것 들
@@ -43,11 +69,30 @@ ui - search - adapterdelegate - model
                               - view
             - presenter
 
-## 배울 점
-인터페이스 활용 : 클래스에서 서로 호출하는 부분은 인터페이스를 사용
-adapterdelegate 사용
 ## 개선
 dataviewmodel 적용
+
+
+
+
+===========================
+# Coordinator Example
+## SimpleCoordinatorActivity
+심플한 CoordinatorLayout 이다.
+Coordinator, CollapsingToolbarLayout 사용,
+스크롤 이벤트에 따라 Appbar 의 헤더 부분의 크기가 변한다.
+
+## IOActivityExample
+Toobar의 위치를 Appbar의 child가 아니라 anchor 속성을 사용하여 지정하였다.
+
+
+## MaterialUpConceptActivity
+
+
+
+
+
+
 
 
 
@@ -189,9 +234,15 @@ unmodifiableList
 
 
 ======================================
-# android component architecture
+# android component architecture - BasicSample
+MVVM
 ## ProduceListFragment
-Databinding, LifecycleFragment, ProductListViewModel,
+Databinding, LifecycleFragment, AndroidViewModel 사용
+### data 갱신
+viewmodel 에 mObservableProducts 를 observe 해서 변화가 발생하면 adapter list 갱신
+### list click 이벤트
+callback을 adpater에 넘겨주고 binding 을 이용해 xml 로 callback을 넘겨줌
+callback > adapter > xml
 ### databinding inflate
 'DataBindingUtil.inflate' 를 사용하여 binding 생성
 ViewDataBinding.bind() 와는 큰 차이는 없음
@@ -212,5 +263,227 @@ static class ProductViewHolder extends RecyclerView.ViewHolder {
 }
 ```
 ## ProduceListViewModel
+Data 에 접근하는 클래스로 DatabaseCreator 사용
+
+## DatabaseCreator
+Room 사용
+
 ## LifecycleFragment
 ## LiveData
+
+
+===========================
+# android component architecture - GithubBrowserSample
+Dagger.android 를 사용함
+## Application
+### HasActivityInjector
+Application 에서 사용하며, 이렇게 셋팅해놓으면 Activity 단위에서
+`DaggerComponent.builder()..` 의 호출없이 좀 더 쉽게 inject 호출할 수 있음
+inject 호출 시, 사용
+Application 에 interface 구현
+구현 후,
+```java
+DaggerYourApplicationComponent.create()
+        .inject(this);
+```
+이렇게 하면 Activity 에서 이렇게 호출하면 됨
+```java
+public class YourActivity extends Activity {
+  public void onCreate(Bundle savedInstanceState) {
+    AndroidInjection.inject(this);
+    super.onCreate(savedInstanceState);
+  }
+}
+```
+가이드에 나오는 내용..
+[dagger.android](https://google.github.io/dagger//android.html)
+
+### @Component.Builder
+Component.builder 에 대한 인터페이스 추가
+
+### ViewModelModule
+AppMoule에 viewmodelmoudle 이 들어간다
+
+### AppInjector
+DaggerAppComponent.builder()를 호출해서 inject 해주는 클래스
+
+## Single Activity
+### NavigationController 사용
+Fragment에서 다른 fragment 로 이동할 때 사용
+
+## SearchFragment
+### lifecycle
+onCreateView 에서 view를 생성하고,
+onActivityCreated 에서 view 초기화 등, 셋팅작업
+### AutoClearedValue
+A value holder that automatically clears the reference if the Fragment's view is destroyed.
+### data 갱신
+searchviewmodel.results.observe 해서 갱신되면
+DataBoundListAdpater의 replace를 호출함
+
+
+## GithubViewModelFactory
+ViewModelProvider.Factory 를 구현
+
+## SearchViewModel
+
+## DataBoundListAdapter
+Data Binding & DiffUtil 사용한 Adapter
+replace 사용, viewModel에서 받은 list와 adapter의 list를 비교해서 데이터를 갱신함 - diffutil 사용
+
+
+## etc
+### manifest 분리
+debug 에 대한 별도 manifest 사용
+
+
+
+
+
+===========================
+# MVVM-with-AAC [MVVM-with-AAC](https://github.com/ZeroBrain/MVVM-with-AAC)
+This source is using Dagger, Databinding, Room, ViewModel, LiveData and MVVM based.
+Stetho 를 사용함
+kotlin extension 사용
+
+## LottieApplication
+LottieApplication 생성 시, LottieApplicationComponent를 생성하고
+LottieApplicationComponent를 Activity 에서 가져다가 쓸 수 있게 함
+LottieListActivity 에서 appComponent를 주입함
+## LottieApplicationDagger.kt - LottieApplicationComponent
+App에서 공통적으로 사용하는 모듈들을 주입함 (okhttp, database 등)
+LottieApplicationComponent 에서 lottieListComponent(@Subcomponent) 도 추가 주입할 수 있도록 함
+DaggerLottieListComponent.builder()를 호출하지 않아도 됨
+LottieApplicationComponent 와 LottieApplicationModule 를 정의
+java에서는 따로따로 생성했던 것 같은데, kotlin에서는 함께 작성?
+filepath method 에 object 대입?
+### LottieApiModule
+okHttpClient, retrofit 생성
+### LottieDatabaseModule
+database 생성(room)
+### LottieDaoModule
+LottieDao 생성
+
+
+## LottieDagger.kt - LottieListComponent
+subcomponent, LottieAppComponent 에 이어 호출
+LottieListComponent를 생성하기 위한 Dagger 클래스를 만들지 않아도 된다.
+### LottieListModule
+LottieModel 생성, inject 클래스
+LottieListViewModel 생성
+ViewModelProvider 생성 - ViewModelProvider.Factory 를 사용해서 ViewModel 생성함
+
+
+## LottieListActivity
+Application 클래스의 appcomponent를 호출해 subcomponent와 결합 후, inject
+lazy 사용
+### addObserver?
+LifecycleRegistry의 addObserver 를 호출
+```kotlin
+lifecycle.addObserver(lottieListViewModel)
+```
+viewModel 에서 lifecycle event 에 따라 직접 컨트롤
+```kotlin
+@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onInit() {
+        lottieModel.refresh()
+}
+
+@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+fun onDestroy() {
+    lottiesDisposable.takeIf { !it.isDisposed }?.dispose()
+}
+```
+### act_lottie_list.xml
+EditText 에서 onTextChanged 속성에 method 호출을 사용 방법
+```xml
+<EditText
+  android:onTextChanged="@{(text, _1, _2, _3)-> viewmodel.onSearch(text)}"/>
+```
+RecyclerView 에 items 적용 방법 app:lottieitems 사용 recyclerview 에 list 셋팅
+binding 으로 알아서 adapter와 연결해준다
+```xml
+<android.support.v7.widget.RecyclerView
+    app:lottieitems="@{viewmodel.lotties}" />
+```
+
+
+## LottieListAdapter
+onCreateViewHolder 에서 그리드 뷰의 width 를 계산해서 셋팅함
+```kotlin
+return LottieViewHolder(lottieItemBinding.apply {
+            val columnWidth = root.resources.displayMetrics.let { Math.min(it.widthPixels, it.heightPixels) / columnCount }
+            root.layoutParams = root.layoutParams.apply {
+                width = columnWidth
+                height = columnWidth
+            }
+        })
+```
+
+
+## lottieListViewModel
+BehaviorProcessor subject 사용
+FlowableForLifecycle.FlowableForLifecycle 사용 > custom function
+subscribeIgnoreError 사용 > Extension Function 사용
+onSearch 사용
+@OnLifecycleEvent 사용, onCreate 와 onDestroy에 어떤 작업을 할 지 구현함
+### rxJava
+distinctUntilChanged 사용, 데이터 변화가 생기면 emit
+sample 사용, 일정 시간 안에 발생한 최근 이벤트를 emit
+
+
+## LottieModel
+lottiedao, lottieApi, downloadApi, filePath 사용해서
+refresh(api), getData(db), search(db) 동작 수행
+LottieModel 에서 리스트를 가지고 있는게 아니라 Flowable<List<Lottie>>, LiveData<List<Lottie>> return type 으로 사용
+
+
+## RxUtil.kt
+boilerplate code
+
+## 배울점
+### subcomponent 사용
+ApplicationComponent에 이어 LottieListComponent라는 subcomponent 를 사용
+appcomponent에서 apimodule, databasemodule 을 생성함
+### scope 사용
+ApplicationScope를 사용
+```kotlin
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ApplicationScope
+```
+@retention 은 컴파일러 옵션을 표시하는 annotation 임
+
+
+===========================
+# BasicRxJavaSample [github](https://github.com/googlesamples/android-architecture-components/tree/master/BasicRxJavaSample)
+This is an api sample to showcase how to implements observable queries in Room, with RxJava's Flowable object.
+The sample app shows an editable user name, stored in database
+## 살펴보기
+### Injection
+This injects UserDataSource and ViewModelFactory.
+UserViewModel을 주입하기 위함
+#### UserDataSource
+Interface for accessing user data(db)
+There are getUser, insertOrUpdateUser, deleteAllUsers methods
+##### LocalUserDataSource
+Using the Room database as a data source
+### UserActivity
+CompositeDisposable 를 사용해서 view를 갱신하는 stream 이벤트를 관리한다.
+### ViewModelFactory
+UserViewModel 을 생성하기 위한 Factory
+UserViewModel 은 생성할 때, UserDataSource 를 전달인자로 필요로 하기 때문에 Factory 클래스 추가가 필요함
+### UserViewModel
+ViewModel 클래스 사용, RxJava를 사용해서 db 조회 후, view 를 갱신함  
+Completable 사용, 결과만 전송하는 이벤트
+getUserName 을 보면 Flowable<String>을 리턴하는데 LiveData 가 아니어도 데이터가 변경되면 emit 한다
+이상하네 LiveData 를 추가하면 되는데 안하면 안되네...
+
+
+===========================
+# todoapp
+[todoapp](https://github.com/googlesamples/android-architecture.git)
+## todo-mvp-clean
+This sample stands on the principles of Clean Architecture.
+### Injection
+Injection클래스를 사용해서 필요한 클래스를 주입한다. Dagger로 대체 가능하다

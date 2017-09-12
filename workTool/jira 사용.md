@@ -24,7 +24,7 @@ Permlink|화면의 바로가기 url
 상단에 Create 버튼을 선택하여 이슈를 생성한다.
 이슈 생성 시 작성해야 할 항목은 다음과 같다.
 - project
-- issue type : bug, task, story, improvement, new feature
+- issue type : bug(문제점)), task(업무), story, improvement(개선), new feature(새 기능)
 - summary
 - assignee
 - descriptioin
@@ -32,7 +32,7 @@ Permlink|화면의 바로가기 url
 - fix version
 - priority
   - 긴급도
-  - 중요도 
+  - 중요도
 - sprint
 - linked issue
 - issue
@@ -51,5 +51,3 @@ Permlink|화면의 바로가기 url
 ## 참고
 [Jira를 통해 프로페셔널하게 프로젝트 협업하기](http://uxd.team.handstudio.net/post/64286399069/jira%EB%A5%BC-%ED%86%B5%ED%95%B4-%ED%94%84%EB%A1%9C%ED%8E%98%EC%85%94%EB%84%90%ED%95%98%EA%B2%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0)
 [JIRA 사용 설명서 및 tips](https://www.lesstif.com/pages/viewpage.action?pageId=12943700)
-
-

@@ -14,6 +14,8 @@ CoordinatorLayout 은 layout_behavior 에 정의된 레이아웃으로 스크롤
 그러면 AppBarLayout 의 ScrollingViewBehavior 가 정보를 받아서 AppBarLayout 을 변형하도록 한다
 
 ## 속성
+### anchor/anchorGravity
+특정 위치 지정
 ### layout_behavior
 해당뷰와 스크롤 이벤트를 연결하기 위한 속성 동일 레벨 계층뷰에 스크롤을 처리할 클래스명 기입
 
@@ -51,3 +53,4 @@ behavior를 사용한 이벤트 처리
 [Demos the new Android Design library](https://github.com/chrisbanes/cheesesquare)
 [mastering-coordinator](http://saulmm.github.io/mastering-coordinator)
 [CoordinatorLayout과 behavior 관계](http://www.kmshack.kr/tag/coordinatorlayout/)
+[CoordinatorExamples](https://github.com/saulmm/CoordinatorExamples)

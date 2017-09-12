@@ -59,3 +59,4 @@ compile ('com.noco.android.ocrlibrary:ocrlibrary:1.0.0@aar') {
 [Providing the SDK as an aar archive](https://docs.onegini.com/msp/android-sdk/5.04.01/topics/setting-up-the-project.html#providing-the-sdk-as-an-aar-archive)
 [how do I include a local jar from a dependent java project in an Android build?](http://stackoverflow.com/questions/22360737/gradle-how-do-i-include-a-local-jar-from-a-dependent-java-project-in-an-android/22415260#22415260)
 [How to Build *.so Library Files into AAR Bundle in Android Studio](http://www.codepool.biz/build-so-aar-android-studio.html)
+[Android Native Library를 JAR에 포함시켜 Dynamic Loading하기](https://kyungw00k.github.io/2013/02/21/android-native-library를-jar에-포함시켜-dynamic-loading-하기/)
