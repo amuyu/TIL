@@ -1,7 +1,7 @@
 # Setup
 ## build.gradle
 ```groovy
-compile 'com.facebook.stetho:stetho:1.5.0
+compile 'com.facebook.stetho:stetho:1.5.0'
 compile 'com.facebook.stetho:stetho-okhttp3:1.5.0' \\ network
 compile 'com.facebook.stetho:stetho-js-rhino:1.5.0' \\ javascript console
 ```

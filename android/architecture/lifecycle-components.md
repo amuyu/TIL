@@ -99,6 +99,29 @@ lifecycle이 finish 할 때까지 유지
 ```java
 ViewModelProviders.of(this).get(MyViewModel.class)
 ```
+### 생성자가 필요한 경우
+ViewModelProvider.Factory 를 사용해서 생성자를  전달받을 수 있다.
+Factory 구현
+```java
+public class ViewModelFactory implements ViewModelProvider.Factory {
+    private final UserDataSource mDataSource;
+    public ViewModelFactory(UserDataSource dataSource) {
+        mDataSource = dataSource;
+    }
+
+    @Override
+    public <T extends ViewModel> T create(Class<T> modelClass) {
+        if (modelClass.isAssignableFrom(UserViewModel.class)) {
+            return (T) new UserViewModel(mDataSource);
+        }
+        throw new IllegalArgumentException("Unknown ViewModel class");
+    }
+}
+```
+호출
+```java
+ViewModelProviders.of(this, ViewModelFactory).get(UserViewModel.class);
+```
 ## Update UI
 ```java
 public class MyActivity extends AppCompatActivity {
