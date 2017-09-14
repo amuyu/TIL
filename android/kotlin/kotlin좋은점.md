@@ -16,3 +16,4 @@ b?.let {
 상태가 없고 변하지 않는 요소를 사용해 SideEffect를 최소화 하자.
 # Coroutines
 # Type aliases
+# 코루틴

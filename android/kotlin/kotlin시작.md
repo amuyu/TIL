@@ -584,6 +584,41 @@ dependencies {
 ### dagger 사용하기
 
 
+### TypeDef
+kotlin에서 TypeDef 사용하기
+1
+```kotlin
+iimport android.support.annotation.IntDef
+import kotlin.annotation.AnnotationRetention
+class MyClass {
+companion object {
+const val ITEM_SERVICES = 0L
+const val ITEM_PORTFOLIO = 1L
+  }
+  @IntDef(ITEM_SERVICES, ITEM_PORTFOLIO)
+  @Retention(AnnotationRetention.SOURCE)
+annotation class ITEM
+}
+```
+2
+```kotlin
+@Retention(AnnotationRetention.SOURCE)
+@StringDef(ListAnnotation.DIALOG, ListAnnotation.TOSTS, ListAnnotation.ALERTS, ListAnnotation.SELECTORS, ListAnnotation.PROGRESS_DIALOG)
+annotation class ListName
+
+
+object ListAnnotation {
+    const val DIALOG = "Dialogs"
+    const val TOSTS = "Toasts"
+    const val ALERTS = "Alerts"
+    const val SELECTORS = "Selectors"
+    const val PROGRESS_DIALOG = "ProgressDialog"
+}
+```
+[Typedef annotations example in kotlin (IntDef)](http://makingiants.github.io/blog/typedef-annotations-example-in-kotlin-intdef/)
+[Again: Supporting Android Typedefs in Kotlin](http://www.tonicartos.nz/2015/11/again-supporting-android-typedefs-in.html)
+[android-movie-mvp](https://github.com/KotlinID/android-movie-mvp)
+
 # 참고
 [Android Kotlin 시작하기](http://thdev.tech/androiddev/2017/07/09/Kotlin-Android-Start.html)
 [Android 개발을 수주해서 Kotlin을 제대로 써봤더니 최고였다](https://gist.github.com/Hazealign/1bbc586ded1649a8f08f)
