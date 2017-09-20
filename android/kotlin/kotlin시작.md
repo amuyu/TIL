@@ -635,6 +635,7 @@ object ListAnnotation {
 [Calling Kotlin from Java](https://kotlinlang.org/docs/reference/java-to-kotlin-interop.html)
 [Singleton in kotlin](https://medium.com/@adinugroho/singleton-in-kotlin-502f80fd8a63)
 [똑똑, 프로젝트에 코틀린을 도입하려고 합니다.](http://woowabros.github.io/experience/2017/07/18/introduction-to-kotlin-in-baeminfresh.html)
+[클래스 위임은 어떻게 동작하는가](https://medium.com/@cwdoh/kotlin의-클래스-위임은-어떻게-동작하는가-c14dcbbb08ad)
 
 ## 참고소스
 [kotlin 으로 짠 DI](https://github.com/SalomonBrys/Kodein)
