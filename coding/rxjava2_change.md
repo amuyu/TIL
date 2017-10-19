@@ -38,6 +38,10 @@ Completable.fromAction { callback.invoke(0) }
                     .subscribe()
 ```
 
+## SubscribeWith
+Subscribe 에서 더는 Subscription 을 리턴하지 않는다.
+SubscribeWith 를 사용해서 Disposable 을 사용해야 한다.
+
 ## 참고
 [Rxjava2.x 무엇이 달라졌을까](http://realignist.me/code/2017/01/25/rxjava2-changelog.html)
 [RxJava2 를 이용한 Collection 데이터 처리](http://doohyun.tistory.com/44)

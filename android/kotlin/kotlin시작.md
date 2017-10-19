@@ -619,6 +619,8 @@ object ListAnnotation {
 [Again: Supporting Android Typedefs in Kotlin](http://www.tonicartos.nz/2015/11/again-supporting-android-typedefs-in.html)
 [android-movie-mvp](https://github.com/KotlinID/android-movie-mvp)
 
+# show Kotlin Bytecode 로 중간 체크 가능 
+
 # 참고
 [Android Kotlin 시작하기](http://thdev.tech/androiddev/2017/07/09/Kotlin-Android-Start.html)
 [Android 개발을 수주해서 Kotlin을 제대로 써봤더니 최고였다](https://gist.github.com/Hazealign/1bbc586ded1649a8f08f)
