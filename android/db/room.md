@@ -39,7 +39,7 @@ Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
 - databaseBuilder
 
 ## Entity
-This component represents a class that holds a database row.
+This component represents a class that holds a database row. (Table)
 ```java
 @Entity
 public class User {

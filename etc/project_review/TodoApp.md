@@ -4,6 +4,11 @@
 clean architecture 와 MVP 패턴을 를 배울 수 있는 프로젝트이다.
 
 ### Clean Architecture 살펴보기
+#### Repository
+TasksRepository > TasksDataSource
+TasksLocalDataSource > TasksDataSource
+TasksRemoteDataSource > TasksDataSource
+mCachedTasks
 #### UseCase
 presenter 에서 domain 에 접근할 때 UseCase를 사용한다.
 UseCase는 비동기로 동작하기 위해 Callback, ThreadPool 을 사용한다.
@@ -108,3 +113,8 @@ filterfactory도 필요없다.
 ## 배울점
 ### CompositeSubscription 사용
 복수의 Subscription 관리, 한꺼번에 unsubscribe 하기 편하다.
+
+### view 갱신 옵션 사용
+forceUpdate / showLoadingUI 옵션을 나누어서 사용한다.
+forceUpdate : repository 까지 업데이트
+showLoadingUI : cache 로 업데이트

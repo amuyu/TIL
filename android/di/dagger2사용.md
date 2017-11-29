@@ -27,7 +27,14 @@ provided 'org.glassfish:javax.annotation:10.0-b28'
 @Provide — methods inside @Module, which “tell Dagger how we want to build and present a dependency“
 @Component — bridge between @Inject and @Module
 @Scope — enables to create global and local singletons
-@Qualifier — if different objects of the same type are necessary
+@Qualifier — if different objects of the same type are necessary, 의존성 식별이 용이하다.
+@Resuable
+@Releasable
+
+## injection
+Lazy injection
+Provider injection
+ 
 
 ## 개발
 ### Module 생성
@@ -36,7 +43,10 @@ provided 'org.glassfish:javax.annotation:10.0-b28'
 ### Component 생성
 ### @Inject 추가
 ### scope 사용
-scope 내에서 동일한 인스턴스 사용
+해당 클래스의 단일 인스턴스가 존재하는 범위
+Singleton은 같은 범위 내에서 하나의 인스턴스만을 반환한다.
+@Singleton 을 사용하기 위해서 Scope 지정이 필요하다.
+Component 와 provides 의 scope 는 동이하게 지정한다.
 @Singleton 은 app scope 안에서 singleton 객체가 생성되어 주입된다.
 @PerActivity activity life cycle 에서만 존재할 수 있는 객체 사용
 
@@ -72,3 +82,5 @@ class LottieListModule(private val lottieListActivity: LottieListActivity) {
 [Dagger 2. Part I. Basic principles, graph dependencies, scopes.](https://android.jlelse.eu/dagger-2-part-i-basic-principles-graph-dependencies-scopes-3dfd032ccd82)
 [Dagger2에서 @Singleton scope및 custom scope annotation이용](http://drcarter.tistory.com/173)
 [Dagger 의 커피머신 예제 들여다보기](http://kingorihouse.tumblr.com/post/97061100384/dagger의-커피머신-예제-들여다보기)
+[DAGGER 2 - A New Type of dependency injection](https://www.youtube.com/watch?v=oK_XtfXPkqw&feature=youtu.be&t=16m58s)
+[Dagger 2 - 기타 다른 Annotation ](https://brunch.co.kr/@oemilk/72)

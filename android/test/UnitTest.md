@@ -51,7 +51,7 @@ Gradle 명령을 실행
 실행 후, 결과는 build/reports/{테스트패키지}/connected 폴더에 저장된다.
 폴더 안의 index.html 파일을 열면 테스트 보고서를 확인할 수 있다.
 ```bash
-gradlew connectedAndroidTestㄴ
+gradlew connectedAndroidTest
 ```
 Local Unit Testing 할 때,
 ```bash

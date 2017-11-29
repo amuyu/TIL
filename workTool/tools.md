@@ -1,3 +1,5 @@
+
+
 # 코딩테스트
 [codereet](https://codereet.com)
 
@@ -7,6 +9,9 @@ convert markdown to html
 
 # mac merge
 opendiff
+
+# mac terminal
+[zsh theme 설치하기](http://thdev.tech/mac/2016/05/01/Mac-ZSH-Install.html)
 
 # android-arsenal
 [android app library search](http://android-arsenal.com)
@@ -46,7 +51,7 @@ D2conding
 - flux
 - synergy : 마우스, 키보드 공유
 - 3dp
-- plantuml
+- plantuml : (http://plantuml.com/download)
 - swagger
 - totalcommander
 - pandoc (text > html)

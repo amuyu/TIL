@@ -1,7 +1,36 @@
-# android version
+# Gradle setting
+## dependencies
+version 을 따로 관리
+## android version
 compileSdkVersion, buildToolsVersion, minSdkVersion, targetSdkVersion
+```
+// gradle.properties
+VERSION_NAME=1.2.1
+VERSION_CODE=26
+
+// build.gradle
+versionName project.VERSION_NAME
+versionCode Integer.parseInt(project.VERSION_CODE)
+```
+(https://stackoverflow.com/a/21331075/6759520)
+```
+//build.gradle
+ext {
+    major = 2
+    minor = 1
+    revision = 0
+    rc = 4
+
+    appVersionName = "$major.$minor.$revision"
+}
+```
 
 # folder tree
+영역 별로 구성하거나 도메인 별로 모듈을 나눈다.
+- 영역별 : ui, application, domina, infra
+- 도메인별 : A(ui, application, domina, infra), B(ui, application, domina, infra)
+도메인이 복잡하면 도메인 별로 패키지를 구분할 수 있다.
+
 data - repository - remote, local, api
 화면 - adapter, domain(usecase, model), presenter, activity
 utils, application, injection, Base class
@@ -40,7 +69,8 @@ base 클래스 작성
 layout 작성
 Activity/Fragment 작성
 contract(view/presenter) 작성
-repository 작성 - local, remote
+도메인 repository 작성 - local, remote
+Injection 작성
 usecase 작성
 
 ## 세부 구현

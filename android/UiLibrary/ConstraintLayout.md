@@ -3,6 +3,8 @@ ConstraintLayout 은 blue print 를 사용하여 뷰들의 복잡한 관계를 �
 blue print : android studio preview 에서 제공하는 디자인 툴
 
 ## 속성
+### layout_constraintHorizontal_chainStyle:
+### layout 위치조정
 layout_constraintTop_toTopOf
 layout_constraintTop_toBottomOf :
 layout_constraintBottom_toTopOf

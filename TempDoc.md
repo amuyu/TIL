@@ -1,4 +1,8 @@
 # TIL
+# etc
+## drone
+Open Source UAV Platform
+
 # Mac
 ## Homebrew
 Apple에서 제공하지 않는 유용한 패키지 관리자 설치
@@ -17,6 +21,9 @@ http 는 rfc 문서..? 고통의 2616 문서
 https://tools.ietf.org/html/rfc2616
 
 # 업무
+## Expert Beginner
+[더 이상 배우려 하지 않는 개발자](https://medium.com/@jwyeom63/더-이상-배우려-하지-않는-개발자-expert-beginner의-등장-dd40c40aeedf)
+
 ## 개발 프로세스
 [토스랩, 이렇게 일하고 있습니다.](http://tosslab.github.io/process/2016/02/25/how-to-work-in-tosslab.html)
 

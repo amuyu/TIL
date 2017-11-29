@@ -226,3 +226,34 @@ Rxbus.send 이벤트를 날린다.
 ## 중간에 10개가 추가되는 이유는?
 화면을 껏다 켜면 0부터 가져온다.
 onStart 를 다시 호출하기 때문에 onNext(0) 을 호출해서 그런거임
+
+
+
+## NetworkDetectorFragment
+Network 연결 상태 모니터링
+PublishProcessor 사용
+`startWith` : 항목을 emit 시작하기 전에 입력한 값을 배출한다. (제일 처음에 호출)
+`distinctUntilChanged` : 항목이 변화가 생기지 않으면 배출하지 않는다.
+
+
+
+## UsingFragment
+Kotlin
+`using` : Observable과 동일한 수명을 가진 일회용 자원(객체) 생성
+ using -> setup, use and dispose. Think DB connections (like Realm instances),
+ socket connections, thread locks etc.
+
+
+
+## MulticastPlaygroundFragment
+Kotlin
+Multicast 구현
+### publish().refCount()
+ConnectableObservable 변환해서 Hot observable 로 만들고 ,
+refCount() 를 호출해서 Observable 변환
+이 후, subscribe 에 대해서 Multicast  
+### publish().autoConnect(2)
+### replay(1).autoConnect(2)
+### replay(1).refCount()
+### replayingShare
+jakewharton library

@@ -50,3 +50,12 @@ aaptOptions
 }
 ```
 [stackoverflow](https://stackoverflow.com/a/32883431/6759520)
+
+==========================
+# Manifest merger failed : uses-sdk:minSdkVersion 15 cannot be smaller than version
+Manifest 다음의 내용을 추가한다.
+```xml
+<uses-sdk tools:overrideLibrary="packagename of library"/>
+```xml
+
+[stackoverflow](https://stackoverflow.com/a/26967369/6759520)

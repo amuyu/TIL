@@ -12,7 +12,7 @@ entitiy(d):Enterprise Business rules, Domain logic or business object
 프레임워크 및 드라이버(Frameworks and Drivers): 여기에는 모든 세부 정보가 들어있습니다. UI, 도구, 프레임워크 등
 
 # Domain 은 무엇인가?
-모든 소프트웨어 프로그램은 그것을 사용하는 사용자의 어떤 활동이나 관심과 관계가 있다. 사용자가 프로그램을 적용하는 대상 영역이 소프트웨어의 도메인이다. 
+모든 소프트웨어 프로그램은 그것을 사용하는 사용자의 어떤 활동이나 관심과 관계가 있다. 사용자가 프로그램을 적용하는 대상 영역이 소프트웨어의 도메인이다.
 
 # Architectural approach
 Presentation(Model View) - Domain(Regular Java) - Data(Repository)
@@ -24,6 +24,18 @@ data direction <---------------------------------
 
 # 궁금한거
 mvvm 과 cleanarchitecture
+
+# DDD
+## Architecture
+표현 > 응용 > 도메인 > 인프라스트럭쳐
+표현 == UI, presenter
+응용 == UseCase
+도메인 == Entity
+infra == repository (db, rest api)
+## DIP
+Dependency inversion principle, 의존 역전 원칙
+고수준 모듈이 저수준 모듈에 의존하지 않도록 한다.
+테스트를 용이하게 한다.
 
 # 참고
 [안드로이드의 MVC, MVP, MVVM 종합 안내서](https://news.realm.io/kr/news/eric-maxwell-mvc-mvp-and-mvvm-on-android/)
