@@ -1,3 +1,13 @@
+# View Life Cycle
+## 생성부터 draw 까지 호출 순서
+constructor > onAttachedToWindow > measure > onMeasure > layout > onLayout > dispatchDraw > draw > onDraw
+
+## invalidate 이후 호출 순서
+dispatchDraw > draw > onDraw
+
+## requestLayout 이후 호출 순서
+measure > onMeasure > layout > onLayout > dispatchDraw > draw > onDraw
+
 # CustomView
 안드로이드에서 말하는 좋은 CustomView를 만들기 위해서 다음 조건을 만족해야 한다.
 - 안드로이드 표준 준수
@@ -221,7 +231,8 @@ protected void onDraw(Canvas canvas) {
 ```
 
 ## Making the View Interactive
-사용자의 액션에 대해 반응하도록 만들어야 합니다.
+drawing 은 custome view를 만드는 한 부분입니다. view를 drawing 한 후에는,
+view에 대해서 사용자가 action 을 취하고 그 action 대해 반응하도록 만들어야 합니다.
 
 ## Handle Input Gestures
 Android system 에서 가장 일반적인 input event는 touch 입니다.
@@ -235,8 +246,87 @@ Android system 에서 가장 일반적인 input event는 touch 입니다.
 
 Touch events 는 그것 자체로는 유용하지 않습니다. raw touch events를
 tapping, pulling, pushing, flinging, and zooming 등으로 변환해서 사용해야
-합니다. 이러한 작업 Android는 GestureDetector 에서 제공합니다.
+합니다. 이러한 작업을 위해 Android는 GestureDetector를 제공합니다.
 
+GestureDetector.OnGestureListener 를 구현하는 객체를 전달하여 GestureDetector
+를 생성합니다. 만약 몇 가지 gesture만 필요하다면 GestureDetector.SimpleOnGestureListener 를 상속받을 수 있습니다.
+```
+class mListener extends GestureDetector.SimpleOnGestureListener {
+   @Override
+   public boolean onDown(MotionEvent e) {
+       return true;
+   }
+}
+mDetector = new GestureDetector(PieChart.this.getContext(), new mListener());
+```
+onDown method 는 반드시 true로 리턴해야 합니다. 모든 gestures들이 onDown 메시지로 시작하기 때문에 onDown 에서 false를 리턴하면 gesture 들을 무시하게 됩니다. GestrueDetector 를 사용해서 onTouchEvent 에서 받은 events를 해석할 수 있습니다.
+
+
+```
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+   boolean result = mDetector.onTouchEvent(event);
+   if (!result) {
+       if (event.getAction() == MotionEvent.ACTION_UP) {
+           stopScrolling();
+           result = true;
+       }
+   }
+   return result;
+}
+```
+
+## Create Physically Plausible Motion
+Gestures touchscreen devices 제어하는 강력한 방법이지만, 물리적으로 가능한 결과를
+만들기에는 부족하다. fling gesture 가 좋은 예이다. flywheel 느낌이 나도록 하기는 쉽지
+않다. Android는 Scroller 를 제공해서 flywheel-style fling gestures를
+다루도록 도와주고 있다.
+
+```
+@Override
+public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+   mScroller.fling(currentX, currentY, velocityX / SCALE, velocityY / SCALE, minX, minY, maxX, maxY);
+   postInvalidate();
+}
+```
+
+대부분 View는 Scroller 개체에 x,y 포지션을 scrollTo를 사용해 직접 전달한다.
+PieChart는 조금 다르다. 스크롤 y 위치를 사용하여 차트의 회전 각도를 설정한다.
+스크롤 애니메이션을 처리하는 방법은 두 가지가 있다.
+
+- fling 후에 postInvalidate()를 호출한다.
+- ValueAnimator를 사용한다.
+
+PieChart는 ValueAnimator를 사용한다.
+
+```
+mScroller = new Scroller(getContext(), null, true);
+       mScrollAnimator = ValueAnimator.ofFloat(0,1);
+       mScrollAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+           @Override
+           public void onAnimationUpdate(ValueAnimator valueAnimator) {
+               if (!mScroller.isFinished()) {
+                   mScroller.computeScrollOffset();
+                   setPieRotation(mScroller.getCurrY());
+               } else {
+                   mScrollAnimator.cancel();
+                   onScrollFinished();
+               }
+           }
+       });
+```
+
+## Make Your Transitions Smooth
+사용자들은 UI가 좀 더 부드럽게 동작하기를 기대한다. UI 요소는 나타나거나 사라지는 대신
+페이드 인 및 페이드 아웃된다. 움직임은 갑자기 시작하고 멈추는 대신 부드럽게 시작하고 끝난다.
+Android property animation은 부드러운 전환을 쉽게 만듭니다.
+
+```
+mAutoCenterAnimator = ObjectAnimator.ofInt(PieChart.this, "PieRotation", 0);
+mAutoCenterAnimator.setIntValues(targetAngle);
+mAutoCenterAnimator.setDuration(AUTOCENTER_ANIM_DURATION);
+mAutoCenterAnimator.start();
+```
 
 ==================
 
