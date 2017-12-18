@@ -4,10 +4,13 @@ local, remote, cache
 
 # 개요
 Repository는 데이터를 가져올 수 있는 곳을 local과 remote로 나눈다
+
 처음 데이터 호출 시에는 remote 데이터를 가져와 local과 cache에 각각 저장하고 cache 데이터를 리턴한다
+
 그 다음 호출 부터는 데이터 갱신이 필요할 경우에만 remote 데이터를 호출하고
-그렇지 않은 경우 cache 데이터가 있으면 cache 데이터를 리턴하고
-cache 데이터가 없는 경우 local 데이터를 호출한다.
+그렇지 않은 경우 cache 데이터가 있으면 cache 데이터를 리턴하고 cache 데이터가 없는 경우
+local 데이터를 호출한다.
+
 만약 local 데이터가 없으면 remote 데이터를 가져온다.
 
 
@@ -55,7 +58,8 @@ public class Repository implements DataSource {
 
 
 
-# inject
+# usecase 의 장점
+usecase 를 사용하면 해당 기능의 실행 결과에 따른 처리를 하기 편하다. (비동기 처리에 따른 비즈니스 로직들에 대해서)
 
 ## 참고
 [todo-app](https://github.com/googlesamples/android-architecture/tree/todo-mvvm-databinding/)
