@@ -64,3 +64,6 @@ hashCode 생성 시, 사용하면 편리하다.
 ```java
 Objects.hashCode(..);
 ```
+
+## 참고
+[Guava로 Ordering으로 컬렉션 정렬하기](https://blog.outsider.ne.kr/715)
