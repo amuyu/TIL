@@ -1,25 +1,11 @@
-A LayoutManager is responsible for measuring and positioning item views within a Recyclerview.
+# LinearLayoutManager
+LayoutManager 를 subclass 로 ListView 처럼 구현한 클래스
 
-# Recyclerview.LayoutManager
-ChildHelper
-RecyclerView
-chooseSize
-width, height
+orientation, reverseLayout, stackFromeEnd 등의 기능을 제공한다.
+이들의 값에 따라 children 을 배치하는 방향이나 프로세스가 달라진다.
 
-## onMeasure
-setMeasuredDimensionFromChildren > setMeasuredDimension
-## setMeasuredDimension
-Sets the measured dimensions from the given bounding box of the children
-Sets the measured dimensions from the given bounding box of the children and the measurement specs that were passed
-## setMeasuredDimensionFromChildren
 ## onLayoutChildren
-"You must override onLayoutChildren(Recycler recycler, State state)"
-# ChildHelper
-Helper class to manage children
-# Bucket
-
-
-# onLayoutChildren
+## 알고리즘
 children view을 배치한다.
 recyclerview 의 displatchLayout 에서 호출,
 view가 초기 레이아웃을 필요할 때, 데이터 변경이 발생할 때,

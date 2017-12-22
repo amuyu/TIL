@@ -30,6 +30,10 @@ true를 return 하도록 하고 onLayoutChildren 에 로직을 추가한다. Sup
 recyclerview 에서 children 을 관리하는데 도움을 주는 클래스이다.
 recyclerview 를 wrap 하고 children 을 숨기는 기능을 가지고 있다.
 
+childhelper 는 regular getChildAt, getChildCount 메소드들(ViewGroup)은 hidden children를 무시하기 때문에
+childhelper 에서 hidden children 에 대한 views를 고려해서 리턴한다.
+getUnfilteredChildCount, getUnfilteredChildAt 은 viewgroup method에 직접 접근한다.
+
 ChildHelper 는 children과 관련된 method 들인 addView, removeView, hideView 등 을 제공한다.
 RecyclerView로 가기 전 ChildHelper 를 거치면서 child view 의 view들의 index 와 hide 여부를 관리한다.
 
@@ -38,24 +42,15 @@ Callback 을 통해 RecyclerView 의 함수를 호출한다. (wrap)
 Bucket은 Index를 offset하는 method 를 제공한다.
 
 ## Bucket
-ChildHelper 의 inner class로 index를 offset 하는 메소드를 제공한다.
-view 가 추가될 때 만다 view에 대한 index 를 bit로 변경해 값을 저장해서
-view가 있는지의 여부와 view가 show인지 hide 인지 구분할 수 있다.
+ChildHelper 의 inner class로 childView 의 index와 visible 상태를 저장한다.
+view 가 추가될 때 마다 호출되서 view에 대한 index와 visible 상태를 저장한다.
+hide 일 때, 1 show 일 때, 0
 
 
 
-## Recycler
-Your LayoutManager is given access to a Recycler instance at key points in the process when you might need to recycle old views, or obtain new views from a potentially recycled previous child.
-### getViewForPosition
-## Detach vs Remove
-Detach is meant to be a lightweight operation for reordering views.
-Remove is meant for views that are no longer needed. Any view that is permanently removed should be placed in the Recycler for later re-use,
-## Scrap vs Recycle
-Recycler has a two-level view caching system: the scrap heap and the recycle pool.
-layoutmanager 에 view를 제공할 때, 먼저 scrap heap에 있는지 확인하고, 없으면 recycle pool 에서 view를 가져오고 recycle pool 에도
-적절할 view가 없으면 새로 view를 생성한다.
 
 
+=============
 # RecyclerView Animations Part 1
 ## removeView,,
 리스트로 {a,b,c,d,e} 를 가지고 있고 view에는 리스트 중에서 4개{a,b,c,d} 만 보이는 상황에서

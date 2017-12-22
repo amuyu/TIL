@@ -1,3 +1,8 @@
+# 정규표현식 공부
+[Regex Tuesday - Challenges](http://callumacrae.github.io/regex-tuesday/)
+근데 2013년 이후로 업데이트 안됨
+
+
 # 성능 모니터링
 [scouter](http://www.popit.kr/scouter-open-source-apm/)
 
