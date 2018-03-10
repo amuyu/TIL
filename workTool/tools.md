@@ -1,3 +1,9 @@
+# color
+https://yeun.github.io/open-color/
+
+# codeopen
+https://codepen.io/gaearon/pen/EmmOqJ?editors=0010
+
 # 정규표현식 공부
 [Regex Tuesday - Challenges](http://callumacrae.github.io/regex-tuesday/)
 근데 2013년 이후로 업데이트 안됨

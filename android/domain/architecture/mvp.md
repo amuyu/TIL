@@ -335,3 +335,4 @@ public interface GetHomeTweetListUseCase extends UseCase {
 - [Android에서는 MVC보다 MVP 쪽이 좋을지도 몰라](http://pluu.github.io/blog/android/2016/04/06/android-mvc-mvp/)
 - [Architecting Android](http://fernandocejas.com/2014/09/03/architecting-android-the-clean-way/)
 - [archi](https://github.com/ivacf/archi) - mvp, mvvm, mvc 세가지 패턴 비교가 쉬움
+- [MvpDaggerSample](https://github.com/eyeahs/MvpDaggerSample)

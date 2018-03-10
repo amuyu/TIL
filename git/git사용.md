@@ -150,6 +150,9 @@ Git 매뉴얼 정의 내용은 다음과 같다
 - git-merge : join two or more development histories together.
 - git-rebase : Forward-port local commits to the updated upstream head
 
+rebase 는 사실상 기준이 되는 base 를 다시 잡아주는 것
+rebase 의 최신 commit log 위에 자기 로그를 쌓는 것
+
 무엇을 쓰는게 좋은가?
 Merget를 사용할 때,
 히스토리 관리를 별로 신경쓰지 않고 혼자(소수)서만 커밋할 때, ?? 확인이 필요함
@@ -259,3 +262,4 @@ local 저장소에 fork한 저장소를 원격 저장소에 추가한다
 - [svn 대비 git의 차별점](http://seungzzang.blogspot.kr/2013/04/git-svn-svn-git.html)
 - [Git브랜치-Rebase하기](https://git-scm.com/book/ko/v1/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase%ED%95%98%EA%B8%B0)
 - [초심자를 위한 github 협업 튜토리얼](https://blog.weirdx.io/post/45529)
+- [git clinent 모음](https://git-scm.com/download/gui/mac)

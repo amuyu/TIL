@@ -26,15 +26,112 @@ provided 'org.glassfish:javax.annotation:10.0-b28'
 @Module — classes which methods “provide dependencies”
 @Provide — methods inside @Module, which “tell Dagger how we want to build and present a dependency“
 @Component — bridge between @Inject and @Module
-@Scope — enables to create global and local singletons
+@Scope — enables to create global and `local singletons`
 @Qualifier — if different objects of the same type are necessary, 의존성 식별이 용이하다.
 @Resuable
 @Releasable
+@Binds - module 에서 제공하고자 하는 클래스의 구현체를 바인딩하고자 할 때 사용
+@intomap - map 으로 multi binding 함
+
+### Singleton 에 관해서
+다음과 같은 모듈이 있다고 하자
+```java
+@Module
+public class CafeModule {
+    @Singleton
+    @Provides
+    CafeInfo provideCafeInfo(){
+        return new CafeInfo();
+    }
+
+    @Provides
+    CoffeeMaker provideCoffeeMaker(Heater heater){
+        return new CoffeeMaker(heater);
+    }
+
+    @Provides
+    Heater provideHeater(){
+        return new Heater();
+    }
+}
+```
+cafeInfo를 제공하는 메서드에만 `@Singleton` 어노테이션을 사용했다.
+singleton 을 사용한 cafeinfo는 component에서 객체 호출 시, 동일한 CafeInfo 객체가 호출된다.
+하지만 sigletone을 적용하지 않은 coffemaker의 경우 호출 시, 매번 다른 coffeemaker가 호출된다.
+```java
+CafeComponent cafeComponent = DaggerCafeComponent.create();
+CafeInfo cafeInfo1 = cafeComponent.cafeInfo();
+CafeInfo cafeInfo2 = cafeComponent.cafeInfo();
+// cafeInfo1 과 cafeInfo2 는 같다.
+CoffeeMaker coffeeMaker1 = coffeeComponent1.coffeeMaker();
+CoffeeMaker coffeeMaker2 = coffeeComponent1.coffeeMaker();
+// coffeeMaker1 과 coffeeMaker2 는 다르다.
+```
+
+### Scope 적용에 관해서 (local scpoe)
+다음과 같은 module 이 있다. component에는 `@CoffeeScope` 적용되어있다.
+```java
+@Module
+public class CoffeeModule {
+
+    @CoffeeScope
+    @Provides
+    CoffeeMaker provideCoffeeMaker(Heater heater){
+        return new CoffeeMaker(heater);
+    }
+
+    @CoffeeScope
+    @Provides
+    Heater provideHeater(){
+        return new Heater();
+    }
+
+    @Provides
+    CoffeeBean provideCoffeeBean(){
+        return new CoffeeBean();
+    }
+
+}
+```
+`@Singleton` 과 유사하게 component와 동일한 scope를 사용한 coffeemaker 와 heater 는
+component 당 한개의 객체만 생성한다.
+
 
 ## injection
 Lazy injection
 Provider injection
- 
+
+## Subcomponent
+부모 component 가 있는 component 로 일반 component 와는 달리 코드 생성은 부모 component 에서 이루어진다.
+부모 Component에서 코드 생성이 이루어지기 때문에 SubComponent 는 특정 Component 에서만 접근할 수 있다.
+
+SubComponent 를 생성하는 방법은 `@Subcomponent` annotation 을 주고 @Subcomponent.Builder 를 정의해주어야 한다.
+그리고 정의한 Subcomponent를 Component에 encapsulate 해야 subcomponent와 component가 관계를 맺을 수 있다.
+상위 Component에 적용된 모듈에 subcomponent를 적용시키면 component 끼리 상위-하위 관곌르 맺게 된다.
+
+Module 에 sumponents를 적용하면 이 모듈을 가지고 있는 Component가 부모 component가 되고
+부모 Component에서 subcomponent 를 생성해 사용할 수 있다.
+
+## Component.builder
+```java
+public interface CafeComponent {
+
+    CafeInfo cafeInfo();
+    CoffeeComponent.Builder coffeeComponent();
+
+    @Component.Builder
+    interface Builder{
+        Builder cafeModule(CafeModule cafeModule);
+        CafeComponent build();
+    }
+
+}
+
+CafeComponent cafeComponent = DaggerCafeComponent.builder()
+        .cafeModule(new CafeModule("example cafe"))
+        .build();
+cafeComponent.cafeInfo().welcome();
+```
 
 ## 개발
 ### Module 생성
@@ -84,3 +181,4 @@ class LottieListModule(private val lottieListActivity: LottieListActivity) {
 [Dagger 의 커피머신 예제 들여다보기](http://kingorihouse.tumblr.com/post/97061100384/dagger의-커피머신-예제-들여다보기)
 [DAGGER 2 - A New Type of dependency injection](https://www.youtube.com/watch?v=oK_XtfXPkqw&feature=youtu.be&t=16m58s)
 [Dagger 2 - 기타 다른 Annotation ](https://brunch.co.kr/@oemilk/72)
+[Di와 dagger2](https://cmcmcmcm.blog/2017/08/02/didependency-injection-와-dagger2-2/)

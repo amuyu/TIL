@@ -59,6 +59,7 @@ EditText 에서 onTextChanged 속성에 method 호출을 사용 방법
 ```
 RecyclerView 에 items 적용 방법 app:lottieitems 사용 recyclerview 에 list 셋팅
 binding 으로 알아서 adapter와 연결해준다
+`@BindingAdapter` 라는 annotation 을 사용한다.
 ```xml
 <android.support.v7.widget.RecyclerView
     app:lottieitems="@{viewmodel.lotties}" />

@@ -11,6 +11,12 @@ adapterdelegate 사용
 
 ## daum_api_key
 project.hasProperty 를 사용해서 daum_api_key 를 입력했는지 확인하고 입력이 안되어 있으면 빌드되지 않도록 구현
+```
+// build gradle
+buildConfigField "String", "DAUM_API_KEY", "\"${rootProject.getProperties().get("daum.apikey")}\""
+// properties
+daum.apikey=xxx
+```
 
 ## source
 [mvp 패턴 사용](https://github.com/delicious-mvp/delicious)

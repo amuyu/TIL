@@ -47,3 +47,4 @@ Dependency inversion principle, 의존 역전 원칙
 [The Clean Architecture - Unclebob](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 [안드로이드에서 Clean Architecture의 흔적과 장점](http://kimjihyok.info/2017/05/29/안드로이드에서-clean-architecture의-흔적과-장점/)
 [Android Architecture: Part 3 – Applying clean architecture on Android](http://five.agency/android-architecture-part-3-applying-clean-architecture-android/)
+[clean-architecture](https://github.com/mattia-battiston/clean-architecture-example)

@@ -166,3 +166,4 @@ archiveProject.dependsOn 'archiveSource'
 ## 참고
 [gradle 개인 wiki](https://slipp.net/wiki/display/IDE/Gradle)
 [안드로이드를 위한 gradle 맛들이기](https://www.slideshare.net/koreacio/gradle-64458419)
+[gradle 에서 multi 프로젝트 만들기](http://yookeun.github.io/java/2017/10/07/gradle-multi/)
