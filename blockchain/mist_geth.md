@@ -24,11 +24,6 @@ geth --dev --rpc --mine
 - reset-tabs : reset mist tabs to their default settings
 
 
-# SimpleToken contract 테스트
-contact 를 실행하고
-지갑 컨트랙트를 등록한다,,
-
-
 # RichToken 테스트
 Contract 배포
 contract invest 실행

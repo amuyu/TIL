@@ -67,6 +67,10 @@ Route: 이 컴포넌트는 우리가 설정한 경로에서 어떤 컴포넌트�
 IndexRoute: 라우트에서 서브라우트가 주어지지 않았을 때, 즉 특정 라우트의 / 경로로 들어 왔을 때, 이 라우트에서 지정한 컴포넌트를 보여줍니다.
 browserHistory: HTML5 의 History API 를 사용하여 브라우저의 URL 변화를 주시하고, 조작합니다.
 
+# custom create-react-app
+npm run eject
+
+
 ## 참고
 [react 공부 중](https://medium.com/@Koshick/react-js-공부-중-6b61e044124)
 [올 한해 react 개발은 접다](https://brunch.co.kr/@matthew-chang/14)
@@ -78,6 +82,7 @@ browserHistory: HTML5 의 History API 를 사용하여 브라우저의 URL 변�
   - 링크 많은 곳
 [codelab2016](https://velopert.com/?s=Codelab+2016)
   - api 호출하는 부분도 볼 수 있음
+[react 에서 es6 사용](https://stackoverflow.com/a/42942214/6759520)
 
 ## github
 [stream-react-example](https://github.com/getstream/stream-react-example)

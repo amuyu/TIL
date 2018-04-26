@@ -8,8 +8,13 @@
 - generalization : 일반화, 상속
 - realization : 전문화, 인터페이스 구현
 
+# plantUml
+@startuml
+Alice -> Bob: test
+@endum
 
 ## 참고
 [UML 기호 정리](http://webie.tistory.com/149)
 [UML 기본편](http://geniusduck.tistory.com/entry/UML-기본편-기본-표기-형식-및-관계표현법)
 [UML 기호 정리](http://fumin.tistory.com/45)
+[plantuml](http://plantuml.com/starting)

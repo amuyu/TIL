@@ -1,6 +1,31 @@
+# web3.version.getNetwork((err, netId) => {
+  switch (netId) {
+    case "1":
+      console.log('This is mainnet')
+      break
+    case "2":
+      console.log('This is the deprecated Morden test network.')
+      break
+    case "3":
+      console.log('This is the ropsten test network.')
+      break
+    default:
+      console.log('This is an unknown network.')
+  }
+})
+
+# api
+https://myetherwallet.github.io/knowledge-base/diving-deeper/does-myetherwallet-have-an-api.html
+
+
 # testnet 접속
 var web3 = new Web3(new Web3.providers.HttpProvider('https://ropsten.infura.io/xxx'));
 // xxx 는 토큰
+https://ropsten.infura.io/2SedeZIXQJR45V7MCQMu
+
+# myetherapi 사용
+myetherapi 는 parity node 에 접속
+https://www.myetherapi.com
 
 # providers
 EtherscanProvider

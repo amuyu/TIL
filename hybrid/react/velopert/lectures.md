@@ -166,18 +166,64 @@ pStyle 을 p element 에 적용할 때,
     }
 ```
 
+# style 과 className
+style 을 객체 형식으로 작성한 후,  render 함수에서 호출할 수 있다
+```js
+render() {
+    const style = {
+      backgroundColor: 'black',
+      padding: '16px',
+      color: 'white',
+      fontSize: '12px'
+    };
+
+    return (
+      <div style={style}>
+        hi there
+      </div>
+    );
+  }
+```
+
+클래스를 설정할 때는 class 대신에 className 을 사용한다.
+```css
+.App {
+  background: black;
+  color: aqua;
+  font-size: 36px;
+  padding: 1rem;
+  font-weight: 600;
+}
+```
+component 에서 호출
+```js
+render() {
+    return (
+      <div className="App">
+        리액트
+      </div>
+    );
+  }
+```
+
+
 # Component 생성 및 모듈화
 컴포넌트는 React.Component 클래스를 상속하여 만든다.
 
 한 파일엔 여러개의 컴포넌트가 존재할 수 있다.
 
 Component들을 모듈화하여 여러 파일로 분리해서 사용한다.
-
 Component 를 구현할 때 의 일반적인 흐름
 - Form.js,
 - Form.css 작성
 - Component 호출
 - 렌더링
+## 클래스형 컴포넌트
+Component 를 상속받아 class 구현
+## 함수형 컴포넌트
+props 만 받아서 보여주는 경우엔 함수 형태로도 사용이 가능하다.
+props 받아서 `<div>... </div>` return
+
 
 # State 와 Props 사용하기
 ## props
@@ -189,7 +235,17 @@ child 컴포넌트에서 사용할 때,
 형식으로 사용하고, parent 에서 child 컴포넌트에 넘길때는
 `< > 괄호 안에 propsName="value"`
 형식으로 사용한다.
+### defaultProps
+defaultProps 를 설정할 수 있다.
+```js
+static defaultProps = {
+    name: '기본이름'
+}
 
+classNmae.defaultProps = {
+  name: '기본이름'
+};
+```
 ### 기본 값 설정하기
 props 를 지정해주지 않았을 때, 사용하는 기본값 설정
 className.defaultProps = { propName: value }
@@ -204,12 +260,69 @@ React.js 어플리케이션을 만들 땐, state를 사용하는 컴포넌트의
 
 state 의 초기값을 설정할 때는 생성자에 this.state={ } 를 사용한다.
 렌더링 할 때는 { this.state.stateName } 을 사용한다.
-state 를 업데이트 할 때는 this.setState() 메소드를 사용한다. ES6 에선 setState 메소드를 사용하게 될 메소드를 bind 해주어야한다
+
+### SetState
+state 를 업데이트 할 때는 this.setState() 메소드를 사용한다.
+setState 는, 객체로 전달되는 값만 업데이트를 해줍니다.
+이런 state가 있다고 할 때
+```js
+state = {
+  number: 0,
+  foo: 'bar'
+}
+```
+이렇게 호출하면
+```js
+this.setState({ number: 1 });
+```
+foo 는 그대로 남고 number 만 업데이트 된다.
+하지만 깊숙한 곳까지는 확인하지 못한다.
+```js
+state = {
+    number: 0,
+    foo: {
+      bar: 0,
+      foobar: 1
+    }
+  }
+```
+foobar 를 업데이트 해주려면 자바스크립트의 전개 연산자를 사용한다.
+```js
+this.setState({
+  number: 0,
+  foo: {
+    ...this.state.foo,
+    foobar: 2
+  }
+});
+```
+기존의 state 값을 가져오려면 다음과 같이 호출한다.
+```js
+this.setState(
+  (state) => ({
+    number: state.number
+  })
+);
+```
+state 를 변경할 때 기존의 객체는 건들이지 않고 하려면 state 구조가 복잡할 경우 작업이 번거롭다.
+이러한 작업을 쉽게 해줄 수 있는 것이 바로 Immutable.js 입니다!
+
+
+
+
+### 메소드 작성
+ES6 에선 setState 메소드를 사용하게 될 메소드를 bind 해주어야한다
 this.methodname = this.methodname.bind(this);
 
 state 를 변경하면 자동으로 render 한다.
 
-# 컴포넌트 Iteration (반복) - Map
+# 리액트에서 배열 다루기
+state 내부의 값을 직접 수정하면 안된다.
+push, splice, unshift, pop 내장함수는 배열 자체를 직접 수정하므로 안된다
+기존의 배열에 기반하여 새 배열을 만들어내는 함수인 concat, slice, map, filter 같은 함수를 사용해야합니다
+concat - 배열 이어 붙이기
+
+## 컴포넌트 Iteration (반복) - Map
 map() 메소드는 파라미터로 전달 된 함수를 통하여 배열 내의 각 요소를 프로세싱 하여 그 결과로 새로운 배열을 생성한다.
 
 arr.map(callback, [thisArg])
@@ -267,5 +380,21 @@ class ContactInfo extends React.Component {
 수정은 배열 복사 후, 변경해서 변경,
 제거는 filter를 사용한다
 
-# Component LifeCycle API
-나중에
+
+# Input 상태 관리하기
+onChange 이벤트가 발생하면, e.target.value 값을 통하여 이벤트 객체에 담겨있는 현재의 텍스트 값을 읽어올 수 있습니다
+이를 state 에 set하면 된다.
+```js
+...
+onChange={this.handleChange}
+...
+handleChange = (e) => {
+    console.log(e.target.value)
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+```
+
+# 부모 컴포넌트에 정보 전달하기
+부모 컴포넌트에서 메소드를 생성하고 props 로 전달한다.

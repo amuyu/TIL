@@ -28,8 +28,24 @@ Codesadbox? online editor
 
 ## 리액트 컴포넌트에서 Immutable 사용하기
 state 자체를 Immutable 데이터로 사용하는 것은 지원되지 않는다.
-
 state 내부에 Immutable 객체를 만들고, 상태관리를 모두 이 객체를 통해서 진행하면 된다.
+```js
+state = {
+  data: Map({
+    input: '',
+    users: List([
+      Map({
+        id: 1,
+        username: 'velopert'
+      }),
+      Map({
+        id: 2,
+        username: 'mjkim'
+      })
+    ])
+  })
+}
+```
 
 ## 계속 .get, .getIn 하는거 싫다 그렇다면 Record
 Record 를 사용하면 Immutable 의 set, update, delete 등을 계속 사용할 수 있으면서 값을 조회할 때 get, getIn 을 사용할 필요 없이, data.input 이런식으로 조회를 할 수 있다.

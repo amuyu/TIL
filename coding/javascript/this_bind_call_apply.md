@@ -8,10 +8,13 @@ Function.prototype.call 을 이용해서도 문제를 해결할 수 있다. call
 
 # apply
 apply 도 마찬가지다. 그러나 call 과는 달리 apply 는 파라미터를 배열(Array) 형태로 받는다.
+```js
+fn.apply(this, [0, 100]);
+```
 
 # bind
 Function.prototype.bind 는 원하는 Function 에 인자로 넘긴 this 가 바인딩 된 새로운 함수를 리턴한다.
-```
+```js
 function A() {
     const self = this
     self.text = 'hello world'

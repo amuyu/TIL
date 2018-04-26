@@ -1,3 +1,73 @@
+## block 조회
+### RecentBlocksController
+block 정보를 조회한다.
+
+## check pending
+`PendingTransaction` 을 사용해서 transaction status 를 업데이트 한다.
+## PendingTransaction
+### checkForTxInBlock
+block 에서 transaction 을 조회한다
+'block' 이라는 이벤트가 발생했을 때(transactions.js) 호출되는데
+'block' 이벤트를 emit 하는 위치는 AccountTracker 밖에 없다.
+(blockTracker.on('block') 으로 이벤트를 수신하는데 이름이 안 맞음, )
+
+
+## transaction 하는 방법
+실제 send는 어디서?
+transactions.js, pending-tx-tracker.js
+transactions 에서 생성한 ethquery 를 pending-tx-tracker에 넘기고
+pending-tx-tracker에서 resubmit.
+
+transactions.js publishTransaction 에서 send
+```
+publishTransaction (txId, rawTx)
+```
+transaction 과 관련된 데이터
+txId, rawTx, txMeta, txHash
+
+updateAndApproveTransaction > approveTransaction > publishTransaction
+
+
+
+## SWcontroller
+ui.js, proxy.js 에서 사용
+
+## ui/app/components/pending-tx/confirm-send-ether.js
+index.js(ui/app/components/pending-tx) 호출
+sendTransaction < pending-tx/index.js < conf-tx.js/sendTransaction
+  action.updateAndApproveTx 호출
+
+
+## reducers/metamsk.js
+store state 변경은 이곳에서
+unapprovedTxs 는 app.js 에서 관리
+
+## FullTxList
+store 에 저장된 transactions 를 호출한다. metamask에서 발생한 transaction 을 말함
+```js
+// tx-state-manager
+getFullTxList () {
+    return this.store.getState().transactions
+  }
+```
+store txlist 를 저장한다. 호출 위치는 addTx, updateTx, wipeTransactions
+```js
+// tx-state-manager
+_saveTxList (transactions) {
+    this.store.updateState({ transactions })
+  }
+```
+
+### updateTransaction
+actions.updateTransaction 를 호출해서 txlist 를 갱신
+action 관리는 'send-v2-container.js' 에서 함, send-v2.js 가 있음
+metamask 화면에서 send 버튼 선택일 듯
+
+## tx-list-item 화면 tx-list-item.js
+props 에서 transactionStatus 가 transaction 의 status를 표시함
+tx-list 에서 renderTransactionListItem() 이 다시 그리기
+tx-list 에서 state, props 로 txsToRender 관리
+
 ## reload
 getTransaction 을 사용해서 호출?
 txhash list 를 가지고 있고 그걸 계속 refresh 하는듯
@@ -44,6 +114,7 @@ window.addEventListener('load', function() {
 metamask 는 tx 에 chainId 를 넣는다
 ui 를 200m 마다 update한다.
 ```js
+// metamask-controller
 this.sendUpdate = debounce(this.privateSendUpdate.bind(this), 200)
 ```
 # MetaMask-Extension
@@ -91,7 +162,7 @@ getNetworkNextNonce
 
 
 ## tx-helper
-
+unapprovedTxs 에 대한 log 를 남긴다.
 
 ## ui
 ### account-detail
@@ -108,3 +179,6 @@ setCurrentCurrency : update currency
 [ObservableStore](https://github.com/kumavis/obs-store)
 [web3-stream-provider](https://github.com/kumavis/web3-stream-provider)
 [eth-token-tracker](https://github.com/MetaMask/eth-token-tracker)
+[csw-readyevent](https://github.com/frankiebee/csw-readyevent)
+[depp-extend](https://github.com/unclechu/node-deep-extend)
+  : deep copy and concat

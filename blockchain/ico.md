@@ -136,3 +136,4 @@ filter.get(function (err, transactions) {
 [mist 브라우저](https://github.com/ethereum/mist)
 [blockcypher api](https://www.blockcypher.com/dev/ethereum/#introduction)
 [crowdsale 구현](https://ethereum.org/crowdsale)
+[verify contract](https://erc20token.sonnguyen.ws/en/latest/verify_contract/)

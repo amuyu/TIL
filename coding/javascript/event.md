@@ -21,12 +21,16 @@ var eventEmitter = new events.EventEmitter();
 
 // event와 EventHandler 를 연동(bind)
 // eventName 은 임의로 설정 가능
+// event 수신
 eventEmitter.on('eventName', eventHandler);
-
+// event 발신
 eventEmitter.emit('eventName');
 ```
 
+# once
 
+# waitUntil
+event.waitUntil
 
 [eventemitter](https://www.haruair.com/blog/3396)
 [Evnet Loop](https://velopert.com/267)

@@ -1,3 +1,12 @@
+### 배포 흐름
+solidity로 스마트 컨트랙트 작성
+web3 혹은 solc를 이용해 바이트코드로 컴파일
+컴파일의 결과물인 바이트코드과 ABI를 얻음
+testrpc 실행
+web3를 이용해 localhost:port에 있는 testrpc에 바이트코드를 배포. 이 때 ABI가 사용됨
+배포 후 컨트랙트 어드레스를 반환받을 수 있음
+web3를 이용해 컨트렉스 어드레스와 ABI를 이용해 컨트랙트를 가져와 함수를 실행시킬 수 있음.
+web3.js와 html를 연동시켜 웹 페이지와 블록체인에 있는 스마트 컨트랙트가 서로 통신할 수 있음.
 
 # contracts with Mist
 Mist 에서 간단한 Contracts 배포해보자.
@@ -70,7 +79,6 @@ ethereumjs-vm 사용
 # Contract Call
 
 # truffle 없이 컴파일하기
-
 [Ethereum DApps without truffle: compile; deploy; use it :)](https://medium.com/@doart3/ethereum-dapps-without-truffle-compile-deploy-use-it-e6daeefcf919)
 
 
@@ -571,6 +579,8 @@ https://github.com/MetaMask/metamask-extension/issues/1127
 ## 같은 nonce 에 data 가 다른 경우
 replacement transaction underpriced
 https://ethereum.stackexchange.com/questions/27256/error-replacement-transaction-underpriced
+gasprice 가 크면 에러가 안나고 gasprice 큰게 선택됨
+이전 tx 는 선택 안됨
 ## 같은 nonce 인 data 가 같은 경우
 known transaction
 ## 이전 nonce 인 경우
@@ -578,8 +588,16 @@ nonce too low
 ## 건너뛴 nonce 인 경우
 기다리기....
 
+
+
+
 # web3 와 gas
 http://astrocket.com/blog/레일즈-개발자의-이더리움-개발하기-2/
+
+# contract.method get
+// https://github.com/paritytech/parity/issues/6293
+eth_call(예를 들어, 무한 루프를 막기 위해) 가스 계산이 수행되고 있습니다.
+우리의 기본 가스 한도는 50M~ 64k가 bytes32한계치에 도달 했음을 나타냅니다
 
 
 # 참고

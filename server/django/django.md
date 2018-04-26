@@ -13,7 +13,19 @@ CBV로 API 를 만들 수 있다.
 속도가 느리다?
 
 # 설치
-djangorestframework
+pip install djangorestframework
+설치 패키지 목록
+```
+Django==2.0.3
+django-disqus==0.5
+django-tagging==0.4.6
+djangorestframework==3.7.7
+mock==2.0.0
+pbr==4.0.0
+Pillow==5.0.0
+pytz==2018.3
+six==1.11.0
+```
 
 # test Apps
 ```sh
