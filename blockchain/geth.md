@@ -12,17 +12,18 @@ geth init CustomGenesis.json --datadir chain-data
 # json 파일 예제
 CustomGenesis.json
 https://ethereum.stackexchange.com/questions/2376/what-does-each-genesis-json-parameter-mean/2377#2377
-```json
+```js
+// json
 {
-    "nonce": "0x0000000000000042",
-    "timestamp": "0x0",
+    "nonce": "0x0000000000000042",  // 마이닝 작업 시에 사용하는 64비트 해쉬
+    "timestamp": "0x0", //블록의 생성 시간
     "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
     "extraData": "0x0",
     "gasLimit": "0x8000000",
-    "difficulty": "0x400",
-    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-    "coinbase": "0x3333333333333333333333333333333333333333",
-    "alloc": {
+    "difficulty": "0x400",  // 난이도
+    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",  // 마이닝 작업에 사용하는 256비트 해쉬
+    "coinbase": "0x3333333333333333333333333333333333333333", // 마이닝에 대한 보상을 전송할 어카운트 주소
+    "alloc": {  // 일정 양의 이더를 특정 어카운트에 미리 할당할 수 있다.
     }
 }
 ```
@@ -32,7 +33,10 @@ https://ethereum.stackexchange.com/questions/2376/what-does-each-genesis-json-pa
 # geth private 실행 명령 best
 geth --identity ether-private --datadir /ethereum/data --port 30303 --rpc --rpcaddr 0.0.0.0 --rpcport 8545 --rpccorsdomain "*" --nodiscover --networkid 2018 --mine --minerthreads=1 --etherbase '0x907e71cf80248926bf64a32f702fc108ca5a6f58' --rpcapi "db,eth,net,web3,minor,personal" console 2>> geth.log
 
-# geth 
+geth --identity ether-private --datadir ./data --port 30303 --rpc --rpcaddr 0.0.0.0 --rpcport 8545 --rpccorsdomain "*" --nodiscover --networkid 2018 --mine --minerthreads=1 --etherbase '0x907e71cf80248926bf64a32f702fc108ca5a6f58' --rpcapi "db,eth,net,web3,minor,personal" console 2>> geth.log
+
+
+# geth
 geth --identity ether-private --datadir /ethereum/data --port 30303 --rpc --rpcaddr 0.0.0.0 --rpcport 8545 --rpccorsdomain "*" --nodiscover --networkid 2018 --mine --minerthreads=1 --etherbase '0x907e71cf80248926bf64a32f702fc108ca5a6f58' --rpcapi "db,eth,net,web3,minor,personal" --targetgaslimit '9999999999' console 2>> geth.log
 
 geth --identity ether-private --datadir ./data --port 30303 --ipcpath ~/.local/share/io.parity.ethereum/jsonrpc.ipc --rpc --rpcaddr 0.0.0.0 --rpcport 8545 --rpccorsdomain "*" --nodiscover --networkid 2018 --mine --minerthreads=1 --etherbase '0x907e71cf80248926bf64a32f702fc108ca5a6f58' --rpcapi "db,eth,net,web3,minor,personal" console 2>> geth.log

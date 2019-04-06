@@ -1,16 +1,53 @@
 
-# Observable.create
-Returns an Observable that will execute the specified function when a Subscriber subscribes to it.
-OnSubscribe 를 입력받아 Observable을 생성한다.
+# Observable
+Observable 의 역할은 다음과 같다.
+observer 에게 전달하기 위한 데이터 조회/변환 등의 내용(매커니즘)을 정의한다.
+정의된 내용을 수행하고 observer 에게 전달한다.
 
+Observed 라는 단어가 관찰을 통해서 얻은 결과를 의미한다면
+Observable 은 현재는 관찰되지 않았지만 이론을 통해서 앞으로 관찰할 가능성을 의미한다.
 
-## Observable
 The Observable class that implements the Reactive Pattern.
 This class provides methods for subscribing to the Observable as well as delegate methods to the various Observers.
 이벤트 발생 시점에 수행할 메커니즘(데이터 조회/변환)을 정의(onSubscribe)
 하고 이벤트를 발생시키면 준비된 연산을 실행하고 결과를 observer에게 리턴한다.
 Observable은 누군가 subscribe 하는 시점에 이벤트를 발생시킨다.
 (그래서 observable을 Cold라고 부른다. subscribe 하기 전에는 이벤트가 발생하지 않으므로)
+
+
+# Observable.create
+Observable 생성에는 여러 방법이 있지만 기본적으로 OnSubscribe 를 입력받아 Observable을 생성한다.
+Returns an Observable that will execute the specified function when a Subscriber subscribes to it.
+
+```java
+// observe
+Observable<String> simpleObservable =
+    Observable.create(new Observable.OnSubscribe<String>() {
+        @Override
+        public void call(Subscriber<? super String> subscriber) {
+            subscriber.onNext("Hello RxAndroid !!");
+            subscriber.onCompleted();
+        }
+    });
+// subscribe
+simpleObservable
+    .subscribe(new Subscriber<String>() {
+        @Override
+        public void onCompleted() {
+            Log.d(TAG, "complete!");
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e(TAG, "error: " + e.getMessage());
+        }
+
+        @Override
+        public void onNext(String text) {
+            ((TextView) findViewById(R.id.textView)).setText(text);
+        }
+    });
+```
 
 
 ## OnSubscribe
@@ -23,10 +60,16 @@ public interface OnSubscribe<T> extends Action1<Subscriber<? super T>> {
 ```
 ### OnSubscribeFromIterable
 Converts an Iterable sequence into an Observable.
+```
+Observable<String> o = Observable.from("a", "b", "c");
+def list = [5, 6, 7, 8]
+Observable<Integer> o = Observable.from(list);
+```
 ### JustOnSubscribe
 The OnSubscribe callback for the Observable constructor.
-
-
+```
+Observable<String> o = Observable.just("one object");
+```
 
 
 ## Subscriber
@@ -42,9 +85,12 @@ public interface Action1<T> extends Action {
     void call(T t);
 }
 ```
-## Producer
-onNext, onCompleted 호출
 
+## Producer
+Interface that establishes a request-channel between an Observable and a Subscriber and
+allows the Subscriber to request a certain amount of items from the Observable
+onNext, onCompleted 호출
+Backpressure 와 연관이 있음
 
 # just
 Returns an Observable that emits a single item and then completes.
@@ -71,6 +117,7 @@ subscribe 하는 것과 상관없이 connect 를 해주어야 item을 emit 한�
 ConnectableObservable 을 반환한다.
 ## refCount(), publish()
 ConnectableObservable 을 Observable로 바꿔준다.
+
 
 
 

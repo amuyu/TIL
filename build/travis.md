@@ -16,6 +16,10 @@ tag push 도 먹힘
 ## test
 
 
+# reference guide
+[projects-using-gradle](https://docs.travis-ci.com/user/languages/java/#projects-using-gradle)
+[gradle guide](https://guides.gradle.org/executing-gradle-builds-on-travisci/)
+[travis-bintray-descriptor](https://github.com/bintray/bintray-examples/blob/master/travis-ci-example/descriptor.json)
 # 참고
 [커니//github + travis 안드로이드 ci 환경 구축](http://androidhuman.com/540)
 [travis로 안드로이드 배포하기(CD)](https://calyfactory.github.io/android-slack-deploy/)

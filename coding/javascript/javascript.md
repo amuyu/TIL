@@ -445,6 +445,9 @@ Promise.resolve 는 reject 가 없고 에러가 발생할 경우, throw 를 호�
 ### singleton
 http://blog.javarouka.me/2012/02/javascripts-pattern-1-singeton-patterrn.html
 
+## async
+async.waterfall
+
 ## 참고
 [A re-introduction to JavaScript (JS tutorial)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
 [상속과 프로토타입](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain)

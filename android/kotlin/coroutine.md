@@ -10,12 +10,61 @@
 
 협력형 멀티태스킹을 구현하는 용도로 사용된다.
 
-coroutines are light-weight threads.
+**coroutines are light-weight threads.**
 They are launched with launch coroutine builder.
+
+coroutines 는 thread를 block 하지 않고 suspend 할 수 있다.
+coroutines suspension 은 context switch 나 OS 개입은 필요하지 않다. 사용자 라이브러리에 의해 suspension 을 제어할 수 있습니다.
+
+coroutine 은 무작위 지시에 중단될 수 없고, 특별히 지정된 함수에 호출되는 정지 점에서만 중단되다.
+
+# Basic
+### Suspending functions
+suspension 은 `supsend` 예약어를 사용해 만든다.
+```kotlin
+suspend fun doSomething(foo: Foo): Bar { ... }
+```
+이와 같이 작성한 함수를 suspending functions 이라고 한다.
+일반 함수와 동일한 방식으로 매개변수 및 반환 값을 취한다.
+coroutines 및 다른 suspending functions 에서 호출할 수 있다.
+함수 literals 도 함수에 인라인 될 수 있다.
+
+coroutine 을 시작하기 위해서는 suspending 함수가 필요하다.
+예를 들어 `async` 함수는 다음과 같다.
+```kotlin
+fun <T> async(block: suspend () -> T)
+```
+`async` 는 regular function 이고 `suspend` 함수 type 의 파라미터를 받는다.
+`async()` 는 다음과 같이 lambda 로 호출할 수 있다.
+```kotlin
+async {
+    doSomething(foo)
+    ...
+}
+```
+`await()` 은 computation이 끝날 때까지 coroutine 을 suspend 하는 suspending function 이다.
+```kotlin
+async {
+    ...
+    val result = computation.await()
+    ...
+}
+```
+`await()` 과 `doSomethind()` 과 같은 suspending functions 은
+non-coroutine 함수에서 호출할 수 없다.
+
+@RestrictsSuspension
+라이브러리 사용자가 coroutine 을 중단하는 새로운 방법을 추가하는 것 방지한다.
+
+### fun
+- launch : coroutine builder, return job
+- async : new coroutine, return deferred
+- future : CompletableFuture
+
 
 ## 개념이해
 ### python 코루틴
-yeild
+yeild : 호출자(Caller)에게 컬렉션 데이타를 하나씩 리턴할 때 사용한다
 
 # kotlin.coroutines
 라이브러리로  Rx, CompletableFuture, NIO, JavaFx 및 Swing 위에서 동작한다.
@@ -26,23 +75,46 @@ yeild
 - delay, yield, etc top level suspending functions
 - select expression support and more
 
-# 사용방법
+# 사용예
+launch 을 사용한 asynchronous computation 예
+```kotlin
+launch {
+    // suspend while asynchronously reading
+    val bytesRead = inChannel.aRead(buf)
+    // we only get to this line when reading completes
+    ...
+    ...
+    process(buf, bytesRead)
+    // suspend while asynchronously writing   
+    outChannel.aWrite(buf)
+    // we only get to this line when writing completes  
+    ...
+    ...
+    outFile.close()
+}
 ```
-// runs the code in the background thread pool
-fun asyncOverlay() = async(CommonPool) {
-    // start two async operations
-    val original = asyncLoadImage("original")
-    val overlay = asyncLoadImage("overlay")
-    // and then apply overlay to both results
+future 을 사용한 예
+```kotlin
+val future = future {
+    val original = asyncLoadImage("...original...") // creates a Future
+    val overlay = asyncLoadImage("...overlay...")   // creates a Future
+    ...
+    // suspend while awaiting the loading of the images
+    // then run `applyOverlay(...)` when they are both loaded
     applyOverlay(original.await(), overlay.await())
 }
-
-// launches new coroutine in UI context
+```
+ui update 예
+```
 launch(UI) {
-    // wait for async overlay to complete
-    val image = asyncOverlay().await()
-    // and then show it in UI
-    showImage(image)
+    try {
+        // suspend while asynchronously making request
+        val result = makeRequest()
+        // display result in UI, here Swing context ensures that we always stay in event dispatch thread
+        display(result)
+    } catch (exception: Throwable) {
+        // process exception
+    }
 }
 ```
 async / await, yield 및 유사한 프로그래밍 패턴을 지원한다
@@ -60,7 +132,8 @@ fun main(args: Array<String>) {
 }
 ```
 coroutine 은 light-weight 하기 때문에 다음과 같은 구현이 가능하다.
-thread를 사용해서 아래와 같이 구현하면 에러가 날 것이다.
+100K 코 루틴을 시작하고, 1초후에 각 코 루틴이 .을 찍는다.
+스레드로 시도하면 대부분의 경우 코드에서 일종의 메모리 부족 오류가 발생할 것이다.
 ```kotlin
 fun main(args: Array<String>) = runBlocking<Unit> {
     val jobs = List(100_000) { // create a lot of coroutines and list their jobs
@@ -73,12 +146,26 @@ fun main(args: Array<String>) = runBlocking<Unit> {
 }
 ```
 
+## daemon threads
+코 루틴은 프로세스를 유지하지 않습니다. 그들은 데몬 스레드와 같습니다.
+```kotlin
+fun main(args: Array<String>) = runBlocking<Unit> {
+    launch {
+        repeat(1000) { i ->
+            println("I'm sleeping $i ...")
+            delay(500L)
+        }
+    }
+    delay(1300L) // just quit after delay
+}
+```
+
 
 ## runBlocking
 Main coroutine
 
 ## Waiting for a job
-coroutine 이 작업이 완료될 때까지 대기할 수 있다.
+job 을 사용해서 coroutine 이 작업이 완료될 때까지 대기할 수 있다.
 ```
 fun main(args: Array<String>) = runBlocking<Unit> {
     val job = launch(CommonPool) { // create new coroutine and keep a reference to its Job
@@ -208,10 +295,14 @@ but their additional feature is that they can, in turn, use other suspending fun
 ## 참고
 [코틀린 1.1 릴리즈](http://kotlin.kr/2017/03/01/kotlin-1-dot-1.html)
 [coroutines-guide](https://github.com/Kotlin/kotlinx.coroutines/blob/master/coroutines-guide.md)
+[guide 변역](https://medium.com/@kimtaesoo188/guide-to-kotlin-coroutines-coroutine-basics-part-1-35215c510c3d)
+[번역](https://github.com/myungpyo/study-kotlin/wiki/Coroutines-(ko))
 [kotlin/coroutines](https://github.com/Kotlin/kotlinx.coroutines)
 [wiki/coroutine](https://en.wikipedia.org/wiki/Coroutine)
 [kotlinKorea/coroutine](https://github.com/kotlin-korea/Study-Log/issues/42)
 [kotlin-coroutines-guide](https://blog.simon-wirtz.de/kotlin-coroutines-guide/)
+[coroutine-recipes](https://medium.com/@kimtaesoo188/kotlin-weekly-63-android-coroutine-recipes-e077cb5f3d97)
+  - launch 와 async 사용
 
 ### 파이썬
 [python의 corountine](http://haerakai.tistory.com/36)

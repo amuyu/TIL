@@ -614,3 +614,4 @@ eth_call(예를 들어, 무한 루프를 막기 위해) 가스 계산이 수행�
 [dapp for beginner](https://dappsforbeginners.wordpress.com)
 [deploy contract from contract](https://ethereum.stackexchange.com/questions/18936/deploying-contract-from-contract)
 [contract 실행 후, filter 로 contract address 확인?](https://github.com/ethereum/web3.js/issues/416)
+[스마트컨트랙트의 이해](http://goodjoon.tistory.com/261)

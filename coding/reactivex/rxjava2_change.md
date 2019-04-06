@@ -32,6 +32,7 @@ compile "com.github.akarnokd:rxjava2-interop:0.10.2"
 
 ## Completable 사용
 
+
 ```
 Completable.fromAction { callback.invoke(0) }
                     .subscribeOnMainThread()

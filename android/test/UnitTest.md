@@ -366,10 +366,15 @@ or
 
 # Hamcrest
 assert()와 같은 matcher를 확장한 라이브러리
+다양한 조건의 Match rule 을 손쉽게 작성하고 테스트 할 수 있는 library로 jUnit 이나 Mokoto 와 연계하여 사용할 수 있다.
 ## assertThat
 Hamcrest has the target to make tests as readable as possible.
 For example, the is method is a thin wrapper for equalTo(value).
+
 ```java
+assertThat(테스트대상, Matcher구문);
+assertThat("메시지", 테스트대상, Matcher구문);
+
 // all statements test the same
 assertThat(a, equalTo(b));
 assertThat(a, is(equalTo(b)));

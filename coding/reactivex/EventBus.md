@@ -1,3 +1,4 @@
+Relay 를 사용한 RxBus 구현 내용
 ```java
 import com.jakewharton.rxrelay2.PublishRelay;
 import com.jakewharton.rxrelay2.Relay;

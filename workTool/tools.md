@@ -1,3 +1,9 @@
+# deploy
+delpoygate
+
+# issue관리
+waffle.io : github 연동 이슈관리, pull request 를 통한 작업 관리
+
 # color
 https://yeun.github.io/open-color/
 

@@ -244,6 +244,7 @@ git clean -f
 git clean -f -d // 디렉토리 까지 제거
 ```
 
+
 ## commit 변경
 ```bash
 git commit --amend
@@ -256,6 +257,13 @@ local 저장소에 fork한 저장소를 원격 저장소에 추가한다
 ```bash
 ```
 
+
+## Gir branch 관리
+Master : Release 완료한 버전을 merge 하고, Release 시 Tag를 함께 둔다.
+Developer Branch : Master Branch 기준으로 티켓 단위 개발 작업을 진행한다.
+Code-Review Branch : 이 Branch는 언제든 제거하고, 다시 생성될 수 있으며, Code review 목적으로 둔다.
+Release Branch : 릴리즈 플래닝이 끝나면 작업 완료한 티켓을 머지 한다.
+
 ## 참고
 - [git간편안내서](https://rogerdudler.github.io/git-guide/index.ko.html)
 - [git merge와 rebase 비교하기](https://blog.outsider.ne.kr/666)
@@ -263,3 +271,4 @@ local 저장소에 fork한 저장소를 원격 저장소에 추가한다
 - [Git브랜치-Rebase하기](https://git-scm.com/book/ko/v1/Git-%EB%B8%8C%EB%9E%9C%EC%B9%98-Rebase%ED%95%98%EA%B8%B0)
 - [초심자를 위한 github 협업 튜토리얼](https://blog.weirdx.io/post/45529)
 - [git clinent 모음](https://git-scm.com/download/gui/mac)
+- [Git Branch - 릴리즈 플래닝 - 회사에서 하고 있는 걸 정리해본다.](https://thdev.tech/android/git/2018/01/21/Git-Branch.html)

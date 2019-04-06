@@ -1,0 +1,850 @@
+# 변수
+변수는 var 를 사용하여 선언한다. var 키워드 뒤에 변수명을 적고, 그 뒤에 타입을 적는다.
+```go
+var a int = 1
+var i, j, k int = 1, 2, 3
+```
+변수를 선언하면서 초기값을 지정하지 않으면, Go는 Zero Value를 기본적으로 할당한다.
+Go 에서는 할당되는 값을 보고 그 타입을 추론하는 기능이 있다.
+
+`short assignment statement`(:=) 를 사용해 변수를 선언할 수 있다. var를 생략할 수 있다.
+func 내에서만 사용할 수 있다.
+
+# 상수
+const를 사용하여 선언한다.
+```go
+const c int = 10
+const c = 10	// 값을 보고 타입 추론
+const (
+    Visa = "Visa"
+    Master = "MasterCard"
+    Amex = "American Express"
+)
+```
+`iota` 라는 identifier를 사용하면 상수값을 순차적으로 부여할 수 있다.
+```go
+const (
+    Apple = iota // 0
+    Grape        // 1
+    Orange       // 2
+)
+```
+
+# keyword
+Go에서 사용하는 예약 키워드들이다.
+```go
+break        default      func         interface    select
+case         defer        go           map          struct
+chan         else         goto         package      switch
+const        fallthrough  if           range        type
+continue     for          import       return       var
+```
+
+# type
+- 부울린 타입
+bool
+- 문자열 타입
+string: string은 한번 생성되면 수정될 수 없는 Immutable 타입임
+- 정수형 타입
+int int8 int16 int32 int64
+uint uint8 uint16 uint32 uint64 uintptr
+- Float 및 복소수 타입
+float32 float64 complex64 complex128
+- 기타 타입
+byte: uint8과 동일하며 바이트 코드에 사용
+rune: int32과 동일하며 유니코드 코드포인트에 사용한다
+
+# 문자열
+문자열 리터럴은 Back Quote(` `) 혹은 이중인용부호(" ")를 사용하여 표현할 수 있다.
+- Back Quote 는 Raw String Literal 이라고 부른다. raw string 그대로의 값을 갖는다.
+- 이중인용부호는 일반적으로 사용하는 string
+
+# type conversion
+데이터 타입을 변환하기 위해서는 `T(V)` 와 같이 표현한다. 명시적으로 지정한다.
+```go
+func main() {
+    var i int = 100
+    var u uint = uint(i)
+    var f float32 = float32(i)  
+    println(f, u)
+
+    str := "ABC"
+    bytes := []byte(str)
+    str2 := string(bytes)
+    println(bytes, str2)
+}
+```
+
+# 연산자
+- 산술연산자 : +, -, \*, /, %, ++,—
+- 관계연산자
+```go
+a == b
+a != c
+a >= b
+```
+- 논리연산자
+```go
+A && B
+A || !(C && B)
+```
+- Bitwise 연산자
+```go
+c = (a & b) << 5
+```
+- 할당연산자 : =, +=, &=, <<=
+- 포인터연산자 : &, * 를 사용하여 변수의 주소를 얻어내고 Dereference할 때 사용, 포인터 산술은 안된다.
+
+# 조건문
+## if
+if 문은 해당 조건이 맞으면 { } 블럭안의 내용을 실행한다.
+조건식을 괄호 ( )로 둘러 싸지 않아도 된다.
+반드시 Boolean 식으로 표현되어야 한다.
+```go
+if k == 1 {
+    println("One")
+} else if k == 2 {  //같은 라인
+    println("Two")
+} else {   //같은 라인
+    println("Other")
+}
+```
+if 문에서 조건식을 사용하기 이전에 간단한 (Optional Statement)를 함께 실행할 수 있다.
+```go
+if val := i * 2; val < max {
+    println(val)
+}
+
+// 아래 처럼 사용하면 Scope 벗어나 에러
+val++
+```
+
+# switch 문
+여러 값을 비교해야 하는 경우 혹은 다수의 조건식을 체크해야 하는 경우 switch 문을 사용한다.
+```go
+package main
+ 
+func main() {
+    var name string
+    var category = 1
+ 
+    switch category {
+    case 1:
+        name = "Paper Book"
+    case 2:
+        name = "eBook"
+    case 3, 4:
+        name = "Blog"
+    default:
+        name = "Other"
+    }
+    println(name)
+     
+    // Expression을 사용한 경우
+    switch x := category << 2; x - 1 {
+        //...
+    }  
+}
+```
+switch 에서 case 문은 case 블럭 마지막에 break 문을 생략해도 break하여 switch문을 빠져나온다.
+default break 문을 사용하지 않고 다음 case 문을 실행하게 하려면 fallthrough 문을 명시하면 된다.
+
+# for 문
+Go는 반복문에 for 하나 밖에 없다. 다른 언어와 같은 형식으로 작성하되 괄호는 생략한다.
+```go
+package main
+
+func main() {
+    sum := 0
+    for i := 1; i <= 100; i++ {
+        sum += i
+    }
+    println(sum)
+}
+```
+조건식만 쓰는 for 루프, 초기값과 증감식을 생략해서 for 루프가 다른 언어의 while루프와 같이 쓰이도록 한다.
+```go
+package main
+
+func main() {
+    n := 1
+    for n < 100 {
+        n *= 2      
+        //if n > 90 {
+        //   break
+        //}     
+    }
+    println(n)
+}
+```
+for range 문은 컬렉션으로부터 한 요소씩 가져와 차례로 for 블럭의 문장을 실행한다.
+foreach와 비슷한 용법이다. `for 인덱스, 요소값 := range 컬렉션`
+```go
+names := []string{"홍길동", "이순신", "강감찬"}
+
+for index, name := range names {
+    println(index, name)
+}
+```
+
+# 함수
+Go에서 함수는 func 키워드를 사용하여 정의한다.
+```go
+package main
+func main() {
+    msg := "Hello"
+    say(msg)
+}
+
+func say(msg string) {
+    println(msg)
+}
+```
+## 파라미터 전달
+Go에서 파라미터를 전달하는 방식은 Pass By Value 와 Pass By Reference로 나뉜다.
+- Pass By Value : 변수 값 전달
+- Pass By Reference : 변수 주소 전달
+
+## Variadic (가변인자함수)
+다양한 숫자의 파라미터를 전달하고자 할 때 `…` 3개의 마침표를 사용한다.
+```go
+package main
+func main() {   
+    say("This", "is", "a", "book")
+    say("Hi")
+}
+
+func say(msg ...string) {
+    for _, s := range msg {
+        println(s)
+    }
+}
+```
+
+## 함수 리턴값
+Go에서 함수는 리턴값이 없을 수도, 하나일 수도, 복수 개일 수도 있다.
+Named Return Parameter 라는 기능을 제공한다. 리턴되는 값들을 리턴 파라미터들에
+할당할 수 있는 기능이다.
+```go
+func sum(nums ...int) (count int, total int) {
+    for _, n := range nums {
+        total += n
+    }
+    count = len(nums)
+    return
+}
+```
+
+# 익명함수
+함수명을 갖지 않는 함수를 익명함수라 부른다. 익명함수는 함수 전체를 변수에 할당하거나
+다른 함수의 파라미터에 직접 정의되어 사용되곤 한다.
+
+# 일급함수
+Go 언어에서 함수는 일급함수로서 Go의 기본 타입과 동일하게 취급되며,
+따라서 다른 함수의 파라미터로 전달하거나 리턴값으로도 사용될 수 있다.
+
+# type 문을 사용한 함수 원형 정의
+type 문은 구조체, 인터페이스 등 Custom Type 을 정의하기 위해 사용한다.
+
+# Closure
+Closure는 함수 바깥에 있는 변수를 참조하는 함수값을 일컫는데,
+바깥의 변수를 마치 함수 안으로 끌어들인 듯이 그 변수를 읽거나 쓸 수 있게 된다.
+```go
+package main
+
+func nextValue() func() int {
+    i := 0
+    return func() int {
+        i++
+        return i
+    }
+}
+
+func main() {
+    next := nextValue()
+
+    println(next())  // 1
+    println(next())  // 2
+    println(next())  // 3
+
+    anotherNext := nextValue()
+    println(anotherNext()) // 1 다시 시작
+    println(anotherNext()) // 2
+}
+```
+
+# Array
+배열의 선언은 `var 변수명 [배열크기] 데이터타입` 과 같이 한다.
+고정된 크기를 사용한다.
+```go
+package main
+
+func main() {
+    var a [3]int  //정수형 3개 요소를 갖는 배열 a 선언
+    a[0] = 1
+    a[1] = 2
+    a[2] = 3
+    println(a[1]) // 2 출력
+}
+```
+
+## 배열의 초기화
+배열 선언 뒤에 { } 괄호를 두고 초기값을 순서대로 적으면 된다
+```go
+var a1 = [3]int{1, 2, 3}
+var a3 = [...]int{1, 2, 3} //배열크기 자동으로
+```
+
+## slice
+슬라이스는 배열과 달리 고정된 크기를 지정하지 않고 크기를 동적으로 변경할 수도 있고,
+부분 배열을 발췌할 수도 있다. 선언은 배열을 선언하듯이 `var v []T` 처럼 한다.
+```go
+package main
+import "fmt"
+
+func main() {
+    var a []int        //슬라이스 변수 선언
+    a = []int{1, 2, 3} //슬라이스에 리터럴값 지정
+    a[1] = 10
+    fmt.Println(a)     // [1, 10, 3]출력
+}
+```
+slice 를 생성하는 방법은 내장함수 make()를 이용할 수 있다.
+make 함수로 슬라이스를 생성하면 슬라이스의 길이와 용량을 임의로 지정할 수 있는 장점이 있다.
+```go
+func main() {
+    s := make([]int, 5, 10)
+    println(len(s), cap(s)) // len 5, cap 10
+}
+```
+
+## sub-slice
+슬라이스에서 일부를 발췌하여 부분 슬라이스를 만들 수 있다.
+`슬라이스[처음인덱스:마지막인덱스]` 형식으로 만든다.
+```go
+package main
+import "fmt"
+
+func main() {
+    s := []int{0, 1, 2, 3, 4, 5}
+    s = s[2:5]  
+    fmt.Println(s) //2,3,4 출력
+}
+
+s := []int{0, 1, 2, 3, 4, 5}
+s = s[2:5]     // 2, 3, 4
+s = s[1:]      // 3, 4
+fmt.Println(s) // 3, 4 출력
+```
+
+## 슬라이스 추가, 병합, 복사
+append(),
+```go
+func main() {
+    s := []int{0, 1}
+
+    // 하나 확장
+    s = append(s, 2)       // 0, 1, 2
+    // 복수 요소들 확장
+    s = append(s, 3, 4, 5) // 0,1,2,3,4,5
+
+    fmt.Println(s)
+}
+```
+copy()
+```go
+func main() {
+    source := []int{0, 1, 2}
+    target := make([]int, len(source), cap(source)*2)
+    copy(target, source)
+    fmt.Println(target)  // [0 1 2 ] 출력
+    println(len(target), cap(target)) // 3, 6 출력
+}
+```
+
+# Map
+Map 은 Hash table을 구현한 자료구조이다.
+`map[Key타입]Value타입` 과 같이 선언할 수 있다.
+```go
+var idMap map[int]string
+idMap = make(map[int]string)	// map 초기화
+//리터럴을 사용한 초기화
+tickers := map[string]string{
+    "GOOG": "Google Inc",
+    "MSFT": "Microsoft",
+    "FB":   "FaceBook",
+}
+```
+
+## Map 키 체크
+map 안에 특정 키가 존재하는제 체크
+`map변수[키]` 읽기를 수행할 때 2개의 리턴값을 리턴한다. 첫번째는 키에 상응하는 값이고,
+두번째는 그 키가 존재하는지 아닌지를 나타내는 bool값이다.
+```go
+package main
+
+func main() {
+    tickers := map[string]string{
+        "GOOG": "Google Inc",
+        "MSFT": "Microsoft",
+        "FB":   "FaceBook",
+        "AMZN": "Amazon",
+    }
+
+    // map 키 체크
+    val, exists := tickers["MSFT"]
+    if !exists {
+        println("No MSFT ticker")
+    }
+}
+```
+# 패키지
+Go는 패키지를 통해 코드의 모듈화, 코드의 재사용 기능을 제공한다.
+Go에 사용하는 표준패키지는 https://golang.org/pkg 에 자세히 설명되어 있다
+
+## main
+컴파일러는 main 패키지를 실행 프로그램으로 만든다.
+
+## 패키지 import
+import 를 사용하여 패키지를 포함시킨다.
+패키지를 import할 때, 컴파일러는 GOROOT or GOPATH 환경변수를 검색한다.
+
+GOROOT 는 Go 설치시 자동으로 시스템에 설정되지만, GOPATH는 사용자가 지정해 주어야 한다.
+
+## 패키지 Scope
+패키지 내에는 함수, 구조체, 인터페잇, 메서드 등이 존재하는데 이름이 첫글자가 대문자로 시작하면
+public으로 사용할 수 있다. 소문자로 시작하면 non-public 으로 패키지 내부에서만 사용한다.
+
+## 패키지 init 함수와 alias
+패키지 실행시 처음으로 호출되는 init() 함수를 작성할 수 있다. 패키지가 로드되면 실행된다.
+
+경우에 따라 패키지를 import 하면서 init() 함수만을 호출하고자 하면 패키지 import 시
+`_` 라는 alias 를 지정한다.
+```go
+package main
+import _ "other/xlib"
+```
+
+## 사용자 정의 패키지 생성
+일반적으로 폴더를 하나 만들고 그 폴더 안에 .go 파일들을 만들어 구성한다.
+하나의 서브 폴더안에 있는 .go 파일들은 동일한 패키지명을 갖는다.
+패키지명은 해당 폴더의 이름과 같게 한다.
+
+Optional : 사이즈가 큰 복잡한 라이브러리 같은 경우 `go install` 명령을 사용하여
+라이브러리를 컴파일하여 Cache 할 수 있다. 이렇게 하면 /pkg 폴더안에 컴파일된 파일이 생성된다.
+
+이렇게 정의한 패키지를 사용하려면 다음과 같이 작성한다.
+```go
+package main
+
+import "24lab.net/testlib"
+
+func main() {
+    song := testlib.GetMusic("Alicia Keys")
+    println(song)
+}
+```
+Go는 24lab.net/testlib 패키지를 찾기 위해 GOROOT와 GOPATH 를 찾는다.
+```
+C:\Go\src\24lab.net\testlib (from $GOROOT)
+C:\GoApp\src\24lab.net\testlib (from $GOPATH)
+C:\GoSrc\src\24lab.net\testlib
+```
+
+# Struct
+Go에서 struct 는 Custom Data Type을 표현한는데 사용한다.
+
+Go 언어는 객체지향 프로그래밍을 고유의 방식으로 지원한다.
+클래스, 객체, 상속 개념이 없다. 전통적인 OOP의 클래스는 Go 언어에서 Custom 타입을 정의하는
+struct로 표현한다. struct는 필드만을 가지며, 메서드는 별도로 분리해서 정의한다.
+
+struct 를 정의하기 위해서 type 문을 사용한다.
+```go
+package main
+
+import "fmt"
+
+// struct 정의
+type person struct {
+    name string
+    age  int
+}
+
+func main() {
+    // person 객체 생성
+    p := person{}
+
+    // 필드값 설정
+    p.name = "Lee"
+    p.age = 10
+
+    fmt.Println(p)
+}
+```
+
+## 객체 생성
+struct 타입으로부터 객체를 생성하는 방법은 몇 가지 방법들이 있다.
+```go
+var p1 person
+p1 = person{"Bob", 20}
+p2 := person{name: "Sean", age: 50}
+p := new(person)
+```
+
+## 생성자 함수
+struct 의 필드가 사용 전에 초기화되어야 하는 경우가 있다.
+이러한 목적을 위해 생성자 함수를 사용할 수 있다.
+```go
+package main
+
+type dict struct {
+    data map[int]string
+}
+
+//생성자 함수 정의
+func newDict() *dict {
+    d := dict{}
+    d.data = map[int]string{}
+    return &d //포인터 전달
+}
+
+func main() {
+    dic := newDict() // 생성자 호출
+    dic.data[1] = "A"
+}
+```
+
+# Method
+Go 메서드는 특별한 형태의 func 함수이다.
+메서드는 함수 정의에서 fund 키워드와 함수명 사이에
+어떤 struct를 위한 메서드인지를 표시한다.
+
+receiver 로 불리우는 이 부분은 메서드가 속한 struct 타입과
+struct 변수명을 지정하는데 함수 내에서 입력 파라미터처럼 사용한다.
+
+```go
+package main
+
+//Rect - struct 정의
+type Rect struct {
+    width, height int
+}
+
+//Rect의 area() 메소드
+func (r Rect) area() int {
+    return r.width * r.height   
+}
+
+func main() {
+    rect := Rect{10, 20}
+    area := rect.area() //메서드 호출
+    println(area)
+}
+```
+
+## value vs pointer receiver
+Value receiver 의 경우 메서드 내에서 struct의 필드값이 변경되더라도
+호출자의 데이터는 변경되지 않는 반면, pointer receiver는
+메서드 내의 필드값 변경이 그대로 호출자에서 반영된다.
+```go
+// 포인터 Receiver
+func (r *Rect) area2() int {
+    r.width++
+    return r.width * r.height
+}
+
+func main() {
+    rect := Rect{10, 20}
+    area := rect.area2() //메서드 호출
+    println(rect.width, area) // 11 220 출력
+}
+```
+
+# 인터페이스
+interface 는 type이 구현해야 하는 메서드들의 집합체이다.
+```go
+type Shape interface {
+    area() float64
+    perimeter() float64
+}
+```
+
+## 인터페이스 구현
+인터페이스 구현은 해당 타입의 메서드를 구현하면 된다.
+```go
+//Rect 정의
+type Rect struct {
+    width, height float64
+}
+
+//Rect 타입에 대한 Shape 인터페이스 구현
+func (r Rect) area() float64 { return r.width * r.height }
+func (r Rect) perimeter() float64 {
+     return 2 * (r.width + r.height)
+}
+```
+
+## 인터페이스 사용
+함수가 파라미터로 인터페이스르 ㄹ사용할 수 있다.
+인터페이스 구현한 타입 객체를 파라미터로 받아 메서드를 호출 할 수 있다.
+```go
+func main() {
+    r := Rect{10., 20.}
+    c := Circle{10}
+
+    showArea(r, c)
+}
+
+func showArea(shapes ...Shape) {
+    for _, s := range shapes {
+        a := s.area() //인터페이스 메서드 호출
+        println(a)
+    }
+}
+```
+
+## 인터페이스 타입
+빈 인터페이스를 인터페이스 타입이라고 하는데 어떠한 타입도
+담을 수 있는 컨테이너라고 볼 수 있다.
+
+## Type Assertion
+Interface type의 x 와 타입 T에 대하여 x.(T)로 표현했을 때,
+x가 nil이 아니며, x가 T타입에 속한다면 T타입의 x를 리턴한다.
+```go
+func main() {
+    var a interface{} = 1
+
+    i := a       // a와 i 는 dynamic type, 값은 1
+    j := a.(int) // j는 int 타입, 값은 1
+
+    println(i)  // 포인터주소 출력
+    println(j)  // 1 출력
+}
+```
+
+# Go 에러
+Go는 내장 타입으로 error라는 interface 타입을 갖는다.
+```go
+type error interface {
+    Error() string
+}
+```
+
+# defer
+defer는 특정 문장 혹은 함수를 나중에 실행하게 한다
+finally 블럭처럼 마지막에 Clean-up 작업을 위해 사용한다.
+
+# panic
+panic은 현재 함수를 멈추고 현재 함수에 defer 함수들을 모두 실행한 후, 즉시 리턴한다.
+
+# recover
+panic 함수에 의한 패닉상태를 정상상태로 되돌린다
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    openFile("1.txt")
+    println("Done") // 이 문장 실행됨
+}
+
+func openFile(fn string) {
+    // defere 함수. panic 호출시 실행됨
+    defer func() {
+        if r := recover(); r != nil {
+            fmt.Println("OPEN ERROR", r)
+        }
+    }()
+
+    f, err := os.Open(fn)
+    if err != nil {
+        panic(err)
+    }
+
+    // 파일 close 실행됨
+    defer f.Close()
+}
+```
+
+# Go 루틴
+Go 런타임이 관리하는 경량 쓰레드 이다. `go` 키워드를 사용하여
+함수를 호출하면, 런타임시 새로운 groutine 을 실행한다.
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func say(s string) {
+    for i := 0; i < 10; i++ {
+        fmt.Println(s, "***", i)
+    }
+}
+
+func main() {
+    // 함수를 동기적으로 실행
+    say("Sync")
+
+    // 함수를 비동기적으로 실행
+    go say("Async1")
+    go say("Async2")
+    go say("Async3")
+
+    // 3초 대기
+    time.Sleep(time.Second * 3)
+}
+```
+
+# 익명함수
+고루틴은 익명함수를 실행할 수도 있다.
+```go
+package main
+
+import (
+    "fmt"
+    "sync"
+)
+
+func main() {
+    // WaitGroup 생성. 2개의 Go루틴을 기다림.
+    var wait sync.WaitGroup
+    wait.Add(2)
+
+    // 익명함수를 사용한 goroutine
+    go func() {
+        defer wait.Done() //끝나면 .Done() 호출
+        fmt.Println("Hello")
+    }()
+
+    // 익명함수에 파라미터 전달
+    go func(msg string) {
+        defer wait.Done() //끝나면 .Done() 호출
+        fmt.Println(msg)
+    }("Hi")
+
+    wait.Wait() //Go루틴 모두 끝날 때까지 대기
+}
+```
+
+## 다중 CPU 처리
+CPU에서 병렬처리 하게 설정할 수 있다.
+```go
+package main
+
+import (
+    "runtime"  
+)
+
+func main() {
+    // 4개의 CPU 사용
+    runtime.GOMAXPROCS(4)
+
+    //...
+}
+```
+
+# Go 채널
+채널을 통해 데이터를 주고받을 수 있다.
+make() 함수를 통해 생성되고 채널 연산자 `<-`을 통해 데이터를 보내고 받는다.
+채널은 고루틴들 사이 데이터를 주고 받는데 사용한다.
+상대편이 준비될 때까지 채널에서 대기함으로써 별도의 lock을 걸지않고
+데이터를 동기화하는데 사용한다.
+
+채널로 데이터를 보낼 때는 `채널명 <- 데이터` 와 같이 하고
+채널로부터 데이터를 받을 경우는 `<- 채널명` 과 같이 사용한다.
+
+```go
+package main
+
+func main() {
+  // 정수형 채널을 생성한다
+  ch := make(chan int)
+
+  go func() {
+    ch <- 123   //채널에 123을 보낸다
+  }()
+
+  var i int
+  i = <- ch  // 채널로부터 123을 받는다
+  println(i)
+}
+```
+Go 채널은 수신자와 송신자가 서로를 기다리는 속성때문에,
+Go 루틴이 끝날 때까지 기다리는 기능을 구현할 수 있다.
+
+## Go 채널 버퍼링
+Unbuffered Channel과 Buffered Channel 이 있다.
+Buffered Channel을 사용하면 수신자가 받을 준비가 되어 있지 않아도
+지정된 버퍼만큼 데이터를 보내고 다른 일을 수행할 수 있다.
+
+버퍼 채널을 사용하지 않는 경우 수신자 고루틴이 없으면 에러가 발생하는데
+버퍼채널을 사용하면 수신자가 당장 없더라도 에러가 발생하지 않는다.
+
+## 채널 파라미터
+채널을 함수의 파라미터로 전달할 때, 일반적으로 송수신을 모두 하는 채널이지만
+특별히 해당 채널로 송신만 할지 혹은 수신만 할지 지정할 수 있다.
+
+송신파라미터는 (p chan<- int) 를 사용하고, 수신 파라미터는 (p <-chan int) 를 사용한다.
+
+## 채널 닫기
+채널을 오픈한 후, close 함수를 사용하여 채널을 닫을 수 있다.
+채널을 닫게 되면, 해당 채널로 더이상 송신을 할 수 없지만, 수신은 가능하다.
+
+## 채널 range 문
+for range 문을 사용해 채널이 닫히는 것을 체크할 수 있다.
+
+## 채널 select 문
+복수 채널들을 기다리면서 준비된 채널을 실행하는 기능을 한다.
+```go
+package main
+
+import "time"
+
+func main() {
+    done1 := make(chan bool)
+    done2 := make(chan bool)
+
+    go run1(done1)
+    go run2(done2)
+
+EXIT:
+    for {
+        select {
+        case <-done1:
+            println("run1 완료")
+
+        case <-done2:
+            println("run2 완료")
+            break EXIT
+        }
+    }
+}
+
+func run1(done chan bool) {
+    time.Sleep(1 * time.Second)
+    done <- true
+}
+
+func run2(done chan bool) {
+    time.Sleep(2 * time.Second)
+    done <- true
+}
+```
+
+
+# Q
+Assertion,,
+Error Type 별 처리
+defer, panic, recover 는 유용할 듯
+wait 사용법
+채널
+
+
+## 참고
+[예제로 배우는 go 프로그래밍](http://golang.site/go/basics)

@@ -81,7 +81,11 @@ pip install --upgrade pip
 pyenv deactivate
 
 pyenv uninstall env_name
+
+# 의존 패키지 저장
+pip freeze > requirements.txt
 ```
+
 
 [python 개발환경 셋팅하기](https://milooy.wordpress.com/2015/07/31/python-set-environments/)
 [pyenv로 쉽게 python 환경 관리하기](https://cookieshake.github.io/posts/pyenv로-쉽게-python-환경-관리하기)

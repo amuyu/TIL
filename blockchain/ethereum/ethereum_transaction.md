@@ -51,7 +51,6 @@ var rawTx = {
     nonce: web3.toHex(transactionCount),
     gasPrice: web3.toHex(gasPrice),
     gasLimit: web3.toHex(gasLimit),
-    // gasLimit: web3.toHex(30000000),
     to: toAddress,
     from: ownerAddress,
     data: data
@@ -60,6 +59,8 @@ var rawTx = {
 var p = new Buffer('c0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0dec0de', 'hex');
 var transaction = new tx(rawTx);
 transaction.sign(p);
+var serializedTx transaction.serialize().toString('hex');
+sendTransaction(serializedTx)
 ```
 
 # contract method call
@@ -74,6 +75,8 @@ console.log (web3.sha3 ( 'transfer (address, uint256)'));
 ```
 
 # encodeParam
+## isDynamic
+string, byte
 ## string encode
 ```js
 abi.rawEncode(["string"],["Hello world"])
@@ -97,8 +100,95 @@ ret = Buffer.concat([ encodeSingle('uint256', arg.length), arg ])
 ```
 
 # help
-be : big-endian
-le : little-endian
+be : big-endian, 큰 단위가 앞에 나옴
+le : little-endian, 작은 단위가 앞에 나옴
+
+# transaction
+```go
+type Transaction struct {
+	data txdata
+	// caches
+	hash atomic.Value
+	size atomic.Value
+	from atomic.Value
+}
+
+type txdata struct {
+	AccountNonce uint64          `json:"nonce"    gencodec:"required"`
+	Price        *big.Int        `json:"gasPrice" gencodec:"required"`
+	GasLimit     uint64          `json:"gas"      gencodec:"required"`
+	Recipient    *common.Address `json:"to"       rlp:"nil"` // nil means contract creation
+	Amount       *big.Int        `json:"value"    gencodec:"required"`
+	Payload      []byte          `json:"input"    gencodec:"required"`
+
+	// Signature values
+	V *big.Int `json:"v" gencodec:"required"`
+	R *big.Int `json:"r" gencodec:"required"`
+	S *big.Int `json:"s" gencodec:"required"`
+
+	// This is only used when marshaling to JSON.
+	Hash *common.Hash `json:"hash" rlp:"-"`
+}
+```
+
+# receipt
+트랜잭션 실행 과정에 대한 모든 기록
+status 트랜잭션 상태(0:실패, 1:성공) // https://ethereum.stackexchange.com/a/29471
+```
+type Receipt struct {
+	// Consensus fields
+	PostState         []byte `json:"root"`
+	Status            uint   `json:"status"`
+	CumulativeGasUsed uint64 `json:"cumulativeGasUsed" gencodec:"required"`
+	Bloom             Bloom  `json:"logsBloom"         gencodec:"required"`
+	Logs              []*Log `json:"logs"              gencodec:"required"`
+
+	// Implementation fields (don't reorder!)
+	TxHash          common.Hash    `json:"transactionHash" gencodec:"required"`
+	ContractAddress common.Address `json:"contractAddress"`
+	GasUsed         uint64         `json:"gasUsed" gencodec:"required"`
+}
+```
+
+# getTransactionbyHash
+transaction 정보는 어디에서 호출하나?
+database 에서 가져온다.
+```go
+package ethapi  // api.go
+
+func (s *PublicTransactionPoolAPI) GetTransactionByHash(ctx context.Context, hash common.Hash) *RPCTransaction {
+	// Try to return an already finalized transaction
+	if tx, blockHash, blockNumber, index := core.GetTransaction(s.b.ChainDb(), hash); tx != nil {
+		return newRPCTransaction(tx, blockHash, blockNumber, index)
+	}
+	// No finalized transaction, try to retrieve it from the pool
+	if tx := s.b.GetPoolTransaction(hash); tx != nil {
+		return newRPCPendingTransaction(tx)
+	}
+	// Transaction unknown, return as such
+	return nil
+}
+```
+
+# transaction 처리 과정
+1. tx 서명
+2. tx 모든 노드에 broadcast
+3. miner는 tx를 검증하고 txpool에 tx 등록
+4. miner는 txpool에서 tx 선택, 실행,
+5. tx 성공하면 처리 결과를 상태 DB에 반영
+
+# transaction 처리 부터 마이닝
+handler(msg) ,worker 에서 처리,
+miner tx 처리, consensus 합의, chain db 저장
+miner/worker.commintNewWork()
+commitTransaction()
+commitUncles() : 엉클 블록을 포함시킨다
+Finalize() : 신규 블록을 만든다. (합의엔진)
+consensus.Finalize -> stated.IntermediateRoot
+
+# 블록체인 생성
+책에는 chain.WriteBlockAndState (WriteBlockWithState)
+여기에서 state.Commit을 함 (work에 state 가 저장되어있음)
 
 # 참고
 [Inside ethereum transaction](https://medium.com/@codetractio/inside-an-ethereum-transaction-fa94ffca912f)

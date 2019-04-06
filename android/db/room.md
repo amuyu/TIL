@@ -1,4 +1,6 @@
 
+entity > dao > database
+
 # Room Persistence Library
 ## gradle setup
 room 을 사용하기 위해 다음의 dependencies 추가한다

@@ -45,7 +45,7 @@ npm run build
 [npm으로 package.json 생성하기](https://blog.outsider.ne.kr/674)
 [Node.js 모듈을 npm 저장소에 배포하기](https://blog.outsider.ne.kr/829)
 [Node.js 프로젝트 시작하기](http://simsi6.tistory.com/29?category=258737)
-
+[deploy script 만들기](https://im-mota.github.io/2017/09/07/deploy-using-nodejs/)
 ### babel
 [babel document](https://babeljs.io/docs/setup/#installation)
 [babel-cli document](https://babeljs.io/docs/usage/cli/)

@@ -339,6 +339,13 @@ var counter = 0 // the initializer value is written directly to the backing fiel
     }
 ```
 
+### Volatile
+@Volatile 어노테이션과 synchronized 블록이다. Volatile 어노테이션은 Java의 volatile과
+같은 역할을 한다. 별도의 커스텀 setter는 없으며 getter 내부에서 우선 초기화 여부를 판단하고
+초기화가 되어 있지 않다면 synchronized 블록에 진입하게 된다. synchronized 블록 안에서
+다시 체크를 하고 초기화가 되어 있지 않다면 초기화를 진행하게 된다. 변수가 @Volatile로
+선언되어 있으므로 변수의 가시성이 보장되기 때문에 성능을 고려하여 synchronized 블록에
+진입하기 전에 초기화 체크를 한다.
 
 ### lateinit/lazy
 늦은 초기화 변수 선언
@@ -619,7 +626,7 @@ object ListAnnotation {
 [Again: Supporting Android Typedefs in Kotlin](http://www.tonicartos.nz/2015/11/again-supporting-android-typedefs-in.html)
 [android-movie-mvp](https://github.com/KotlinID/android-movie-mvp)
 
-# show Kotlin Bytecode 로 중간 체크 가능 
+# show Kotlin Bytecode 로 중간 체크 가능
 
 # 참고
 [Android Kotlin 시작하기](http://thdev.tech/androiddev/2017/07/09/Kotlin-Android-Start.html)

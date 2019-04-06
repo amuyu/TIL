@@ -1,3 +1,8 @@
+# Redux 예제를 통해 사용해보기
+store : 모든 동적 데이터들을 담아두는 곳
+action : 어떤 변화가 일어나야 할 지 나타내는 객체, 모든 action 에는 type 이 있다.
+reducer : action 타입에 따라 행동, action 객체를 받았을 때, 데이터를 어떻게 바꿀지 처리할지 정의하는 객체
+
 # Redux: React 앱의 효율적인 데이터 교류
 Redux 는 data-state와 UI-state를 관리해주는 도구이다.
 데이터 교류 및 state 관리를 쉽고 효율적으로 해준다.
@@ -29,11 +34,6 @@ return 값은 오직 parameter 값에 의존해야 한다.
 같은 인수로 실행된 함수는 언제나 같은 결과를 반환해야 한다.
 순수하지 않은 API 호출을 하지 말아야한다. (Date 및 Math 함수 등)
 
-
-# Redux 예제를 통해 사용해보기
-store : 모든 동적 데이터들을 담아두는 곳
-action : 어떤 변화가 일어나야 할 지 나타내는 객체
-reducer : action 객체를 받았을 때, 데이터를 어떻게 바꿀지 처리할지 정의하는 객체
 
 ## store 명령
 store.getState() : 현재 스토어에 있는 데이터를 반환한다.
