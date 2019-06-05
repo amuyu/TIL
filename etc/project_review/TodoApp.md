@@ -1,4 +1,13 @@
-# todoapp
+# todoapp-mvvm-kotlin 2부
+## Model (domain model, data access layer)
+세부 레이어 구분은 다음과 같은 형태로 구현되어 있다.
+Repository > DataSource > Entity
+프로젝트 구조는 다음과 같다
+data - source - local, remote
+
+
+
+# todoapp 1부
 [todoapp](https://github.com/googlesamples/android-architecture.git)
 ## todo-mvp-clean
 clean architecture 와 MVP 패턴을 를 배울 수 있는 프로젝트이다.

@@ -1,3 +1,41 @@
+
+# architecture reloaded 
+https://fernandocejas.com/2018/05/07/architecting-android-reloaded/
+이전에 내용이 mvp 에 대한 구조였는데 mvvm 구조로 내용이 변경 되었다.
+
+## general arch
+ui > viewmodel > usecases > entities
+
+## 3 tiers arch
+- presentation layer: fragments, viewmodel, livedata
+- domain layer: usecases, entities, repository
+- data layer: network, databases, memory
+
+## UseCase
+ui 와 data layer 의 연결
+repository 를 사용하지 않고 UseCase 를 사용하는 이유는? Repository 는 자원의 느낌이 더 강하기 때문에?
+```kotlin
+abstract class UseCase<out Type, in Params> where Type : Any {
+
+    abstract suspend fun run(params: Params): Either<Failure, Type>
+
+    fun execute(onResult: (Either<Failure, Type>) -> Unit, params: Params) {
+        val job = async(CommonPool) { run(params) }
+        launch(UI) { onResult.invoke(job.await()) }
+    }
+}
+```
+
+## data layer
+repository 는 다음과 같은 패턴으로 만들고 UseCases 에서 repository 를 사용한다.
+repository interface > repository implementation > network, database
+Repository : response -> entity
+ViewModel : entity -> View Data
+
+
+
+=====
+
 # diagram
 ui(f)>presenter(i)>usecases(b)>entities(d)
 ui(f):Frameworks and Drivers

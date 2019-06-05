@@ -24,6 +24,12 @@ public class Test {
 ## InstantTaskExecutorRule
 async 를 동기적으로 실행함
 
+## permission
+```kotlin
+@get:Rule
+    var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.READ_CONTACTS)
+```
+
 
 # 참고
 [안드로이드 스튜디오에서 단위 테스트 작성 및 실행하기](http://androidhuman.com/536)

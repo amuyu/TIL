@@ -182,3 +182,4 @@ Realm.getDefaultInstance()에서 발생하는 문제, 해결방법 없음
 - [realm 사용 - android](https://devgooda.wordpress.com/2016/08/29/realm-%EC%82%AC%EC%9A%A9/)
 - [realm ref site](https://realm.io/docs/java/latest/#getting-started)
 - [Realm Module을 이용해서 멀티 Schema 활용하기](http://developer88.tistory.com/76)
+- [unit test](https://forum.realm.io/t/unit-testing-realm-in-android-studio/868)

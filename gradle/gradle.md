@@ -1,3 +1,35 @@
+# Gradle 에 대해 알아야할 다섯 가지
+## Gradle 은 범용 빌드 툴이다.
+
+## 핵심 모델은 tasks 를 기반으로 한다.
+tasks 를 기반으로 한 DAGs 를 생성하고 이를 통해 어떤 순서로 실행할지 결정하고 실행한다.
+
+tasks 의 구성
+actions - 파일 복사, 소스 컴파일 같은 작업
+inputs - actions 에서 사용하는 파일, 디렉토리, 값
+outputs - actions 에서 수정하거나 만드는 파일, 디렉토리
+
+## 고정 build 단계가 있다.
+세단계로 build script 를 실행한다.
+- initialization : 빌드 환경 설정
+- configuration : tasks graph 를 구성하고 작업 실행 순서 결정
+- execution : 선택한 작업 실행
+
+## Gradle 은 한가지 이상의 방법으로 확장 가능하다.
+- custom task types : `buildSrc` 디렉토리나 packaged plugin 에서 custom task 를 위한 source file 를 추가할 수 있다. 
+- custom task actions : Task.doFirst() 와 Task.doLast() 에서 custom build logic 을 붙일 수 있다.
+- projects 와 tasks properties : 프로젝트나 task 에 자신의 properties 를 추가할 수 있다.
+- custom conventions : 
+- custom model : 
+
+## 빌드 스크립트는 api 에 대해 작동합니다.
+Java 표준 API 를 사용할 수 있습니다.
+
+
+# ref
+[What is gradle?](https://docs.gradle.org/current/userguide/what_is_gradle.html#what_is_gradle)
+
+
 # build란?
 소스 코드 파일을 컴퓨터에서 실행할 수 있는 독립 소트프웨어 가공물로 변환하는
 과정 또는 결과를 일컫는다.
