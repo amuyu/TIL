@@ -28,10 +28,13 @@ css 작성 시, 가장 중요한 점은 중복되는 클래스명 생성하지 �
 - CSS Selector : 최상위 요소 > 하위 요소
 
 ## Sass 사용
-.scss, .sass 가 있음.... scss 를 많이 쓴다고 함
+sass 는 css pre-processor 로서 복잡한 작업을 쉽게 할 수 있게 하고, 코드의 재활용성, 코드의 가독성을 높여준다.
+`.scss`, `.sass` 가 있음.... scss 를 많이 쓴다고 함
 `node-sass` 라는 라이브러리를 설치 해야 
 
-scss import 시, path 가 길어지는 부분을 해결하기 위해서는 sass-loader 설정을 커스터마이징하여 해결할 수 있음
+scss import 시, path 가 길어지는 부분을 해결하기 위해서는 
+webpack 에서 `sass-loader` 설정을 커스터마이징하여 해결할 수 있음, 
+하지만 커스터마이징 하려면 `yarn eject` 를 통해서 세부설정을 꺼내주어야 한다.
 
 자주 사용하는 Sass 라이브러리 중에서 반응형 디자인을 쉽게 해주는 `include-media`와
 색상 팔레트인 `open-color` 가 있음

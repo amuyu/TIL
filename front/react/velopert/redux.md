@@ -41,17 +41,8 @@ store.dispatch(ACTION) 을 호출해서 action 을 실행한다.
 store.subscribe(LISTENER) : dispatch 메소드가 실행되면 리스너가 실행된다. 다시 리렌더링하도록 설정한다.
 
 ## react-redux 를 사용하지 않고 만들어보기
-store 생성 시, reducer 가 인수로 사용된다.
-```js
-/*
- * Store
- */
-const store = createStore(counterReducer);
-```
-생성 후, action 을 호출하기위 dispatch 를 실행한다.
-```js
-store.dispatch(increase(1));
-```
+
+### Action 정의
 increase라는 정의된 ACTION 을 실행하고 action에서는 type 과 수행 결과를 리턴한다.
 ```js
 /*
@@ -66,7 +57,11 @@ function increase(diff) {
     };
 }
 ```
+
+### Reducer 정의
+action 을 처리하는 애
 reducer 에서는 초기 상태를 정의하고 action type 에 따라 state 에 데이터를 변경한다.
+기존의 state 를 복사해서 새로운 객체를 만든다.
 ```js
 /*
  * Reducer
@@ -87,6 +82,19 @@ const counterReducer = (state = initialState, action) => {
 }
 ```
 
+### Store 정의
+store 생성 시, reducer 가 인수로 사용된다.
+```js
+/*
+ * Store
+ */
+const store = createStore(counterReducer);
+```
+생성 후, action 을 호출하기위 dispatch 를 실행한다.
+```js
+store.dispatch(increase(1));
+```
+
 ## 모듈
 redux, react-redux 설치
 
@@ -95,9 +103,9 @@ action 과 reducer는 별도로 작성하는게 관리하기 편리한듯
 
 connect를 사용해 React Component를 Redux Store 에 연결해준다.
 ```js
-connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])(Component)
 ```
-mapStateToProps : store의 state 컴포넌트를 props 에 매핍시켜준다.
+mapStateToProps : store의 state 컴포넌트를 component 의 props 에 맵핑시켜준다.
 mapDispatchToProps : 함수형 props 를 실행했을 때, 지정한 action 을 dispatch 하도록 설정한다.
 
 
@@ -136,6 +144,8 @@ const store = createStore(counterReducer);
 렌더링 할 때, Redux 컴포넌트인 <Provider> 에 store를 설정해주면 하위 컴포넌트들에 따로 parent-child 구조로
 전달해주지 않아도 connect 될 때 store에 접근할 수 있다.
 
+Provider 컴포넌트는 connect() 함수를 사용하여 "연결(connect)"할 수 있도록 앱의 store를 "제공(provide)"한다.
+
 
 
 [참고](https://velopert.com/1015)
@@ -144,3 +154,5 @@ const store = createStore(counterReducer);
 [redux 정복하기](https://velopert.com/3346)
 [redux 를 통한 React 어플리케이션 상태 관리](https://velopert.com/3365)
 [Redux: 예제를 통해 사용해보기](https://velopert.com/1266)
+[아마 이게 제일 이해하기 쉬운 redux 플로우 이해](https://medium.com/@ca3rot/아마-이게-제일-이해하기-쉬울걸요-react-redux-플로우의-이해-1585e911a0a6)
+[ducks-modular-redux](https://github.com/erikras/ducks-modular-redux)

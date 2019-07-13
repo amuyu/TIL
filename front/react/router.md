@@ -1,5 +1,10 @@
 
 # velopert - router
+```sh
+yarn add react-router-dom
+```
+
+
 ## project structure
 - components : react 컴포넌트
 - pages : 각 라우트들이 위치하는 디렉토리

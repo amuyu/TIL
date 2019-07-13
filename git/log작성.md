@@ -12,3 +12,4 @@ UserCommand 추상 기반 클래스를 추가한다
 ```
 
 [Visual Studio Code를 사용해 Git 커밋 메시지 작성하기](http://blog.weirdx.io/post/53799)
+[How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/)

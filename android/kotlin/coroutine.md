@@ -1,3 +1,11 @@
+# android coroutine setting
+- kotlinx-coroutines-core : Main interface for using coroutines in Kotlin
+- kotlinx-coroutines-android : Support for the Android Main thread in coroutines
+```gradle
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:x.x.x"
+implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:x.x.x"
+```
+
 # 코루틴?
 논블록킹 비동기 코드를 마치 일반적인 동기 코드처럼 간단하게 사용할 수 있게 해주는 라이브러리
 
@@ -147,10 +155,12 @@ fun main(args: Array<String>) = runBlocking<Unit> {
 ```
 
 ## daemon threads
-코 루틴은 프로세스를 유지하지 않습니다. 그들은 데몬 스레드와 같습니다.
+GlobalScope 에서 실행 된 활성 코 루틴 은 프로세스를 유지하지 않습니다. 그들은 데몬 스레드와 같습니다.
+데몬 쓰레드는 다른 일반 쓰레드(데몬 쓰레드가 아닌 쓰레드)의 작업을 돕는 보조적인 역할을 수행하는 쓰레드이다.
+
 ```kotlin
 fun main(args: Array<String>) = runBlocking<Unit> {
-    launch {
+    GlobalScope.launch {
         repeat(1000) { i ->
             println("I'm sleeping $i ...")
             delay(500L)
