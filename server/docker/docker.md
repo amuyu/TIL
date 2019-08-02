@@ -72,6 +72,9 @@ docker rm helloCentos
 ## 이미지 삭제하기
 docker rmi <이미지 이름>:<태그>
 
+## 로그 보기
+docker logs -f <docker_id>
+
 
 ## port 설정
 docker add-host

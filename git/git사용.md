@@ -215,6 +215,11 @@ git branch -d iss53
 
 ```
 
+## stage 한 파일 취소하기
+```bash
+git reset HEAD
+```
+
 ### 로컬 저장소를 원격 저장소에 추가 하기
 ```bash
 git remote add origin <저장소>
