@@ -15,12 +15,9 @@ GRPC 네트워크 프로토콜에서 메세지를 프로토콜 버퍼를 이용�
 [example](https://github.com/protocolbuffers/protobuf/tree/master/examples)
 go 나 python 을 사용하면 빠르게 돌려볼수 있을것 같아.. 둘 중에 Go 로 시작
 
-# process
 - go plugin 설치
-- `make go` 실행 : 예제에 포함된 addressbook.proto 파일로 go 에 맞는 클래스 파일을 생성한다
-+ `protoc $$PROTO_PATH --go_out=tutorial addressbook.prot` 
-+ `go build -o add_person_go add_person.go`
 - add_person.go 파일을 실행해서 data 파일 생성
+
 
 ## protoc install
 brew 로 protobuf 설치
@@ -110,20 +107,12 @@ if err := proto.Unmarshal(in, book); err != nil {
 }
 ```
 
----------------------
-
 # 무엇을 알아야 할까?
 - message 를 작성하는 방법
 - build 하는 방법
 - 주고 받고 하는 방법
 - data 파일은 뭔가?
-- JSON 파일 <-> 프로토콜 버퍼로 변경 가능?
 
-## data 파일은?
-protobuf 로 직렬화된 파일 
-
-## Json 파일 변환
-https://godoc.org/github.com/golang/protobuf/jsonpb
 
 
 

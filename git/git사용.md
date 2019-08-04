@@ -262,6 +262,13 @@ local 저장소에 fork한 저장소를 원격 저장소에 추가한다
 ```bash
 ```
 
+## 쓸데없는 파일 제외
+```bash
+git rm --cached -r
+git add .
+git commit
+```
+
 
 ## Gir branch 관리
 Master : Release 완료한 버전을 merge 하고, Release 시 Tag를 함께 둔다.
