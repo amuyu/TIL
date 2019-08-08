@@ -249,6 +249,10 @@ git clean -f
 git clean -f -d // 디렉토리 까지 제거
 ```
 
+## 원격 저장소의 다른 branch 가져오기
+```bash
+git checkout -t <branch_name>
+```
 
 ## commit 변경
 ```bash
