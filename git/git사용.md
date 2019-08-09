@@ -280,6 +280,11 @@ Developer Branch : Master Branch 기준으로 티켓 단위 개발 작업을 진
 Code-Review Branch : 이 Branch는 언제든 제거하고, 다시 생성될 수 있으며, Code review 목적으로 둔다.
 Release Branch : 릴리즈 플래닝이 끝나면 작업 완료한 티켓을 머지 한다.
 
+## GIt 레퍼런스
+git 에서는 SHA-1(commit id) 값을 외우기 쉬운 이름으로 저장할 수 있는데
+이런 것을 레퍼런스라고 부른다.
+
+
 ## 참고
 - [git간편안내서](https://rogerdudler.github.io/git-guide/index.ko.html)
 - [git merge와 rebase 비교하기](https://blog.outsider.ne.kr/666)
