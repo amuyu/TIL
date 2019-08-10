@@ -19,8 +19,11 @@ vimtutor 사용
 - shift - m : 현재 보이는 페이지를 기준으로 중간 라인으로 커서 이동
 - shift + l : 현재 보이는 페이지를 기준으로 맨 아래로 커서 이동
 
-- ctrl + f : 페이지 이동
-- ctrl + b : 페이지 이동
+- ctrl + f : 다음 페이지 이동
+- ctrl + d : 다음 반 페이지 이동
+- ctrl + b : 이전 페이지 이동
+- ctrl + u : 이전 반 페이지 이동
+
 
 - i : 현재 커서 위치에 insert 
 - I : 현재 줄 앞에 insert
