@@ -1,5 +1,5 @@
 # QuickStart
-baobaa 기준으로 설명되어 있음
+baob 기준으로 설명되어 있음
 
 
 # faucet
@@ -16,6 +16,16 @@ $ export PATH=$PATH:$PWD/ken-darwin-amd64/bin
 `kend_home` 이 base directory 인듯.. 변경 가능하겠지? 밑에 config file 에서 `DATA_DIR` 로 설정
 ```bash
 $ mkdir -p ~/kend_home
+```
+
+## genesis.json
+download genesis.json
+```sh
+curl -X GET http://packages.klaytn.net/baobab/genesis.json -o genesis.json
+```
+e. Before starting an EN, it is necessary to initialize the genesis block using ken and genesis.json
+```sh
+ken init --datadir ~/kend_home genesis.json
 ```
 
 # Configuration EN
@@ -93,14 +103,51 @@ caver-js 는 JSON RPC framework 임 web3.js와 같은 라이브러리
 ```bash
 $ npm init # initialize npm at the klaytn project directory
 $ npm install caver-js
+# If you already installed caver-js, please update it to the latest version.
 $ npm cache clean --force # initialize npm cache
 $ npm install caver-js@latest # update caver-js to the latest version
-// 에러가 발생하면 
+# version update 할 때, 에러가 발생하면 
 $ rm /Users/username/klaytn/node_modules/websocket/.git
 ```
 
 web3.js 가 `web3.eth...` 인 것처럼 `caver.klay...` 로 호출한다.
 
 # Installing Truffle
+현재 klaytn 는 truffle 4.1.15 까지 지원한다.
 
+- Truffle repository - https://github.com/trufflesuite/truffle
+- Truffle documents - https://truffleframework.com/docs
 
+globally install truffle
+```sh
+$ sudo npm install -g truffle@4.1.15
+$ cd /usr/local/lib/node_modules/truffle
+$ sudo npm install solc@0.4.24
+$ cd -
+```
+
+locally install trueffle
+```sh
+# Assuming you are in $HOME/klaytn/.
+$ npm install truffle@4.1.15
+$ cd node_modules/truffle
+$ npm install solc@0.4.24
+$ cd -
+$ ln -s node_modules/truffle/build/cli.bundled.js truffle
+$ export PATH=`pwd`:$PATH
+```
+
+# Installing vvisp
+vvisp is an easy-to-use cli tool/framework for developing smart contracts, provided by HEACHI LABS.
+
+- vvisp repository - https://github.com/HAECHI-LABS/vvisp
+- vvisp document - https://github.com/HAECHI-LABS/vvisp/blob/dev/README_KLAYTN.md
+
+```sh
+$ npm install -g @haechi-labs/vvisp
+# or if you use yarn
+$ yarn global add @haechi-labs/vvisp
+```
+
+# ref
+[install guide](https://docs.klaytn.com/node/en/installation/linux/enlinuxconfig)
