@@ -1,2 +1,2 @@
 # Today I Learned
-print("Hello World")
+블로그, 강의, 책 등 개발과 관련된 내용을 습득하면서 작성하는 초고노트
