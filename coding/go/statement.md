@@ -915,7 +915,7 @@ func openFile(fn string) {
 }
 ```
 
-# Go 루틴
+# Gi 루틴
 Go 런타임이 관리하는 경량 쓰레드 이다. `go` 키워드를 사용하여
 함수를 호출하면, 런타임시 새로운 groutine 을 실행한다. goroutine 은 비동기적으로 함수루틴을 실행한다.
 ```go
