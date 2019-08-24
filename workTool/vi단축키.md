@@ -34,4 +34,4 @@ vimtutor 사용
 
 - shift + j : 다음 줄을 현재 커서가 있는 줄의 끝으로 이어 붙이기
 
-- ctrl + g : Redo
+- ctrl + r : Redo
