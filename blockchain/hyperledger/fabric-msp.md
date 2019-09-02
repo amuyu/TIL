@@ -1,6 +1,7 @@
 # MSP
 Membership Service Provider
 peer 와 org 의 digital identities 를 생성
+블록체인 네트워크에서 peer(개별) identity 와 org 역할 사이의 연결을 제공한다.
 
 ## 종류
 Local MSP 는 해당 노드를 제어할 때 사용, 

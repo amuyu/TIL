@@ -84,15 +84,111 @@ networks:
 # Sample REST APIs Requests
 프로젝트에서 blockain 과 연동하는 부분은 app/helper.js 에 구현되어 있다.
 
-1. 멤버와 조직 등록 (keyvalue 저장)
+- /users, 멤버와 조직 등록
+- /chaincodes, 체인코드 install
+
+-------------
+
+## /users, 멤버와 조직 등록 (kv 저장)
 peer 를 조작할 member 계정을 만든다. ca 서버에 등록함
 org1 에 jim 이라는 계정을 추가한다.
 ```bash
 curl -s -X POST http://localhost:4000/users -H "content-type: application/x-www-form-urlencoded" -d 'username=Jim&orgName=Org1'
 ```
-org 를 가져오고 (config 정보에서)
-Jim usercontext 를 찾는다. store 에 있는지,, 있으면 가져온다. 없으면 fa 로부터 가져와야 한다.
-fa admin 계정 정보를 사용해서 마찬가지로 UserContext 를 찾는다.
+
+### Flow
+- network 정보 셋팅
+- org 정보를 셋팅 (client)
+- initCredentialStores
+- username 과 일치하는 usercontext 를 확인한다.
+- user 를 등록한다 (usercontext 가 없는 경우)
+
+
+#### network 정보 셋팅
+connection-profile 설정 path 를 읽어와서 Client 생성 후, network 정보를 셋팅한다.
+```js
+var hfc = require('fabric-client');
+client = hfc.loadFromConfig(network-config-path);
+```
+
+#### org 정보 셋팅
+네트워크 정보를 들고 있는 client 객체에서 org 정보를 읽어온다.
+```js
+client.loadFromConfig(org-config-path);
+```
+이 때, 필요한 추가 정보와 admin, mspid, client 정보를 셋팅한다.
+
+#### initCredentialStores
+org config 에 있는 credentialStore 정보를 참고로 초기화한다.
+```js
+client.initCredentialStores();
+```
+
+#### usercontext 호출
+username 과 일치하는 user 정보를 호출한다. 
+```js
+client.getUserContext(username, checkPersistence);
+```
+
+#### user 등록
+user 를 등록하기 위해서 CA admin client 를 가져오고, 그 후에, user 정보를 셋팅한다.
+
+CA admin client 를 호출하기 위해 config 에 셋팅된 admins 정보를 읽어와서 Client에 contexts update 한다. 예제에서는 username 과 password object 를 사용하고 있다.
+adminuser 객체를 받아오면 caClient 를 사용해서 register 를 호출한다.
+```js
+// admin user 정보 등록
+var admins = hfc.getConfigSetting('admins');
+let adminUserObj = client.setUserContext(admins_user);
+```
+이 과정에서 admin 에 해당하는 정보는 kv 에 저장된다.
+
+CA Service 객체를 호출해서 user 를 등록한다.
+user 등록 후, 성공하면 usercontext 를 업데이트 한다.
+```js
+let caClient = client.getCertificateAuthority();
+let secret = await caClient.register({
+    enrollmentID: username,
+    affiliation: userOrg.toLowerCase() + '.department1'
+}, adminUserObj);
+var user = await client.setUserContext({username:username, password:secret});
+```
+매번 usercontext 를 업데이트 하는 이유는 파일로 저장하기 위해서,,
+
+
+-------------
+
+## /chaincodes, 체인코드 install
+chaincodeName, chaincodePath, chaincodeType, chaincodeVersion
+chaincode 를 읽어와서 install 하는 Method
+
+### flow
+- network,org 정보를 들고있는 객체 호출
+- installChaincode 호출
+- proposalResponses 확인
+
+### network, org 정보를 들고있는 객체 호출
+```js
+var client = await helper.getClientForOrg(org_name);
+```
+
+### installChaincode 호출
+org client 로 installChaincode 호출이 가능하다.
+```js
+let results = await client.installChaincode(request);
+```
+
+### proposalResponses 확인
+
+-------------
+
+## /
+
+
+## tls?
+tls 인것과 아닌것 설정?
+
+## eventHub
+eventUrl
 
 - helper.getClinetForOrg
 config setting 으로 부터 `network-connection-profile-path` 정보를 읽어온다.
@@ -191,16 +287,21 @@ enrollment 받는다. (ca, root ca)
 peers, chaincodeeName, chaincodePath, chaincodeVersion, chaincodeType, username, org_name
 
 - helper.setupChaincodeDeploy
-GOPATH 를 설정한다. config.json 에 CC_SRC_PATH 로 설정하도록 되어있고
-`artifacts` 폴더를 보게 되어있다.
+GOPATH 를 설정한다. 
+예제에서는 config.json 에 CC_SRC_PATH 로 설정하도록 되어있고 `artifacts` 폴더를 보게 되어있다.
+이 path 밑에 install 하기 위한 chaincode 가 위치해있다.
+`process.env.GOPATH` 에 들고 있는 형태로 사용한다.
 
 - helper.getClinetForOrg(org_name, username)
-config 정보로부터 (connection-profile-path) 정보를 읽어와 셋팅한후, 
-username 과 일치하는 usercontext 를 호춣
-이때, Usercontext 를 호출하기 위한 파일이 kv 폴더에 있어야 함
+config 정보로부터 (connection-profile-path) 정보를 읽어와 org 정보를 먼저 셋팅한후, 
+username 과 일치하는 usercontext 를 호춣 이때, Usercontext 를 호출하기 위한 파일이 kv 폴더에 있어야 함
+
+> kv 폴더에는 amdin 과 user key 가 있는데 어떤 것들이 필요한가?
+
 
 - clinet.installChaincode(request)
 입력한 peer 들에 요청,,, peer 들에 요청 권한만 있으면 가능하다?
+proposalResponse 들을 모아서 결과를 확인하고 ?
 
 
 
@@ -249,6 +350,7 @@ true 이면, store 에 있는지 확인한다.
 
 
 yaml 셋팅은 뭐로 하는거지?
+
 
 
 
