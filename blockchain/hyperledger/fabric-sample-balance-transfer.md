@@ -49,6 +49,12 @@ first-network 연동과 동일하게 balance-transfer.json 파일에서 crypto �
 https://github.com/hyperledger/blockchain-explorer/blob/master/CONFIG-BALANCE-TRANSFER-HLEXPLORER.md
 를 참조하자
 
+## postgresql 이 필요
+local 에서는 postgresql 을 docker 로 설치했다.
+
+
+
+
 ## operation service 와 연동?
 prometeus 와 grafana 연동
 balance-trasnfer 샘플에
@@ -76,7 +82,19 @@ networks:
 ```
 
 네트워크를 up 한 후, prometeus 설치 후, 설정 변경 실행 그리고 grafana 연동하면 된다.
+prometeus 와 다른 container 와 network 연결
+```
+docker network connect artifacts_byfn a98dc61ad8b6
+```
 
+grafana 는 docker 로 실행
+```sh
+docker run -d -p 3000:3000 grafana/grafana
+```
+실행 후, 설정에서 prometeus 정보 셋팅
+url 을 http://localhost:9090 으로 안되면 ip 주소를 적거나 container 이름을 적어줌
+
+ledger_blockchain_height{channel="mychannel",instance="peer0.org1.example.com:9443",job="hyperledger_metrics"}
 
 -----------------
 

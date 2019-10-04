@@ -34,6 +34,8 @@ db 설정을 변경 한 후,
 `blockchain-explorer/app/persistence/fabric/postgreSQL/db` 에서 `createdb.sh` 를 실행한다.
 postgre 가 docker 일 경우, 스크립트를 수정한다.
 
+local 에서는 postgresql 을 docker 를 사용해서 설치했고 `createdb-docker.sh` 를 실행한다.
+
 3. Netowrk Setup
 hyperledger network 를 실행해야 한다.
 README.md 에는 BYFN 을 기준? 으로 설명하고 있다.

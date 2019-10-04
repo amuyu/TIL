@@ -1112,6 +1112,13 @@ func run2(done chan bool) {
 }
 ```
 
+# casting (convert interface)
+type 이 interface{} 인 경우, 다음과 같이 casting 할 수 있다.
+```go
+var t interface{}
+s, ok := t.(string)
+```
+
 
 # Q
 Assertion,,
