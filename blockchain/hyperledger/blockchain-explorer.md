@@ -44,6 +44,9 @@ README.md 에는 BYFN 을 기준? 으로 설명하고 있다.
 `CORE_PEER_GOSSIP_BOOTSTRAP` 와 `CORE_PEER_GOSSIP_EXTERNALENDPOINT` 를 각 peer 마다 
 셋팅해야 explorer 에서 모니터링이 가능하다.
 
+`balance-transfer` 를 기준으로 보면 `testAPI` 를 호출한 후부터 explorer 실행이 가능하다.
+
+
 operation service 를 위한 상세 설정은 다음을 참고한다.
 [config-guide](https://github.com/hyperledger/blockchain-explorer/blob/master/CONFIG-OPERATIONS-SERVICE-HLEXPLORER.md)
 아마도 프로메테우스 등의 연동이 필요한 경우에 셋팅일 듯하다.

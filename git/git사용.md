@@ -293,3 +293,4 @@ git 에서는 SHA-1(commit id) 값을 외우기 쉬운 이름으로 저장할 �
 - [초심자를 위한 github 협업 튜토리얼](https://blog.weirdx.io/post/45529)
 - [git clinent 모음](https://git-scm.com/download/gui/mac)
 - [Git Branch - 릴리즈 플래닝 - 회사에서 하고 있는 걸 정리해본다.](https://thdev.tech/android/git/2018/01/21/Git-Branch.html)
+- [git 직접 해보면서 배우는 사이트](https://learngitbranching.js.org/)

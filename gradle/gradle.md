@@ -177,6 +177,21 @@ val sourcesJar by tasks.creating(Jar::class) {
 }
 ```
 
+## Extra properties
+https://docs.gradle.org/current/userguide/writing_build_scripts.html
+```
+// groovy
+ext {
+    springVersion = "3.1.0.RELEASE"
+    emailNotification = "build@master.org"
+}
+
+// kotlin 
+val springVersion by extra("3.1.0.RELEASE")
+```
+
+
+
 # multiple publishing
 [multiple-publications](https://github.com/gradle/gradle/tree/master/subprojects/docs/src/samples/maven-publish/multiple-publications)
 [onejar](https://stackoverflow.com/questions/13782013/can-gradle-jar-multiple-projects-into-one-jar?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa)
