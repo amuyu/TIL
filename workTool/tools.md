@@ -63,6 +63,11 @@ D2conding
 - git
 - svn
 
+# todo
+- things
+- ntask
+- todoist
+
 # etc
 - bandizip
 - vlc

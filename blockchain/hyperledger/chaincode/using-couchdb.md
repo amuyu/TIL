@@ -46,6 +46,10 @@ sdk 를 사용하여 체인코드를 설치하는 동안 metadataPath 를 포함
 cli 에서 설치하는 경우 JSON 인덱스 파일은 META-INF/statedb/couchdb/indexs 경로 아래에 있어야 한다.
 
 ## query chaincode
+query 를 작성할 때 기억할 것
+인덱스를 사용하려면 인덱스의 모든 필드가 쿼리의 선택기 또는 정렬 섹션에 있어야합니다.
+복잡한 쿼리 일수록 성능이 떨어지고 인덱스를 사용할 가능성이 줄어 듭니다.
+당신은 전체 테이블 스캔 또는 스캔 등 전체 인덱스가 발생합니다 연산자를 피하려고한다 $or, $in하고 $regex.
 ```json
 "selector": {
   "$title": "Live And Let Die"
@@ -57,6 +61,11 @@ cli 에서 설치하는 경우 JSON 인덱스 파일은 META-INF/statedb/couchdb
 
 {\"selector\":{\"docType\":\"marble\",\"owner\":\"tom\"}, \"use_index\":[\"_design/indexOwnerDoc\", \"indexOwner\"]}"
 ```
+
+위의 쿼리에 추가 필드를 추가하면 여전히 인덱스를 사용합니다. 그러나 쿼리에서 추가 필드에 대해 인덱싱 된 데이터를 스캔해야하므로 응답 시간이 더 길어집니다. 
+예를 들어 아래 쿼리는 여전히 인덱스를 사용하지만 이전 예제보다 반환하는 데 시간이 더 오래 걸립니다.
+
+
 
 ## sort
 sort 하기 위해서는 field 가 index 가 걸려 있어야 하는듯?
@@ -114,9 +123,18 @@ boomark 를 사용하기 위해서는 Response 에 bookmark 를 포함해서 던
 [{"ResponseMetadata":{"RecordsCount":"0",
 "Bookmark":"g1AAAABLeJzLYWBgYMpgSmHgKy5JLCrJTq2MT8lPzkzJBYqz5yYWJeWkmoKkOWDSOSANIFk2iCyIyVySn5uVBQAGYhR1"}}]
 
+## index update
+curl -i -X POST -H "Content-Type: application/json" -d
+       "{\"index\":{\"fields\":[\"docType\",\"owner\"]},
+         \"name\":\"indexOwner\",
+         \"ddoc\":\"indexOwnerDoc\",
+         \"type\":\"json\"}" http://hostname:port/mychannel_marbles/_index
+
+
 # 참고
 [Using CouchDB](https://miiingo.tistory.com/160)
 [couchdb-best-practices](https://github.com/jo/couchdb-best-practices)
 [guide-view](https://guide.couchdb.org/draft/views.html)
 [뷰(View) 이해하기](https://bcho.tistory.com/928)
 [find-selectors](http://docs.couchdb.org/en/latest/api/database/find.html#find-selectors)
+[couchdb mapreduce](https://www.slideshare.net/okurow/couchdb-mapreduce-13321353)

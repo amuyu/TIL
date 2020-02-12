@@ -13,6 +13,21 @@ fabric-SDK 에서 fabric ca server 와 peer 붙어 통신하는 형태로 구성
 
 # fabric-ca-server
 
+## start
+docker 로 시작하려면 다음과 같이 셋팅한다.
+docker-compose.yaml
+```yaml
+fabric-ca-server:
+  image: hyperledger/fabric-ca:x86_64-1.0.0-beta
+  container_name: fabric-ca-server
+  ports:
+    - "7054:7054"
+  environment:
+    - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+  volumes:
+    - "./fabric-ca-server:/etc/hyperledger/fabric-ca-server"
+  command: sh -c 'fabric-ca-server start -b admin:adminpw'
+```
 
 ## initializing the server
 server 설정 파일에 ca.certfile 과 ca.keyfile 이 있는데 이 파일들이 root ca 가 되는 듯 하다.

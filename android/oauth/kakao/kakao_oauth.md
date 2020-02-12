@@ -62,7 +62,7 @@ AndroidManifest 에 app key 를 meta-data 로 추가한다.
 릴리즈 키 해시는 릴리즈용 키스토어 사용이 필요함
 ### 디버그 키 해시 구하기
 ```
-keytool -exportcert -alias androiddebugkey -keystore <debug_keystore_path> -storepass android -keypass android | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -storepass android -keypass android | openssl sha1 -binary | openssl base64
 ```
 
 
