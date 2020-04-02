@@ -37,6 +37,19 @@ SignedProposal
                     |\_ ChaincodeACtion
 
 
+SignedTransaction
+|\_ Signature                                    (signature on the Transaction message by the creator specified in the header)
+ \_ Transaction
+     \_ TransactionAction (1...n)
+        |\_ Header (1)                           (the header of the proposal that requested this action)
+         \_ ChaincodeActionPayload (1)
+            |\_ ChaincodeProposalPayload (1)     (payload of the proposal that requested this action)
+             \_ ChaincodeEndorsedAction (1)
+                |\_ Endorsement (1...n)          (endorsers' signatures over the whole response payload)
+                 \_ ProposalResponsePayload
+                     \_ ChaincodeAction          (the actions for this proposal)
+
+
 # explorer 참고
 ## block
 
