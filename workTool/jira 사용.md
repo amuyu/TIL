@@ -51,3 +51,4 @@ Permlink|화면의 바로가기 url
 ## 참고
 [Jira를 통해 프로페셔널하게 프로젝트 협업하기](http://uxd.team.handstudio.net/post/64286399069/jira%EB%A5%BC-%ED%86%B5%ED%95%B4-%ED%94%84%EB%A1%9C%ED%8E%98%EC%85%94%EB%84%90%ED%95%98%EA%B2%8C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%98%91%EC%97%85%ED%95%98%EA%B8%B0)
 [JIRA 사용 설명서 및 tips](https://www.lesstif.com/pages/viewpage.action?pageId=12943700)
+[소프트웨어 팀을 위한 컨프루언스 가이드](https://woowabros.github.io/files/2016-09-13/Software_Teams_Guide_to_Confluence_KOR.pdf)
