@@ -117,3 +117,8 @@ docker로 centos 실행했어요
 
 docker hub
 docket-toolbox
+
+
+host.docker.internal
+172.17.0.1
+
