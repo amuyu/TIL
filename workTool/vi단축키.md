@@ -39,3 +39,10 @@ vimtutor 사용
 - vs 파일명 : 새로운 파일을 열때
 - ^ww : 창간 이동
 
+## 비주얼 모드
+
+### 여러 줄 에 텍스트 입력
+1. `ctrl + v` 해서 비주얼 블록 모드
+2. `shift + i` 누르고 텍스트 입력
+3. 입력 완료
+https://vim.fandom.com/wiki/Inserting_text_in_multiple_lines
