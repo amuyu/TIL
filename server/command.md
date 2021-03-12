@@ -1,5 +1,6 @@
 
 
+less 로 log 볼 때, `-R` 옵션을 넣으면 `ESC` 없이 볼 수 있다.
 
 ip a
 vmstat 5 # stat 5초 간격으로 호출
@@ -12,3 +13,6 @@ ps -ef |grep firewall
 hostname # hostname 알아오는 명령
 
 dig q-test.zzeung.id +short
+
+apt install dnsutils
+nslookup
