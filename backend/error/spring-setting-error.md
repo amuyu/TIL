@@ -11,3 +11,9 @@ dependencies {
 }
 ```
 [solution](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.3-Release-Notes#validation-starter-no-longer-included-in-web-starters)
+
+
+# mysql driver
+mysql connector 에서 eriver 의 이름이 변경됨 `com.mysql.cj.jdbc.Driver` 를 사용하면 된다.
+> The name of the class that implements java.sql.Driver in MySQL Connector/J has changed from com.mysql.jdbc.Driver to com.mysql.cj.jdbc.Driver. The old class name has been deprecated.  
+https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-api-changes.html

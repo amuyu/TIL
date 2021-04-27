@@ -1,5 +1,6 @@
 # scrum 이 뭔데?
-Agile 방법론 중의 하나로 product backlog 를 바탕으로 기술적으로 분할되고 재해석된 sprint 를 scrum 팀을 통해 구현해 나가는 개발 방법론
+Agile 방법론 중의 하나로 product backlog 를 바탕으로 기술적으로 분할되고 
+재해석된 sprint 를 scrum 팀을 통해 구현해 나가는 개발 방법론
 
 Product backlog -> sprint -> scrum 에서 구현
 
@@ -13,6 +14,13 @@ Daily scrum : 매일 진행하는 15분 정도의 회의
 ## 역할
 제품 오너 : 요구사항을 정의하고, 제품 백로그를 업데이트 하는 역할, 가장 중요한 역할은 백로그 항목에 대한 우선순위를 조정하는 역할
 스크럼 마스터 : 프로젝트의 일정과 태스크를 조율, 정해진 일정에 따라서 개발을 수행*리드 하는 역할
+
+## scrum workflow state
+### product backlog item
+* new : 새로운 backlog item 생성한다.
+* approved : product owner 가 승인한다.
+* committed : 스프린트 중에 작업하기로 결정한다.
+* done : 작업 종료 한다.
 
 ## 에픽과 사용자 스토리
 사용자 스토리 : 우리가 흔히 이야기하는 요구 사항으로 "나는 사용자로서 사진을 업로드 하고 싶다" 라는 식으로 서술하는 형태

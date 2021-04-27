@@ -58,6 +58,8 @@ public class CustomSpringEventListener implements ApplicationListener<CustomSpri
         System.out.println("Received spring custom event - " + event.getMessage());
     }
 }
+
+// annotation 사용
 ```
 
 4. 비동기 설정
@@ -73,6 +75,8 @@ public class AsynchronousSpringEventsConfig {
         return eventMulticaster;
     }
 }
+
+// Async annotation 사용
 ```
 
 
