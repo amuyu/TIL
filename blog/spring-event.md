@@ -1,7 +1,7 @@
 
 Spring 에서 비동기 ApplicationEvent 구현하는 방법을 정리하려고 합니다.
 
-간략하게 다음과 같은 순로 구현을 합니다.
+간략하게 다음과 같은 순서로 구현을 합니다.
 - ApplicationEvent 를 상속받는 event 클래스
 - ApplicationEventPublisher object 를 주입받아 event publish
 - ApplicationListener interface 를 사용해서 listener 구현

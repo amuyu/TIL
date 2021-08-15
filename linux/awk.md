@@ -1,4 +1,7 @@
-
+# syntax
+```
+awk 'pattern' filename
+```
 
 # 원하는 열만 추출하기
 ```

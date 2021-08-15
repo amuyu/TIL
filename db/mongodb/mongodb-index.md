@@ -40,6 +40,7 @@ db.consert.count({
 });
 ```
 
+
 # ref
 [Naver 속도의 속도에의한 속도를 위한 몽고 DB](https://www.slideshare.net/mongodb/naver-db-db-naver) - 2019.9.16
 [index annotation](https://www.baeldung.com/spring-data-mongodb-index-annotations-converter)

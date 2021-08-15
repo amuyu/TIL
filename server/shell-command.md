@@ -12,7 +12,15 @@ ps -ef |grep firewall
 
 hostname # hostname 알아오는 명령
 
+도메인 네임 서버의 정보 확인
 dig q-test.zzeung.id +short
 
 apt install dnsutils
 nslookup
+
+mac network
+lsof -iTCP -sTCP:LISTEN -n -P
+
+
+netstat -antpo |grep 10.8.10.230
+watch -n 1 "netstat -antpo |grep 10.8.10.230"

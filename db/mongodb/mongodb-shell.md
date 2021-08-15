@@ -374,6 +374,10 @@ $pull 연산자를 사용해서 배열에 값을 제거합니다.
 ... )
 ```
 
+## group
+```
+db.getCollection('_149dd5_vc').aggregate( [{ $group : { _id : "$issuerDid" }}])
+```
 
 
 # ref 

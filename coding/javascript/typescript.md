@@ -65,3 +65,4 @@ index.d.ts :외부 모듈의 타입 정보를 d.ts 파일에 작성하는 방법
 [Webpack & Typescript Env](https://github.com/udsdevteam/udt_kanban/wiki/Webpack-&-Typescript-Env)
 [d.ts 작성하는 방법](https://www.slideshare.net/gloridea/dts-74589285)
 [TypeScript-React-Conversion-Guide](https://github.com/Microsoft/TypeScript-React-Conversion-Guide#typescript-react-conversion-guide)
+[타입스크립트 연습](https://react.vlpt.us/using-typescript/01-practice.html)
