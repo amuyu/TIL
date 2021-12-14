@@ -16,6 +16,18 @@
 ## select query paging 처리
 
 
+## bulk 
+bulk 형태로 업데이트 하기
+https://docs.mongodb.com/manual/reference/method/Bulk.find.update/
+```java
+BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, score.getCollectionName());
+Query query = new Query();
+Update update = Update.update(key, value);
+bulkOperations.updateOne(query, update);
+...
+bulkOperations.execute();
+```
+
 # ref
 [spring-data-mongodb-tutorial](https://www.baeldung.com/spring-data-mongodb-tutorial)
 
