@@ -14,6 +14,8 @@ hostname # hostname 알아오는 명령
 
 도메인 네임 서버의 정보 확인
 dig q-test.zzeung.id +short
+host q-tet.zzeung.id
+nslookup q-test.zzeung.id
 
 apt install dnsutils
 nslookup
@@ -24,3 +26,11 @@ lsof -iTCP -sTCP:LISTEN -n -P
 
 netstat -antpo |grep 10.8.10.230
 watch -n 1 "netstat -antpo |grep 10.8.10.230"
+
+# 파일만
+find ./ -type f -exec chmod -v 755 {} \;
+# 폴더만
+find ./ -type d -exec chmod -v 755 {} \;
+
+# 용량 확인
+du -sh kend_home

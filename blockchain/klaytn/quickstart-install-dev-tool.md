@@ -21,7 +21,7 @@ $ mkdir -p ~/kend_home
 ## genesis.json
 download genesis.json
 ```sh
-curl -X GET http://packages.klaytn.net/baobab/genesis.json -o genesis.json
+curl -X GET https://packages.klaytn.net/baobab/genesis.json -o genesis.json
 ```
 e. Before starting an EN, it is necessary to initialize the genesis block using ken and genesis.json
 ```sh
@@ -148,6 +148,18 @@ $ npm install -g @haechi-labs/vvisp
 # or if you use yarn
 $ yarn global add @haechi-labs/vvisp
 ```
+
+# EN
+EN의 상태를 확인하는 유용한 API는 다음과 같습니다.
+```
+klay.blockNumber (최신 블록 번호를 가져옵니다)
+net.peerCount (현재 연결된 Klaytn 노드의 수를 가져옵니다)
+```
+addPeer
+```
+admin.addPeer("kni://0412e1fe709512a2ae7387eafba0036c07195a8b63921ce8bd708b1c02db21366efcc690bc50801eb6c74facad42f8d801db289ea3882fe37e56829ad73e8a81@54.180.16.123:32323?ntype=en")
+```
+
 
 # ref
 [install guide](https://docs.klaytn.com/node/en/installation/linux/enlinuxconfig)

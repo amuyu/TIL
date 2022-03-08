@@ -105,3 +105,69 @@ Running migration: 1_initial_migration.js
 Saving artifacts...
 ...
 ```
+
+result
+```
+Compiling your contracts...
+===========================
+✔ Fetching solc version list from solc-bin. Attempt #1
+✔ Downloading compiler. Attempt #1.
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'baobab'
+> Network id:      1001
+> Block gas limit: 0 (0x0)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x65d5ac9a528d04e20dbae0a2c18420c6fd3564a68dd090eed44e99deee9dedfd
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xC96487124C235d3c040e3e6Cf7949A35f1DFE5de
+   > block number:        81004185
+   > block timestamp:     1642572928
+   > account:             0x4b02B152E205C5DBfE86fd3565Eb4cE2AC964C07
+   > balance:             14.78782405
+   > gas used:            243519 (0x3b73f)
+   > gas price:           25 gwei
+   > value sent:          0 ETH
+   > total cost:          0.006087975 ETH
+
+
+   Deploying 'KlaytnGreeter'
+   -------------------------
+   > transaction hash:    0x9fa4718b1bddc601c5b7a2d5a5c23ba709be4ec760b7c9a682f6bd04bd8ea77f
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x97e90b7A8F8C085f1cB67dE9a5E14b663b6ddFDF
+   > block number:        81004188
+   > block timestamp:     1642572931
+   > account:             0x4b02B152E205C5DBfE86fd3565Eb4cE2AC964C07
+   > balance:             14.78004825
+   > gas used:            311032 (0x4bef8)
+   > gas price:           25 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0077758 ETH
+
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.013863775 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.013863775 ETH
+```
+
+
+## ref
+[스마트컨트랙트 배포](https://ko.docs.klaytn.com/getting-started/quick-start/deploy-a-smart-contract)

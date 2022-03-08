@@ -73,6 +73,23 @@ module.exports = {
 ```
 여기서 fallback 은 가장 나중에 설정해야 한다.
 
+# static link
+https://github.com/vuejs/vuepress/issues/1057#issuecomment-473145604
+As a workaround, I've created the following component, to be dropped in .vuepress/components/StaticLink.vue:
+
+<script>
+export default {
+  name: "StaticLink",
+  render(h) {
+    return h("a", { domProps: this.props }, this.$slots.default);
+  }
+};
+</script>
+Then, in a markdown file, you can use it like an a-tag, but it opts-out of vuepress' router behavior. In this example, I have a folder full of html at .vuepress/public/rdoc/
+
+<StaticLink href="/rdoc/">Rdocs</StaticLink>
+
+
 
 # ref
 https://vuepress.vuejs.org/guide/getting-started.html#prerequisites

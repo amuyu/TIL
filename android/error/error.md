@@ -56,6 +56,32 @@ aaptOptions
 Manifest 다음의 내용을 추가한다.
 ```xml
 <uses-sdk tools:overrideLibrary="packagename of library"/>
-```xml
+```
 
 [stackoverflow](https://stackoverflow.com/a/26967369/6759520)
+  
+  
+==========================
+# Caused by: java.lang.Exception: No native library is found for os.name=Mac and os.arch=aarch64. path=/org/sqlite/native/Mac/aarch64
+
+```
+If you are using Apple M1 chip
+
+One of the release notes they have mentioned by jetpack (Version 2.4.0-alpha03 )
+
+Fixed an issue with Room’s SQLite native library to support Apple’s M1 chips.
+Change Version to 2.4.0-alpha03 or above
+
+implementation "androidx.room:room-runtime:2.4.0-alpha03"
+annotationProcessor "androidx.room:room-compiler:2.4.0-alpha03"
+kapt 'androidx.room:room-compiler:2.4.0-alpha03'
+Reference
+
+https://developer.android.com/jetpack/androidx/releases/room#version_240_2
+```
+
+[stackoverflow](https://stackoverflow.com/a/69142381)
+
+
+61ef8c624c9c016f35c159c8
+78990b52125b4c7abcbd048c45a4c082

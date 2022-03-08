@@ -72,6 +72,10 @@ docker rm helloCentos
 ## 이미지 삭제하기
 docker rmi <이미지 이름>:<태그>
 
+## shell 접속
+docker exec -it <container> /bin/bash
+docker exec -it <container> /bin/sh
+
 ## 로그 보기
 docker logs -f <docker_id>
 

@@ -5,6 +5,7 @@ psvm : main method
 
 # editor
 ctrl + alt + o : optimize import
+command + alt + l : reformat
 ⌥⌘L : correct indention
 ⌥⌘M : Extract method
 ⌥⌘V : Introduce variable

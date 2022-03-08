@@ -269,7 +269,7 @@ local 저장소에 fork한 저장소를 원격 저장소에 추가한다
 ## 쓸데없는 파일 제외
 ```bash
 # 원격 저장소에 있는 파일을 삭제한다.
-git rm --cached -r
+git rm --cached -r {file}
 git add .
 git commit
 git commit --amend -CHEAD
