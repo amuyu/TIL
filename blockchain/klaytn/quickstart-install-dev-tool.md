@@ -163,3 +163,4 @@ admin.addPeer("kni://0412e1fe709512a2ae7387eafba0036c07195a8b63921ce8bd708b1c02d
 
 # ref
 [install guide](https://docs.klaytn.com/node/en/installation/linux/enlinuxconfig)
+[endpoint 실행](https://ko.docs.klaytn.com/getting-started/quick-start/launch-an-en#download-and-initialize-an-endpoint-node-en)
