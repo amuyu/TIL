@@ -15,7 +15,12 @@ network: {
         mnemonic: "", 
     },
     accounts: [privateKey1, privateKey2, ...]
+    
 }
+
+
+accounts: [`${PRIVATE_KEY}`],
+
 
 hardhat: {
     chainId: 1337,
