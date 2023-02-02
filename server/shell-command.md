@@ -32,5 +32,9 @@ find ./ -type f -exec chmod -v 755 {} \;
 # 폴더만
 find ./ -type d -exec chmod -v 755 {} \;
 
+# DS_Store 지우기
+find ./ -name ".DS_Store" -depth -exec rm {} \;
+
+
 # 용량 확인
 du -sh kend_home

@@ -24,10 +24,15 @@
  - 375x812 에서 표기되는 20 x 20 이미지의 경우 전달시 20x20 , 40x40, 60x60 3장 필요
  ![screensize](./screen-size.png)
 
- - baseline, 1x, mdpi, 160dpi
+ - baseline, 1x, mdpi, 160dpi, - (360x800?)
  - 1.5x, hdpi, 240dpi
  - 2x, xhdpi, 320dpi
  - 3x, xxhdpi, 480dpi
  - 4x, xxxhdpi, 640dpi
 
  3x or xxhdpi = 1080x2400
+
+
+ font 경량화?
+ subset
+ https://github.com/uyeong/NotoSans-subset

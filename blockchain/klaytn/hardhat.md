@@ -42,6 +42,8 @@ https://hardhat.org/guides/create-task.html
 ex
 ```
 task("balance", "Prints an account's balance").setAction(async () => {});
+
+npx hardhat balance
 ```
 
 # hardhat network
