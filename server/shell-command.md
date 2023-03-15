@@ -20,7 +20,7 @@ nslookup q-test.zzeung.id
 apt install dnsutils
 nslookup
 
-mac network
+mac network port 확인
 lsof -iTCP -sTCP:LISTEN -n -P
 
 

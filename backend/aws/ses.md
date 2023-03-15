@@ -8,6 +8,7 @@ aws ses create-template --cli-input-json file://tt.json
 금지 목록 조회
 ```shell
 aws sesv2 list-suppressed-destinations
+aws sesv2 list-suppressed-destinations --next-token=$TOKEN > mail$INDEX.json
 ```
 
 
