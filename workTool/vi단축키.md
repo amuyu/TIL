@@ -48,5 +48,5 @@ vimtutor 사용
 ### 여러 줄 에 텍스트 입력
 1. `ctrl + v` 해서 비주얼 블록 모드
 2. `shift + i` 누르고 텍스트 입력
-3. 입력 완료
 https://vim.fandom.com/wiki/Inserting_text_in_multiple_lines
+3. 입력 완료

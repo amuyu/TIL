@@ -86,6 +86,13 @@ git add <파일 이름>
 ```bash
 git diff <원래 가지> <비교 대상 가지>
 ```
+squash merge
+```bash
+git merge --squash <branch>
+git commit -m "Merge feature-branch with squash"
+```
+
+
 ### 원격 저장소 가져오기 정리 Fetch
 git pull 보다 git fetch를 사용하면 직접 병합 작업을 할 수 있다.
 ```bash
@@ -119,6 +126,18 @@ git tag -d <tag>
 ':'를 사용하여 삭제
 ```bash
 git push origin :<tag>
+```
+
+### 태그 가져오기
+```
+git fetch origin --tags # origin의 모든 태그를 가져온다
+git fetch origin refs/tags/원하는태그 # "원하는태그" 태그만 가져온다
+```
+
+### 태그 체크아웃 
+```bash
+git checkout tags/{원하는태그}
+git checkout tags/{원하는태그} -b 원하는브랜치명
 ```
 
 

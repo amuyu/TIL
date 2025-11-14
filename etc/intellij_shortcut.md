@@ -32,6 +32,9 @@ alt + F7 : 어떤 항목이 사용된 위치 검색
 # build
 shift + command + i : load build.gradle
 
+# 줄이동
+Option(⌥) + Shift + ↓
+
 
 [cheatsheet](https://www.shortcutfoo.com/app/dojos/intellij-idea-mac/cheatsheet)
 [단축키 모음](https://medium.com/@umanking/인텔리j-사용법-a44543666893)
